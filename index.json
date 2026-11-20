@@ -7,7 +7,7 @@
     "sha256": "0a074b70d2989e708337476f295314a4f54004c6be36a74c2726da08e6d2b375"
   },
   {
-    "path": "classes/combat/vampire-lord/farming.ts",
+    "path": "classes/vampire-lord/farming.ts",
     "kind": "classes",
     "name": "Vampire Lord farming",
     "desc": "AoE farming rotation: Deafened uptime, Gouge/Devour on cooldown, Bat burst window. Needs the classes loader (not wired yet).",
