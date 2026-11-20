@@ -1,0 +1,16 @@
+[
+  {
+    "path": "bots/smoke-eridani.ts",
+    "kind": "bots",
+    "name": "Eridani smoke test",
+    "desc": "Travel to eridani, enter r3, kill 3 of anything.",
+    "sha256": "0a074b70d2989e708337476f295314a4f54004c6be36a74c2726da08e6d2b375"
+  },
+  {
+    "path": "lib/bot.ts",
+    "kind": "lib",
+    "name": null,
+    "desc": null,
+    "sha256": "babe13eb3b05512d1121c13c1f2a0f0e3595098878665bd436c212b8eab86dde"
+  }
+]
