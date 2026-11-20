@@ -1,5 +1,5 @@
 /// name: Vampire Lord farming
-/// desc: AoE farming rotation: Deafened uptime, Gouge/Devour on cooldown, Bat burst window. Needs the classes loader (not wired yet).
+/// desc: AoE farming rotation: Deafened uptime, Gouge/Devour on cooldown, Bat burst window.
 
 // Vampire Lord (AC). Refs, costs, and cooldowns verified live on device
 // (`actions.active`): aa Slash (0/2.5s), a1 Sonar Scream (0/10s),
@@ -16,8 +16,7 @@
 // Passives, always on: Sanguine Lord (+15% damage), Ageless (+30% INT,
 // -20% crit), Pure Blood (+15% damage).
 //
-// Contract (pending the classes loader): the engine calls `rotation(me,
-// target)` every tick. It returns skill refs in preference order; the
+// Contract: the engine calls `rotation(me, target)` every tick. It returns skill refs in preference order; the
 // engine fires the first one that is ready (cooldown + mana, enforced from
 // the live table) and falls back to auto attack (aa Slash) when none is.
 // So this function ranks by aura state only — costs and cooldowns are the
