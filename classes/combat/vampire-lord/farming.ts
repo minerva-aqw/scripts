@@ -16,28 +16,33 @@
 // Passives, always on: Sanguine Lord (+15% damage), Ageless (+30% INT,
 // -20% crit), Pure Blood (+15% damage).
 //
-// Priority order, first match wins. The engine fires an entry only when
-// its skill is ready (cooldown + mana, enforced from the live table) and
-// its conditions hold; otherwise it keeps falling through to auto attack
-// (aa Slash). Conditions cover aura state only — costs and cooldowns are
-// the engine's job.
-const farming = [
+// Contract (pending the classes loader): the engine calls `rotation(me,
+// target)` every tick. It returns skill refs in preference order; the
+// engine fires the first one that is ready (cooldown + mana, enforced from
+// the live table) and falls back to auto attack (aa Slash) when none is.
+// So this function ranks by aura state only — costs and cooldowns are the
+// engine's job.
+//
+// Helpers used, provided by the loader: `me.aura(name)` /
+// `target.aura(name)` (the aura or null) and `target.auraBelow(name, ms)`
+// (true when missing or expiring within ms).
+function rotation(me, target) {
+  const skills = [];
   // Deafened first: everything after hits 30% harder. Recast under 2s left
-  // (a1's 10s cooldown already spaces it past the 8s duration).
-  {
-    skill: "a1",
-    when: [{ targetAuraBelowMs: ["Deafened", 2000] }],
-    unless: [{ meAura: "Aspect of The Bat" }],
-  },
+  // (a1's 10s cooldown already spaces it past the 8s duration). Never lands
+  // while Bat holds, so skip it then.
+  if (!me.aura("Aspect of The Bat") && target.auraBelow("Deafened", 2000)) {
+    skills.push("a1");
+  }
   // Bat window: haste/crit for the whole bar. Debuffs pause while it holds.
-  { skill: "a4", when: [] },
+  skills.push("a4");
   // Gouge: the hardest hit (120%) plus its dot.
-  { skill: "a3", when: [] },
+  skills.push("a3");
   // Devour: damage plus a heal off the damage dealt.
-  { skill: "a2", when: [] },
+  skills.push("a2");
   // While Bat holds, a1 cannot debuff — it buffs hit instead. Keep it up.
-  {
-    skill: "a1",
-    when: [{ meAura: "Aspect of The Bat" }],
-  },
-];
+  if (me.aura("Aspect of The Bat")) {
+    skills.push("a1");
+  }
+  return skills;
+}
