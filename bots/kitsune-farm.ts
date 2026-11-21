@@ -7,7 +7,9 @@
 //
 // Flow: travel first (locate only censuses the live room), ask the census
 // where the boss stands, go there, then loop kill -> pickup until the
-// blade is in the backpack. `ensureItem` is the loop condition: it
+// blade is in the backpack. The loader builds the session drops list on
+// the first entered frame, so every kill's drops land where name-pickup
+// reads them. `ensureItem` is the loop condition: it
 // unbanks first when banked and reads a bare boolean, so it fits `while`
 // directly. The round cap keeps a dry streak from running forever.
 bot.travel("kitsune");
@@ -16,13 +18,6 @@ if (!spot.found) {
   throw new Error("no Kitsune in kitsune (saw cells: " + spot.cells.join(",") + ")");
 }
 bot.cell(spot.cell);
-// Arm the session drops list BEFORE the first kill. The loader builds the
-// custom list on first ensure and only drops arriving after that land in
-// it — anything earlier exists solely as yes/no popups, which name-pickup
-// cannot see (and a stuck popup blocks later drops). This call is also
-// the canary: it errors actionably when the list is unavailable instead
-// of failing 50 silent rounds later.
-bot.drops();
 
 const WANT = "Hanzamune Dragon Koi Blade";
 let rounds = 0;

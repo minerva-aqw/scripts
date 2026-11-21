@@ -146,9 +146,9 @@ const bot = {
     return park({ op: "set_quest_value", slot, value });
   },
   // `drops()`: read-only pending drop list — `[{id, name, qty}]`, empty when
-  // nothing is pending. Ensures the session-only custom drops list first
-  // (the loader replicates the option toggle without persisting it — the
-  // drops panel appears this session, your saved option is untouched).
+  // nothing is pending. The loader builds the session-only list itself on
+  // the first entered frame (the toggle replicated without persisting it —
+  // the drops panel appears this session, your saved option is untouched).
   // Errors when the list is unavailable.
   drops(): unknown {
     return park({ op: "drops" });
