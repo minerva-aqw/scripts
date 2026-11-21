@@ -13,7 +13,9 @@
 // census + `moveToCell` + kill, `gather(id, map, qty?)` -> teleport (no
 // cell move; the `getMapItem` packet carries no cell) + `getMapItem` polled
 // against temp inventory, `inventory(idOrName)` -> detail object,
-// `ensureItem(idOrName, qty?)` -> bare boolean, unbanking first).
+// `ensureItem(idOrName, qty?)` -> bare boolean, unbanking first,
+// `buyItem(shopId, idOrName, qty?)` -> bare boolean, loading the shop first,
+// `sellItem(idOrName, qty?)` -> bare boolean, clamped to held).
 declare function park(v: unknown): unknown;
 
 const bot = {
@@ -72,5 +74,27 @@ const bot = {
     return typeof idOrName === "number"
       ? park({ op: "ensure_item", id: idOrName, qty: want })
       : park({ op: "ensure_item", name: idOrName, qty: want });
+  },
+  // `buyItem(shopId, idOrName, qty?)`: buy `qty` more of the item from the
+  // shop — same call for merge shops (their records just carry `turnin`).
+  // Loads the shop first unless already on it. Resumes bare `true`/`false`:
+  // not stocked, a zero gate (locked, broke, capped, short on merge
+  // materials), and a grant that never lands all read `false`. `qty`
+  // defaults to 1 and must fit in one purchase.
+  buyItem(shopId: number, idOrName: number | string, qty?: number): unknown {
+    const want = qty ?? 1;
+    return typeof idOrName === "number"
+      ? park({ op: "buy_item", shop_id: shopId, id: idOrName, qty: want })
+      : park({ op: "buy_item", shop_id: shopId, name: idOrName, qty: want });
+  },
+  // `sellItem(idOrName, qty?)`: sell up to `qty` of the item (clamps to what
+  // is held — selling the whole stack reads `true`). No shop needed; the
+  // record's `CharItemID` rides along. Resumes bare `true`/`false`; `qty`
+  // defaults to 1.
+  sellItem(idOrName: number | string, qty?: number): unknown {
+    const want = qty ?? 1;
+    return typeof idOrName === "number"
+      ? park({ op: "sell_item", id: idOrName, qty: want })
+      : park({ op: "sell_item", name: idOrName, qty: want });
   },
 };
