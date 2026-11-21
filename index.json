@@ -21,6 +21,13 @@
     "sha256": "002f03f224aef29bbcaab065901bee930952bacb1a6d1a2da9ae97aeffe655b0"
   },
   {
+    "path": "classes/yami-no-ronin/dodge-dps.ts",
+    "kind": "classes",
+    "name": "Yami no Ronin dodge DPS",
+    "desc": "Dodge-safe damage rotation: nuke on the fading Yami, DoT upkeep, safe Tachi spam, Kettou only while the dodge buffer holds.",
+    "sha256": "4f3fac7504b2ad0a3ad90eaeb90df12fc288bd15f3ddc94db83501a62108d787"
+  },
+  {
     "path": "lib/bot.ts",
     "kind": "lib",
     "name": null,
