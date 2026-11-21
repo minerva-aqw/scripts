@@ -10,7 +10,8 @@
 // combat mission via `kill_mission`, `quest(id).accept()` ->
 // `Game.world.acceptQuest`, `quest(id).turnIn()` ->
 // `Game.world.tryQuestComplete`, `hunt(name, map, qty?)` -> teleport +
-// census + `moveToCell` + kill, `gather(id, map, qty?)` -> teleport (no
+// census + `moveToCell` + kill, `locate(name)` -> read-only census of the
+// live room (no bridge traffic), `gather(id, map, qty?)` -> teleport (no
 // cell move; the `getMapItem` packet carries no cell) + `getMapItem` polled
 // against temp inventory, `inventory(idOrName)` -> detail object,
 // `ensureItem(idOrName, qty?)` -> bare boolean, unbanking first,
@@ -54,6 +55,16 @@ const bot = {
   // kill. `map` is required; `qty` defaults to 1.
   hunt(name: string, map: string, qty?: number): unknown {
     return park({ op: "hunt", name, map, qty: qty ?? 1 });
+  },
+  // `locate(name)`: read-only census of the live room — the cell holding
+  // the most `name` matches (same substring rule as `kill`/`hunt`). No
+  // travel, no packets, no bridge traffic. Resumes
+  // `{"found":true,"map","name","cell","count"}` (a miss resumes
+  // `found:false` with the cells seen, so `if` branches work). Travel
+  // first, then locate, then `cell()` + `kill()` — the manual half of what
+  // `hunt` does composed.
+  locate(name: string): unknown {
+    return park({ op: "locate", name });
   },
   // `gather(id, map, qty?)`: teleport to `map` when elsewhere (no cell
   // move — the server accepts `getMapItem` map-wide), then `getMapItem [id]`
