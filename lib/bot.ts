@@ -15,7 +15,8 @@
 // against temp inventory, `inventory(idOrName)` -> detail object,
 // `ensureItem(idOrName, qty?)` -> bare boolean, unbanking first,
 // `buyItem(shopId, idOrName, qty?)` -> bare boolean, loading the shop first,
-// `sellItem(idOrName, qty?)` -> bare boolean, clamped to held).
+// `sellItem(idOrName, qty?)` -> bare boolean, clamped to held,
+// `me()` -> player snapshot object).
 declare function park(v: unknown): unknown;
 
 const bot = {
@@ -96,5 +97,11 @@ const bot = {
     return typeof idOrName === "number"
       ? park({ op: "sell_item", id: idOrName, qty: want })
       : park({ op: "sell_item", name: idOrName, qty: want });
+  },
+  // `me()`: read-only player snapshot — identity, wallet, vitals, location,
+  // capacity. No travel, no polling, no packets. Resumes the detail object;
+  // raw counts only, scripts subtract.
+  me(): unknown {
+    return park({ op: "me" });
   },
 };
