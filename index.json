@@ -19,9 +19,9 @@
     "path": "bots/storylines/elegy-of-madness/01-eridani.ts",
     "kind": "bots",
     "name": "Elegy of Madness 01 - Eridani",
-    "desc": "Eridani chapter, quests 7769-7779. Flat accept, farm, turn in.",
+    "desc": "Eridani chapter, quests 7769-7779. Skips completed quests, so re-runs resume where they left off.",
     "autoload": null,
-    "sha256": "f745693b357fd7cfba68d34321ae59394aa3eaa202f373ea7b811cf5b5e37b23"
+    "sha256": "3d2f9daa5e6c588e1b12aef2780eb6f5ef88d184a47b9511288acf1a8be2c2e3"
   },
   {
     "path": "classes/archpaladin/archpaladin.ts",
@@ -117,6 +117,6 @@
     "name": null,
     "desc": null,
     "autoload": null,
-    "sha256": "b31ef7027dc70a78e35d0b9610b892070ca4bda97f3caa8c7ad3e01d997e040b"
+    "sha256": "b9d87b57cdc4dbd9cf4b9f489a76dda9a8a3f09d218f5db52a8f65c364a4705d"
   }
 ]

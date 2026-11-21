@@ -9,7 +9,8 @@
 // `BotCommand` (`travel` -> gotoTown, `cell` -> moveToCell, `kill` ->
 // combat mission via `kill_mission`, `quest(id).accept()` ->
 // `Game.world.acceptQuest`, `quest(id).turnIn()` ->
-// `Game.world.tryQuestComplete`, `hunt(name, map, qty?)` -> teleport +
+// `Game.world.tryQuestComplete`, `quest(id).completed()` -> bare boolean
+// re-run guard, `hunt(name, map, qty?)` -> teleport +
 // census + `moveToCell` + kill, `locate(name)` -> read-only census of the
 // live room (no bridge traffic), `gather(id, map, qty?)` -> teleport (no
 // cell move; the `getMapItem` packet carries no cell) + `getMapItem` polled
@@ -35,11 +36,16 @@ const bot = {
   kill(name: string, count?: number): unknown {
     return park({ op: "kill", name, count: count ?? 1 });
   },
-  // `quest(407).accept()` / `quest(407).turnIn(choice?, qty?)`.
-  // `quest(id)` itself never parks: it only captures the id for the two
-  // parking calls below, so `const q = bot.quest(id); q.accept();` works.
+  // `quest(407).accept()` / `quest(407).turnIn(choice?, qty?)` /
+  // `quest(407).completed()`.
+  // `quest(id)` itself never parks: it only captures the id for the parking
+  // calls below, so `const q = bot.quest(id); q.accept();` works.
   // `choice` defaults to -1 (no reward choice, the SWF default —
   // `QFrameMC.as:28`); `qty` defaults to 1 and caps at 250.
+  // `completed()` is the re-run guard: read-only, no packets beyond the
+  // definition fetch — resumes bare `true` when the one-time quest already
+  // completed, `false` otherwise (including unknown), so blocks read
+  // `if (!bot.quest(id).completed()) { ... }`.
   quest(id: number) {
     return {
       accept(): unknown {
@@ -47,6 +53,9 @@ const bot = {
       },
       turnIn(choice?: number, qty?: number): unknown {
         return park({ op: "quest_turnin", id, choice: choice ?? -1, qty: qty ?? 1 });
+      },
+      completed(): unknown {
+        return park({ op: "quest_completed", id });
       },
     };
   },

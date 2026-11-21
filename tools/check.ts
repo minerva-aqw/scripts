@@ -189,8 +189,8 @@ function lineAt(src: string, index: number): number {
 }
 
 /// `name(min,max)` per method, parsed from lib/bot.ts signatures so the
-/// checker enforces the stdlib as written. `accept`/`turnIn` are the chained
-/// pair on the object `quest(id)` returns.
+/// checker enforces the stdlib as written. `accept`/`turnIn`/`completed`
+/// are the chained calls on the object `quest(id)` returns.
 function botTable(libSrc: string): Map<string, [number, number]> {
   const table = new Map<string, [number, number]>();
   for (const match of libSrc.matchAll(/^\s*(\w+)\s*\(([^)]*)\)/gm)) {
@@ -208,10 +208,11 @@ function botTable(libSrc: string): Map<string, [number, number]> {
     }).length;
     if (!table.has(name)) table.set(name, [required, params.length]);
   }
-  // The chained pair lives on quest()'s return; ensure both are known even
+  // The chained calls live on quest()'s return; ensure all are known even
   // if the parse above missed them.
   if (!table.has("accept")) table.set("accept", [0, 0]);
   if (!table.has("turnIn")) table.set("turnIn", [0, 2]);
+  if (!table.has("completed")) table.set("completed", [0, 0]);
   table.delete("park");
   return table;
 }
@@ -280,7 +281,7 @@ function checkBotsCalls(
     checkArity(name, `bot.${name}`, match.index, count);
     if (name === "quest" && table.has("quest")) {
       const rest = stripped.slice(close + 1);
-      const chain = rest.match(/^\s*\.(accept|turnIn)\s*\(/);
+      const chain = rest.match(/^\s*\.(accept|turnIn|completed)\s*\(/);
       if (chain) {
         const cOpen = close + 1 + chain[0].length - 1;
         const cArgs = argCount(stripped, cOpen);
@@ -289,7 +290,7 @@ function checkBotsCalls(
     }
   }
   for (const alias of aliases) {
-    const re = new RegExp(`\\b${alias}\\.(accept|turnIn)\\s*\\(`, "g");
+    const re = new RegExp(`\\b${alias}\\.(accept|turnIn|completed)\\s*\\(`, "g");
     for (const match of stripped.matchAll(re)) {
       const open = match.index + match[0].length - 1;
       const { count } = argCount(stripped, open);
