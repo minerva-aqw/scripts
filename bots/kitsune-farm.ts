@@ -16,6 +16,13 @@ if (!spot.found) {
   throw new Error("no Kitsune in kitsune (saw cells: " + spot.cells.join(",") + ")");
 }
 bot.cell(spot.cell);
+// Arm the session drops list BEFORE the first kill. The loader builds the
+// custom list on first ensure and only drops arriving after that land in
+// it — anything earlier exists solely as yes/no popups, which name-pickup
+// cannot see (and a stuck popup blocks later drops). This call is also
+// the canary: it errors actionably when the list is unavailable instead
+// of failing 50 silent rounds later.
+bot.drops();
 
 const WANT = "Hanzamune Dragon Koi Blade";
 let rounds = 0;

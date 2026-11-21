@@ -4,7 +4,7 @@
     "kind": "bots",
     "name": "Kitsune farm",
     "desc": "Travel to kitsune, locate the Kitsune boss cell, kill and claim until Hanzamune Dragon Koi Blade lands.",
-    "sha256": "7c28d4cad870920e51860cf427517b65cbca6b3c441d0679185f4a9be8976bbe"
+    "sha256": "0195185a1a3854b01132d8643e93360d79cc7f8df502ad1f63cf39483df524c0"
   },
   {
     "path": "bots/smoke-eridani.ts",
