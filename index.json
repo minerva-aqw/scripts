@@ -16,6 +16,14 @@
     "sha256": "0a074b70d2989e708337476f295314a4f54004c6be36a74c2726da08e6d2b375"
   },
   {
+    "path": "bots/storylines/elegy-of-madness/01-eridani.ts",
+    "kind": "bots",
+    "name": "Elegy of Madness 01 - Eridani",
+    "desc": "Eridani chapter, quests 7769-7779. Flat accept, farm, turn in.",
+    "autoload": null,
+    "sha256": "f745693b357fd7cfba68d34321ae59394aa3eaa202f373ea7b811cf5b5e37b23"
+  },
+  {
     "path": "classes/archpaladin/archpaladin.ts",
     "kind": "classes",
     "name": "ArchPaladin solo support",
