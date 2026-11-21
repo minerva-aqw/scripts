@@ -16,12 +16,84 @@
     "sha256": "0a074b70d2989e708337476f295314a4f54004c6be36a74c2726da08e6d2b375"
   },
   {
+    "path": "classes/archpaladin/archpaladin.ts",
+    "kind": "classes",
+    "name": "ArchPaladin solo support",
+    "desc": "Seal-to-Eden combo rotation: Hymn upkeep and heals, Commandment shred stacks, Eden inside the fading seal.",
+    "autoload": "ArchPaladin",
+    "sha256": "134da6baa9956cf70103a53e908ded68bc8c479a47d2123a840ce80ca320c708"
+  },
+  {
+    "path": "classes/healer/healer.ts",
+    "kind": "classes",
+    "name": "Healer starter",
+    "desc": "Solo rotation: heal under pressure, Energy Flow upkeep for mana and the damage cut, Holy nuke, Heartbeat filler.",
+    "autoload": "Healer",
+    "sha256": "eae1c73765256f10d82ff98947bd9353d9e44d2d4f6c5413973a2a0b2dd18bda"
+  },
+  {
+    "path": "classes/kings-echo/damage.ts",
+    "kind": "classes",
+    "name": "King's Echo damage",
+    "desc": "Full-damage loop: Censure upkeep, Bolt to 8 Residual stacks, CORVAK on a full battery, repeat.",
+    "autoload": "King's Echo",
+    "sha256": "ec6b45fed091459d49a76f9993dd294beb0b7fe7120e27538fed3e3afc49d5ab"
+  },
+  {
+    "path": "classes/kings-echo/defense.ts",
+    "kind": "classes",
+    "name": "King's Echo defense",
+    "desc": "Defensive loop: shield when exposed, Censure and Overthrown upkeep, Bolt to 8 stacks, CORVAK to reset the shield.",
+    "autoload": null,
+    "sha256": "13de80248fe5cfec357a6af2b48e02d10d7809f1edf1e45c40f262a1ae4925f8"
+  },
+  {
+    "path": "classes/mage/mage.ts",
+    "kind": "classes",
+    "name": "Mage starter",
+    "desc": "Elemental combo rotation: Ice Shard sets Frozen Blood, Fireball spends it doubled, Explosion detonates Scorched, shield when hurt.",
+    "autoload": "Mage",
+    "sha256": "2bfc1a0b16c7fd8b8f96931036436668787ebcf85e9a4aa15c98e5168bbe1993"
+  },
+  {
+    "path": "classes/rogue/rogue.ts",
+    "kind": "classes",
+    "name": "Rogue starter",
+    "desc": "Poison rotation: execute as Viper's Kiss runs out, poison upkeep, Footwork while down, Stiletto for the execute buff.",
+    "autoload": "Rogue",
+    "sha256": "f768f720aed5e77386e78a63ddc0c55a6912faecfac9071cdd85ee9a33a0aeea"
+  },
+  {
+    "path": "classes/stonecrusher/stonecrusher.ts",
+    "kind": "classes",
+    "name": "StoneCrusher support DPS",
+    "desc": "Earth support rotation: shield when exposed, nukes inside Magnitude windows, Stalagmite upkeep, Echoing Earth on cooldown.",
+    "autoload": "StoneCrusher",
+    "sha256": "9e5aefb149e838795d718011a78ee532f172f6dd7ed01417aed703473fa89309"
+  },
+  {
+    "path": "classes/swordmaster/swordmaster.ts",
+    "kind": "classes",
+    "name": "SwordMaster dodge DPS",
+    "desc": "Dodge melee rotation: stun and Spinning Dragon on cooldown, Evasion wall upkeep, Sever cripple, Bladefury crit buff.",
+    "autoload": "SwordMaster",
+    "sha256": "cf839e6f49d8626ff9241a7ee236c7bc2a4fb6715ebc1e8414f248a36428ad23"
+  },
+  {
     "path": "classes/vampire-lord/farming.ts",
     "kind": "classes",
     "name": "Vampire Lord farming",
     "desc": "AoE farming rotation: Deafened uptime, Gouge/Devour on cooldown, Bat burst window.",
     "autoload": null,
     "sha256": "002f03f224aef29bbcaab065901bee930952bacb1a6d1a2da9ae97aeffe655b0"
+  },
+  {
+    "path": "classes/warrior/warrior.ts",
+    "kind": "classes",
+    "name": "Warrior starter",
+    "desc": "Single-target rotation: stun nuke on cooldown, Armor Shred upkeep, Prepared crits under guard, guard when hurt.",
+    "autoload": "Warrior",
+    "sha256": "6d4f55a8757ab78cfb4d3dfb3ecc5450a8d0e6cc53afbb9415d90c87440452b2"
   },
   {
     "path": "classes/yami-no-ronin/dodge-dps.ts",
