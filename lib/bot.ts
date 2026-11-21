@@ -16,7 +16,8 @@
 // `ensureItem(idOrName, qty?)` -> bare boolean, unbanking first,
 // `buyItem(shopId, idOrName, qty?)` -> bare boolean, loading the shop first,
 // `sellItem(idOrName, qty?)` -> bare boolean, clamped to held,
-// `me()` -> player snapshot object).
+// `me()` -> player snapshot object,
+// `rep(idOrName)` -> faction detail object).
 declare function park(v: unknown): unknown;
 
 const bot = {
@@ -103,5 +104,16 @@ const bot = {
   // raw counts only, scripts subtract.
   me(): unknown {
     return park({ op: "me" });
+  },
+  // `rep(idOrName)`: read-only faction query — the record for a `FactionID`
+  // or an exact `sName` (the SWF's own either/or lookup). Resumes
+  // `{"found":true,"id","name","rep","rank","repToRank"}` (or `found:false`
+  // with zeroed fields). A miss reads `rank: 0`, so check `found` once when
+  // writing a rank loop — `while (bot.rep("Good").rank < 10)` spins forever
+  // on a typo'd name.
+  rep(idOrName: number | string): unknown {
+    return typeof idOrName === "number"
+      ? park({ op: "rep", id: idOrName })
+      : park({ op: "rep", name: idOrName });
   },
 };
