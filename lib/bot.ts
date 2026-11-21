@@ -17,7 +17,9 @@
 // `buyItem(shopId, idOrName, qty?)` -> bare boolean, loading the shop first,
 // `sellItem(idOrName, qty?)` -> bare boolean, clamped to held,
 // `me()` -> player snapshot object,
-// `rep(idOrName)` -> faction detail object).
+// `rep(idOrName)` -> faction detail object,
+// `questValue(slot)` -> bare slot number,
+// `setQuestValue(slot, value)` -> bare boolean on the server echo).
 declare function park(v: unknown): unknown;
 
 const bot = {
@@ -115,5 +117,19 @@ const bot = {
     return typeof idOrName === "number"
       ? park({ op: "rep", id: idOrName })
       : park({ op: "rep", name: idOrName });
+  },
+  // `questValue(slot)`: read-only quest progression slot — `slot` is
+  // uncapped (`strQuests`, `strQuests2`, …). Resumes the bare number (`-1`
+  // when unset, the SWF's own miss signal).
+  questValue(slot: number): unknown {
+    return park({ op: "quest_value", slot });
+  },
+  // `setQuestValue(slot, value)`: write a progression slot (map/cutscene
+  // `qs` locks and quest/shop gates read these same local strings, so a
+  // landed write unlocks immediately). `value` must be 0–35 — one base-36
+  // digit per slot, anything more corrupts to `"0"`. Resumes bare
+  // `true`/`false`: `false` when the server echo never lands.
+  setQuestValue(slot: number, value: number): unknown {
+    return park({ op: "set_quest_value", slot, value });
   },
 };
