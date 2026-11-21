@@ -4,6 +4,7 @@
     "kind": "bots",
     "name": "Kitsune farm",
     "desc": "Travel to kitsune, locate the Kitsune boss cell, kill and claim until Hanzamune Dragon Koi Blade lands.",
+    "autoload": null,
     "sha256": "80730b649870d1c93092c45d68770073d24aaad3c5026e716cf50b05e6ee8cd8"
   },
   {
@@ -11,6 +12,7 @@
     "kind": "bots",
     "name": "Eridani smoke test",
     "desc": "Travel to eridani, enter r3, kill 3 of anything.",
+    "autoload": null,
     "sha256": "0a074b70d2989e708337476f295314a4f54004c6be36a74c2726da08e6d2b375"
   },
   {
@@ -18,6 +20,7 @@
     "kind": "classes",
     "name": "Vampire Lord farming",
     "desc": "AoE farming rotation: Deafened uptime, Gouge/Devour on cooldown, Bat burst window.",
+    "autoload": null,
     "sha256": "002f03f224aef29bbcaab065901bee930952bacb1a6d1a2da9ae97aeffe655b0"
   },
   {
@@ -25,13 +28,15 @@
     "kind": "classes",
     "name": "Yami no Ronin dodge DPS",
     "desc": "Dodge-safe damage rotation: nuke on the fading Yami, DoT upkeep, safe Tachi spam, Kettou only while the dodge buffer holds.",
-    "sha256": "4f3fac7504b2ad0a3ad90eaeb90df12fc288bd15f3ddc94db83501a62108d787"
+    "autoload": "Yami no Ronin",
+    "sha256": "701ac437649e5c6df050f4a9bba295b9e24b8c889a617a9ea04a2f8ea5845d6c"
   },
   {
     "path": "lib/bot.ts",
     "kind": "lib",
     "name": null,
     "desc": null,
+    "autoload": null,
     "sha256": "b31ef7027dc70a78e35d0b9610b892070ca4bda97f3caa8c7ad3e01d997e040b"
   }
 ]

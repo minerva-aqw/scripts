@@ -1,5 +1,6 @@
 /// name: Yami no Ronin dodge DPS
 /// desc: Dodge-safe damage rotation: nuke on the fading Yami, DoT upkeep, safe Tachi spam, Kettou only while the dodge buffer holds.
+/// autoload: Yami no Ronin
 
 // Yami no Ronin (dodge melee). Refs follow the standard table layout
 // (`actions.active`): aa Batto, a1 Tachi, a2 Yami no Maku, a3 Kettou,

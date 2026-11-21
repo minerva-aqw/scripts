@@ -1,0 +1,8 @@
+{
+  "name": "minerva-scripts",
+  "private": true,
+  "scripts": {
+    "gen-index": "bun tools/gen-index.ts",
+    "check": "bun tools/check.ts"
+  }
+}

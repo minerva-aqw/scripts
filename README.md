@@ -38,8 +38,20 @@ hash in `index.json` is the version, the folder is the kind.
 Generated, never hand-edited:
 
 ```
-python3 tools/gen-index.py
+bun tools/gen-index.ts
 ```
 
 CI fails when the committed index drifts from the tree. On device the index
 is a fast-listing cache; the files are the source of truth.
+
+## check
+
+Static checks (Bun, zero dependencies):
+
+```
+bun tools/check.ts
+```
+
+Enforces the headers, the classic-script shape (no `import`/`export`/
+`await`/`async`), `bot.*` method names and arity against `lib/bot.ts`,
+a `rotation(me, target)` in every `classes/` file, and a fresh `index.json`.
