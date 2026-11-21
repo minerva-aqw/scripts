@@ -24,6 +24,14 @@
     "sha256": "3d2f9daa5e6c588e1b12aef2780eb6f5ef88d184a47b9511288acf1a8be2c2e3"
   },
   {
+    "path": "bots/zz-debug-quest.ts",
+    "kind": "bots",
+    "name": "zz debug quest completed",
+    "desc": "Temporary diagnostic: reports completed() and slot 376 for quest 7769, then fails with the values. Delete after use.",
+    "autoload": null,
+    "sha256": "ba6fb0d832847f9b7e39773f5480bc0b8d0af723e81107dac1700d560850bb7c"
+  },
+  {
     "path": "classes/archpaladin/archpaladin.ts",
     "kind": "classes",
     "name": "ArchPaladin solo support",
