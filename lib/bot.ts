@@ -19,7 +19,9 @@
 // `me()` -> player snapshot object,
 // `rep(idOrName)` -> faction detail object,
 // `questValue(slot)` -> bare slot number,
-// `setQuestValue(slot, value)` -> bare boolean on the server echo).
+// `setQuestValue(slot, value)` -> bare boolean on the server echo,
+// `drops()` -> pending drop array,
+// `pickup(idOrName | "*")` -> bare boolean, `"*"` clears the floor).
 declare function park(v: unknown): unknown;
 
 const bot = {
@@ -131,5 +133,24 @@ const bot = {
   // `true`/`false`: `false` when the server echo never lands.
   setQuestValue(slot: number, value: number): unknown {
     return park({ op: "set_quest_value", slot, value });
+  },
+  // `drops()`: read-only pending drop list — `[{id, name, qty}]`, empty when
+  // nothing is pending. Ensures the session-only custom drops list first
+  // (the loader replicates the option toggle without persisting it — the
+  // drops panel appears this session, your saved option is untouched).
+  // Errors when the list is unavailable.
+  drops(): unknown {
+    return park({ op: "drops" });
+  },
+  // `pickup(idOrName)` / `pickup("*")`: claim one pending drop by id or by
+  // exact pending-list name, or clear the whole floor. Id claims work in
+  // every UI mode; names and `"*"` read the ensured list. One `getDrop` per
+  // item plus a grant poll each. Resumes bare `true`/`false`: a miss, a
+  // rejected claim, and a stalled pass all read `false` (claimed items stay
+  // claimed — call again for the remainder); an empty floor reads `true`.
+  pickup(idOrName: number | string): unknown {
+    return typeof idOrName === "number"
+      ? park({ op: "pickup", id: idOrName })
+      : park({ op: "pickup", name: idOrName });
   },
 };
