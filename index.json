@@ -16,6 +16,14 @@
     "sha256": "80730b649870d1c93092c45d68770073d24aaad3c5026e716cf50b05e6ee8cd8"
   },
   {
+    "path": "bots/reputations/lycan.ts",
+    "kind": "bots",
+    "name": "Lycan rep",
+    "desc": "Farms Lycan reputation to rank 10 via quest 537 Sanguine in /lycan. Requires the Wolfwing storyline done and quest 537 completed at least once.",
+    "autoload": null,
+    "sha256": "0f6aed00098410e204437d73052143b58378f47eca1253cbeddc7f0ef313bb66"
+  },
+  {
     "path": "bots/smoke-eridani.ts",
     "kind": "bots",
     "name": "Eridani smoke test",
