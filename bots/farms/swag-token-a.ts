@@ -9,15 +9,33 @@
 // 1304/1307 in terrarium, member quests 1310/1312/1313/1314 in
 // collectorlab r2 Left). Kills are "*" — the temp quest items drop off
 // anything in those cells while the quest is accepted, and `bot.quest`
-// accepts, fills via the handlers, and turns in by itself. Trade-up
-// ratios from the same source: 10 D -> 1 C (cap 500), 10 C -> 1 B
-// (cap 200), 20 B -> 1 A (cap 100), all at shop 325 in /collection.
+// accepts, fills via the handlers, and turns in by itself. Rewards can
+// land on the floor, so every quest is followed by a pickup drain before
+// any travel. Trade-up ratios from the same source: 10 D -> 1 C
+// (cap 500), 10 C -> 1 B (cap 200), 20 B -> 1 A (cap 100), all at
+// shop 325 in /collection.
 
 const WANT = 100;
 
 function tokenQty(name) {
   const inv = bot.inventory(name);
   return inv.found ? inv.qty : 0;
+}
+
+// Quest rewards can land on the floor instead of joining the backpack,
+// and nothing claims them by itself — not the hunt sweep (it only
+// covers watched requirements) and not the turn-in (fire-and-forget).
+// Drain each token name after every quest, before any travel leaves
+// the room. `pickup` with a name claims one per call and reads false
+// on a miss, so loop until the floor is clear of it.
+function pickupTokens(names) {
+  for (const n of names) {
+    let guard = 0;
+    while (bot.pickup(n)) {
+      guard += 1;
+      if (guard >= 500) break;
+    }
+  }
 }
 
 function tradeUp() {
@@ -72,6 +90,7 @@ while (tokenQty("Super-Fan Swag Token A") < WANT) {
       "9388": lab, // Wanted Rock
       "9387": lab, // Winding String
     });
+    pickupTokens(["Super-Fan Swag Token C"]);
   } else {
     const terr = function () { bot.hunt("*", "terrarium", 1, "Enter", "Spawn"); };
     bot.quest(1304, {
@@ -80,10 +99,13 @@ while (tokenQty("Super-Fan Swag Token A") < WANT) {
       "9308": terr, // Sweatband
       "9309": terr, // Water bottle
     });
+    // 1304 rewards both D and C.
+    pickupTokens(["Super-Fan Swag Token D", "Super-Fan Swag Token C"]);
     bot.quest(1307, {
       "9540": terr, // Ball of Fluff
       "9313": terr, // Dust Bunny Blown Apart!
     });
+    pickupTokens(["Super-Fan Swag Token D", "Super-Fan Swag Token C"]);
   }
   tradeUp();
 }
