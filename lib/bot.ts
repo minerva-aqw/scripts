@@ -82,7 +82,7 @@ const bot = {
     const turnIn = opts && opts.turnIn === false ? false : true;
     const choice = opts && opts.choice !== undefined ? opts.choice : -1;
     const qty = opts && opts.qty !== undefined ? opts.qty : 1;
-    for (let round = 0; round < 50; round++) {
+    for (let round = 0; round < 9999; round++) {
       const st = park({ op: "quest_status", id }) as QuestStatus;
       if (st.completed === true) return true;
       const reqs = st.requirements || [];
@@ -128,6 +128,27 @@ const bot = {
           "' stalled: " + cur.have + "/" + cur.need
         );
       }
+    }
+    // Re-read before turning in: creeping progress can exhaust the rounds
+    // with requirements still open, and an unreadable definition reads as
+    // no requirements at all. Both must fail naming the shortfall, never
+    // fire a turn-in the native gate will refuse.
+    const final = park({ op: "quest_status", id }) as QuestStatus;
+    if (final.completed === true) return true;
+    const reqs = final.requirements || [];
+    if (reqs.length === 0 && final.accepted !== true) {
+      throw new Error(
+        "quest " + id + " has no readable requirements and is not accepted"
+      );
+    }
+    const unmet = reqs.filter(function (r) {
+      return (r.have === undefined ? -1 : r.have) < r.need;
+    });
+    if (unmet.length > 0) {
+      throw new Error(
+        "quest " + id + " requirements unmet after filling: " +
+        unmet.map(function (r) { return r.name + " " + r.have + "/" + r.need; }).join(", ")
+      );
     }
     if (turnIn) return park({ op: "quest_turnin", id, choice, qty });
     return true;

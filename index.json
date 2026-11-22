@@ -1,5 +1,13 @@
 [
   {
+    "path": "bots/farms/swag-token-a.ts",
+    "kind": "bots",
+    "name": "Swag Token A farm",
+    "desc": "Farms Super-Fan Swag Token A to 100, member and non-member paths. Member farms Token C in collectorlab r2, non-member farms Token D in terrarium, then trades up D-C-B-A at shop 325 in /collection.",
+    "autoload": null,
+    "sha256": "6e9f4a5305abd7f028b602bae4ac1fcd07b6224bbed2418c8b2daaf4e1014564"
+  },
+  {
     "path": "bots/kitsune-farm.ts",
     "kind": "bots",
     "name": "Kitsune farm",
@@ -189,6 +197,6 @@
     "name": null,
     "desc": null,
     "autoload": null,
-    "sha256": "7b4dd57c8a8522574a77b43dc7066562b5c2907c5765a4d3ef2dbb20ea775157"
+    "sha256": "e6b32a67018b69fdc902918d940dbb5ddc4e259f385809813816174c44784e67"
   }
 ]
