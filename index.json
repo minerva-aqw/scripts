@@ -80,6 +80,14 @@
     "sha256": "725340f484c964cc254cad9b029a45af73b95949fd337d3817bc18b1adca44d8"
   },
   {
+    "path": "bots/storylines/elegy-of-madness/09-theworld.ts",
+    "kind": "bots",
+    "name": "Elegy of Madness 09 - The World",
+    "desc": "The World chapter, quests 8723-8733. Skips completed quests, so re-runs resume where they left off.",
+    "autoload": null,
+    "sha256": "4b2867b7c7f230e213db4dbca8f172067671197384d8d83e611177a74c60acb9"
+  },
+  {
     "path": "classes/archpaladin/archpaladin.ts",
     "kind": "classes",
     "name": "ArchPaladin solo support",
