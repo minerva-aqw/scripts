@@ -72,6 +72,14 @@
     "sha256": "afb02cbe50efe8ef13825a493d8ec6021821a2db5219d8cc501b832b266665e4"
   },
   {
+    "path": "bots/storylines/elegy-of-madness/08-genesisgarden.ts",
+    "kind": "bots",
+    "name": "Elegy of Madness 08 - Genesis Garden",
+    "desc": "Genesis Garden chapter, quests 8678-8687. Skips completed quests, so re-runs resume where they left off.",
+    "autoload": null,
+    "sha256": "725340f484c964cc254cad9b029a45af73b95949fd337d3817bc18b1adca44d8"
+  },
+  {
     "path": "classes/archpaladin/archpaladin.ts",
     "kind": "classes",
     "name": "ArchPaladin solo support",
