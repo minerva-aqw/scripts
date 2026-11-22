@@ -27,6 +27,8 @@
 declare function park(v: unknown): unknown;
 
 const bot = {
+  // Already in `map` reads as done with no rejoin; a non-default `cell`
+  // goes through the verified cell move instead of the join's blind args.
   travel(map: string, cell?: string, pad?: string): unknown {
     return park({ op: "travel", map, cell: cell ?? "Enter", pad: pad ?? "Spawn" });
   },
