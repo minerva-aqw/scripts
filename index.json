@@ -5,7 +5,7 @@
     "name": "ArchFiend class",
     "desc": "Gets the ArchFiend class (no rank-up): Evil rep, Nation materials, Abyssal Contract quest, purchase.",
     "autoload": null,
-    "sha256": "2fc319a67324b24c10a78f74409e5f4bcc91ea0219e9ed995a462696cde4b9ac"
+    "sha256": "420b1b3a694fc1e18b549193f3b0d62cbcfae0332646659954692ddd58807dcd"
   },
   {
     "path": "bots/farms/swag-token-a.ts",
@@ -13,7 +13,7 @@
     "name": "Swag Token A farm",
     "desc": "Farms Super-Fan Swag Token A to 100, member and non-member paths. Member farms Token C in collectorlab r2, non-member farms Token D in terrarium, then trades up D-C-B-A at shop 325 in /collection.",
     "autoload": null,
-    "sha256": "45f601de8e680e6088955f3a2ed54e61ddd5a7421d93e15dab31c8fadd185ff4"
+    "sha256": "8ec4891e4db8fd210c2abbccdb40f02c1b52fda9261fe752d066238e6adfdaff"
   },
   {
     "path": "bots/kitsune-farm.ts",

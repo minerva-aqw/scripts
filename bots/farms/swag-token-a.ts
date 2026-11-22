@@ -98,13 +98,13 @@ while (tokenQty("Super-Fan Swag Token A") < WANT) {
       "9307": terr, // Track Suit
       "9308": terr, // Sweatband
       "9309": terr, // Water bottle
-    });
-    // 1304 rewards both D and C.
+    }, { choice: 9396 }); // Super-Fan Swag Token D (Skua farms D; C is the other choice)
+    // 1304 pays one choice per turn-in (D here).
     pickupTokens(["Super-Fan Swag Token D", "Super-Fan Swag Token C"]);
     bot.quest(1307, {
       "9540": terr, // Ball of Fluff
       "9313": terr, // Dust Bunny Blown Apart!
-    });
+    }, { choice: 9396 }); // Super-Fan Swag Token D
     pickupTokens(["Super-Fan Swag Token D", "Super-Fan Swag Token C"]);
   }
   tradeUp();
