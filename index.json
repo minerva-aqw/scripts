@@ -64,6 +64,14 @@
     "sha256": "925bbe106f3db9c098b9f3922ebbf1768e6770250a7788c7b5471c10e91d1d57"
   },
   {
+    "path": "bots/storylines/elegy-of-madness/07-firstobservatory.ts",
+    "kind": "bots",
+    "name": "Elegy of Madness 07 - First Observatory",
+    "desc": "First Observatory chapter, quests 8630-8641. Skips completed quests, so re-runs resume where they left off.",
+    "autoload": null,
+    "sha256": "afb02cbe50efe8ef13825a493d8ec6021821a2db5219d8cc501b832b266665e4"
+  },
+  {
     "path": "classes/archpaladin/archpaladin.ts",
     "kind": "classes",
     "name": "ArchPaladin solo support",
