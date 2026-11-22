@@ -56,6 +56,14 @@
     "sha256": "1154c9525c6a58e3c60d69e658682b7b73a31218453cd2a3864ac09a8e91458b"
   },
   {
+    "path": "bots/storylines/elegy-of-madness/06-astraviapast.ts",
+    "kind": "bots",
+    "name": "Elegy of Madness 06 - Astravia Past",
+    "desc": "Astravia Past chapter, quests 8592-8601. Skips completed quests, so re-runs resume where they left off.",
+    "autoload": null,
+    "sha256": "925bbe106f3db9c098b9f3922ebbf1768e6770250a7788c7b5471c10e91d1d57"
+  },
+  {
     "path": "classes/archpaladin/archpaladin.ts",
     "kind": "classes",
     "name": "ArchPaladin solo support",
