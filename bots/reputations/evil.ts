@@ -1,17 +1,22 @@
 /// name: Evil rep
-/// desc: Farms Evil reputation to rank 10: quest 364 Youthanize to rank 4, then 367 Bone-afide (member: 366 Dangerous Decor). Requires Evil alignment.
+/// desc: Farms Evil reputation to rank 10: quest 364 Youthanize to rank 4, then 367 Bone-afide (member: 366 Dangerous Decor). Aligns Evil itself first.
 
 // `bot` is a global from lib/bot.ts, evaluated before every entry. Calls
 // are sync and durable: each one parks until the host answers. (No `await`,
 // no `import`: the engine only suspends from a classic script stack.)
 //
-// Ported from Skua `CoreFarms.EvilREP` (rep only — alignment is manual:
-// Minerva cannot change alignment, and quest 364 refuses otherwise).
+// Ported from Skua `CoreFarms.EvilREP` (rep only). Alignment is automatic
+// (`bot.align`, same packet as Skua's `ChangeAlignment`); quest 364
+// refuses otherwise, so a failed switch fails the run up front.
 // `bot.quest` accepts, fills via the handlers, and turns in by itself;
 // the loops run until the faction reads the next threshold. Handler keys
 // are ItemIDs: old definitions can report empty requirement names, and
 // IDs win on collision anyway.
 const RANK = 10;
+
+if (!bot.align("evil")) {
+  throw new Error("alignment switch refused (align Evil manually first)");
+}
 
 // Fresh accounts have no Evil entry yet: run one cycle first — a real
 // turn-in registers the faction. Still missing after that means the

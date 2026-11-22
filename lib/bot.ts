@@ -275,6 +275,13 @@ const bot = {
   setQuestValue(slot: number, value: number): unknown {
     return park({ op: "set_quest_value", slot, value });
   },
+  // `align(side)`: switch alignment — `"good"`, `"evil"` or `"chaos"`
+  // (Skua's `ChangeAlignment`, same `updateQuest` packet, slot 41).
+  // Fire-and-forget past the paced send: no readable echo exists, so a
+  // gated quest's accept is the real check. Resumes bare `true`.
+  align(side: string): unknown {
+    return park({ op: "align", side });
+  },
   // `drops()`: read-only pending drop list — `[{id, name, qty}]`, empty when
   // nothing is pending. The loader builds the session-only list itself on
   // the first entered frame (the toggle replicated without persisting it —

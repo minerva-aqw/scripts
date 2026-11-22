@@ -5,7 +5,7 @@
     "name": "ArchFiend class",
     "desc": "Gets the ArchFiend class (no rank-up): Evil rep, Nation materials, Abyssal Contract quest, purchase.",
     "autoload": null,
-    "sha256": "03a0caf6ffc8ba90a91c73cf3ef4d8638db04ff8f5500456fca45e7313cb4d29"
+    "sha256": "2fc319a67324b24c10a78f74409e5f4bcc91ea0219e9ed995a462696cde4b9ac"
   },
   {
     "path": "bots/farms/swag-token-a.ts",
@@ -27,9 +27,9 @@
     "path": "bots/reputations/evil.ts",
     "kind": "bots",
     "name": "Evil rep",
-    "desc": "Farms Evil reputation to rank 10: quest 364 Youthanize to rank 4, then 367 Bone-afide (member: 366 Dangerous Decor). Requires Evil alignment.",
+    "desc": "Farms Evil reputation to rank 10: quest 364 Youthanize to rank 4, then 367 Bone-afide (member: 366 Dangerous Decor). Aligns Evil itself first.",
     "autoload": null,
-    "sha256": "26a5b06b0a51d4990c6ad3c58190bfe46b724308157fd99fdb1c20d1423621b3"
+    "sha256": "ba740560fbf94d30a39919d2800a97d08025f1c2f52b3c473c037b8c49531a54"
   },
   {
     "path": "bots/reputations/lycan.ts",
@@ -229,6 +229,6 @@
     "name": null,
     "desc": null,
     "autoload": null,
-    "sha256": "5fd220113b45c70e8b6d6d5395a282e459142644ce8302451786a4abe0530ac5"
+    "sha256": "720b6f38cf219356a6f4c2abd053b1d8f3aff32729e08a82a881973d71c82a40"
   }
 ]

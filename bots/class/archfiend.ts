@@ -50,7 +50,8 @@
 //   for the Abyssal Contract, then shop 695 tercessuinotlim sells the
 //   ArchFiend (item 18894).
 //
-// PREREQS (checked or loud): level 50, Evil alignment, Dark Makai
+// PREREQS (checked or loud): level 50, Evil rank 10 via
+// bots/reputations/evil.ts (it aligns itself), Dark Makai
 // access, a combat class seated (Minerva cannot swap classes), and the
 // usual patience — this is Nulgath, it grinds.
 
