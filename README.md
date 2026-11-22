@@ -33,6 +33,37 @@ Every file under `bots/` and `classes/` starts with `///` metadata lines:
 `name` is required. `desc` is optional. No `version`, no `kind` — the content
 hash in `index.json` is the version, the folder is the kind.
 
+## Quests
+
+Default is the declarative form — accept, then the first unmet
+requirement's handler until every requirement reads held, then turn in:
+
+```ts
+bot.quest(8248, {
+  "63016": () => bot.hunt("*", "astraviacastle", 6, "r3", "Left"),
+  "63015": () => bot.gather(8891, "astraviacastle", 6),
+});
+```
+
+Handler keys are requirement `ItemID`s (stable) or turn-in `sName`s
+(case-insensitive). `bot.quest(id, handlers, { choice, qty })` passes the
+turn-in options through; `{ turnIn: false }` fills without turning in.
+Completed quests return `true` without touching anything, so re-runs are
+safe. Missing or stalled requirements error with have/want counts.
+
+Manual sequence for blocks that need full control — ordering past
+turn-in order, interleaved bank/class/cutscene steps, per-turn-in
+repeatable logic:
+
+```ts
+if (!bot.quest(8249).completed()) {
+  bot.quest(8249).accept();
+  bot.gather(8892, "astraviacastle", 6);
+  bot.hunt("Creature 20", "astraviacastle", 4);
+  bot.quest(8249).turnIn();
+}
+```
+
 ## index.json
 
 Generated, never hand-edited:
