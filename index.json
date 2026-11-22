@@ -24,6 +24,14 @@
     "sha256": "0f6aed00098410e204437d73052143b58378f47eca1253cbeddc7f0ef313bb66"
   },
   {
+    "path": "bots/reputations/vampire.ts",
+    "kind": "bots",
+    "name": "Vampire rep",
+    "desc": "Farms Vampire reputation to rank 10 via quest 522 Twisted Paw in /safiria. Requires the Wolfwing storyline done and quest 522 unlocked.",
+    "autoload": null,
+    "sha256": "bc997cfdee56dbe40a53f770ac3a99d5255c964329c36d9cff4121179ae0ad8d"
+  },
+  {
     "path": "bots/smoke-eridani.ts",
     "kind": "bots",
     "name": "Eridani smoke test",
