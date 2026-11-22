@@ -4,8 +4,7 @@
 
 // ArchPaladin (solo/support full hybrid; 0 AC and AC share the kit). Refs,
 // costs, and cooldowns from aqwwiki.wikidot.com/archpaladin-0-ac,
-// combo from solarisaqw.lol (unconfirmed live — aura names are the wiki's;
-// confirm against the aura tracker if a window ever looks off):
+// combo from solarisaqw.lol:
 // aa Auto Attack (0/2s), a1 Commandment (10/5s), a2 Hymn of Light (40/10s),
 // a3 Righteous Seal (20/25s), a4 Sacred Magic: Eden (40/25s).
 // - Commandment (a1): 150% weapon to 3 targets (375% vs undead). Stacks
@@ -20,46 +19,56 @@
 // - Passives: Restitution (-20% incoming), Blessed by Light (+100% END,
 //   +10% hit), Righteous Judgement (+20% outgoing, +15% haste).
 //
-// Solaris combo: spam Hymn and Seal, Eden as the seal runs out, every
-// buff and debuff up at all times. Getting one: the /darkthronehub chain
-// (rank 10 Good, rank 8 SpellCrafting, 13 Lords of Chaos; members also
-// rank 10 Healer and Warrior). Enhancements: Luck class; Valiance, Praxis,
-// Awe Blast, or Arcana's Concerto weapon; Forge helm; Lament, Vainglory,
-// or Penitence cape. Potions: Fate Tonic, Battle Elixir, Felicitous
-// Philtre.
+// Getting one: the /darkthronehub chain (rank 10 Good, rank 8
+// SpellCrafting, 13 Lords of Chaos; members also rank 10 Healer and
+// Warrior). Enhancements: Luck class; Valiance, Praxis, Awe Blast, or
+// Arcana's Concerto weapon; Forge helm; Lament, Vainglory, or Penitence
+// cape. Potions: Fate Tonic, Battle Elixir, Felicitous Philtre.
 //
-// Contract: the engine calls `rotation(me, target)` every tick. It returns
-// skill refs in preference order; the engine fires the first one that is
-// ready (cooldown + mana, enforced from the live table) and falls back to
-// auto attack when none is. So this function ranks by aura state only.
-function rotation(me, target) {
-  const skills = [];
-  // Heal first: 380% party heal that always crits, plus END/defense.
-  const lowHp = me.maxHp > 0 && me.hp < me.maxHp * 0.6;
-  if (lowHp) {
-    skills.push("a2");
+// Contract: the engine calls `policy(s)` every tick with the live snapshot
+// and fires the one skill it names (or holds on null). Readiness and mana
+// are the snapshot's own answers (`s.usable`), so this function decides by
+// aura state only.
+function policy(s) {
+  const me = s.self;
+  const target = s.target;
+
+  if (!me || !me.alive) return null;
+
+  // Hymn of Light: 40 mana, 10 s, 7 allies. Heals 380% hybrid, always crits,
+  // and grants +20% END and Defense for 15 s. A heal first: at full health
+  // the buff is not worth the cast or the mana.
+  if (me.hpPct < 55 && s.usable("Hymn of Light")) return "Hymn of Light";
+
+  if (!target) return null;
+
+  const seal = target.aura("Righteous Seal");
+
+  // Righteous Seal: 20 mana, 25 s, 135% hybrid. The target deals 90% less
+  // damage for 7 s, and undead are stunned for 3 s. The opener against
+  // anything that hits back, and the setup for Eden.
+  if (!seal && s.usable("Righteous Seal")) return "Righteous Seal";
+
+  // Sacred Magic: Eden: 40 mana, 25 s, 550% spell damage to 3 targets,
+  // doubled to 1100% while the target is sealed. It consumes the seal and
+  // leaves Broken Seal, -15% outgoing damage for 25 s. Hold it until the seal
+  // is about to fade: the seal keeps almost all of its 7 s of mitigation
+  // instead of one tick, and the matching 25 s cooldowns stay lined up for
+  // the next cycle.
+  if (seal && seal.remainingMs < 3000 && s.usable("Sacred Magic: Eden")) {
+    return "Sacred Magic: Eden";
   }
-  // Seal-to-Eden combo: Eden doubles inside the seal and leaves Broken
-  // Seal behind. Let the seal soak, then break it as it runs out.
-  if (target.aura("Righteous Seal")) {
-    if (target.auraBelow("Righteous Seal", 2500)) {
-      skills.push("a4");
-    }
-  } else {
-    skills.push("a3");
-  }
-  // Hymn upkeep: +20% END and defense for 15s. Never let it lapse.
-  if (!me.aura("Hymn of Light")) {
-    skills.push("a2");
-  }
-  // Commandment upkeep: the shred stacks fall off after 10s.
-  if (target.auraBelow("Divine", 3000)) {
-    skills.push("a1");
-  }
-  // Fallbacks keep the Solaris spam order on slow ticks.
-  skills.push("a1");
-  skills.push("a2");
-  skills.push("a3");
-  skills.push("a4");
-  return skills;
+
+  // Commandment: 10 mana, 5 s, 150% weapon damage to 3 targets, 375%
+  // against undead. Applies Divine, Commandment and Eminent, -10% Dodge and
+  // Defense and -5% Hit, outgoing damage and Crit Chance per stack, six
+  // stacks for 10 s. This is the spam skill: even at six stacks a cast beats
+  // the auto attack and refreshes the stacks, so it is used on every
+  // cooldown, not just to refresh.
+  if (s.usable("Commandment")) return "Commandment";
+
+  // Restitution (-20% incoming damage), Blessed by Light (+100% END, +10%
+  // Hit) and Righteous Judgement (+20% outgoing damage, +15% Haste) are
+  // passive.
+  return s.usable("Auto Attack") ? "Auto Attack" : null;
 }

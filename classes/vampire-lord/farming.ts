@@ -16,32 +16,40 @@
 // Passives, always on: Sanguine Lord (+15% damage), Ageless (+30% INT,
 // -20% crit), Pure Blood (+15% damage).
 //
-// Contract: the engine calls `rotation(me, target)` every tick. It returns skill refs in preference order; the
-// engine fires the first one that is ready (cooldown + mana, enforced from
-// the live table) and falls back to auto attack (aa Slash) when none is.
-// So this function ranks by aura state only — costs and cooldowns are the
-// engine's job.
-//
-// Helpers used, provided by the loader: `me.aura(name)` /
-// `target.aura(name)` (the aura or null) and `target.auraBelow(name, ms)`
-// (true when missing or expiring within ms).
-function rotation(me, target) {
-  const skills = [];
+// Contract: the engine calls `policy(s)` every tick with the live snapshot
+// and fires the one skill it names (or holds on null). Readiness and mana
+// are the snapshot's own answers (`s.usable`), so this function decides by
+// aura state only.
+function policy(s) {
+  const me = s.self;
+  const target = s.target;
+
+  if (!me || !me.alive) return null;
+  if (!target) return null;
+
+  const bat = me.aura("Aspect of The Bat");
+
   // Deafened first: everything after hits 30% harder. Recast under 2s left
   // (a1's 10s cooldown already spaces it past the 8s duration). Never lands
   // while Bat holds, so skip it then.
-  if (!me.aura("Aspect of The Bat") && target.auraBelow("Deafened", 2000)) {
-    skills.push("a1");
+  if (!bat) {
+    const deafened = target.aura("Deafened");
+    if ((!deafened || deafened.remainingMs < 2000) && s.usable("Sonar Scream")) {
+      return "Sonar Scream";
+    }
   }
+
   // Bat window: haste/crit for the whole bar. Debuffs pause while it holds.
-  skills.push("a4");
+  if (s.usable("Aspect of The Bat")) return "Aspect of The Bat";
+
   // Gouge: the hardest hit (120%) plus its dot.
-  skills.push("a3");
+  if (s.usable("Ghoul Gouge")) return "Ghoul Gouge";
+
   // Devour: damage plus a heal off the damage dealt.
-  skills.push("a2");
+  if (s.usable("Devour Blood")) return "Devour Blood";
+
   // While Bat holds, a1 cannot debuff — it buffs hit instead. Keep it up.
-  if (me.aura("Aspect of The Bat")) {
-    skills.push("a1");
-  }
-  return skills;
+  if (bat && s.usable("Sonar Scream")) return "Sonar Scream";
+
+  return s.usable("Auto Attack") ? "Auto Attack" : null;
 }

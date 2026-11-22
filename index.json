@@ -93,7 +93,7 @@
     "name": "ArchPaladin solo support",
     "desc": "Seal-to-Eden combo rotation: Hymn upkeep and heals, Commandment shred stacks, Eden inside the fading seal.",
     "autoload": "ArchPaladin",
-    "sha256": "134da6baa9956cf70103a53e908ded68bc8c479a47d2123a840ce80ca320c708"
+    "sha256": "5869c91ec4d8e30b26b7ea901da87d031a26ebb8a2b77c526f3cecaf603c23bf"
   },
   {
     "path": "classes/healer/healer.ts",
@@ -101,7 +101,7 @@
     "name": "Healer starter",
     "desc": "Solo rotation: heal under pressure, Energy Flow upkeep for mana and the damage cut, Holy nuke, Heartbeat filler.",
     "autoload": "Healer",
-    "sha256": "eae1c73765256f10d82ff98947bd9353d9e44d2d4f6c5413973a2a0b2dd18bda"
+    "sha256": "687fcc0fcd0ec56b9d1c3a1d5b3d0a7fe1e7840733ffd7c9d45419b60467e1bf"
   },
   {
     "path": "classes/kings-echo/damage.ts",
@@ -109,7 +109,7 @@
     "name": "King's Echo damage",
     "desc": "Full-damage loop: Censure upkeep, Bolt to 8 Residual stacks, CORVAK on a full battery, repeat.",
     "autoload": "King's Echo",
-    "sha256": "ec6b45fed091459d49a76f9993dd294beb0b7fe7120e27538fed3e3afc49d5ab"
+    "sha256": "bf5dc5d6d4fc67544e2151af8abc648e817f0f437677c91429b64455f87a39ea"
   },
   {
     "path": "classes/kings-echo/defense.ts",
@@ -117,7 +117,15 @@
     "name": "King's Echo defense",
     "desc": "Defensive loop: shield when exposed, Censure and Overthrown upkeep, Bolt to 8 stacks, CORVAK to reset the shield.",
     "autoload": null,
-    "sha256": "13de80248fe5cfec357a6af2b48e02d10d7809f1edf1e45c40f262a1ae4925f8"
+    "sha256": "a11912062ea862296387f7399da65be06a674c06f00e62626e19862a7b0b6e6e"
+  },
+  {
+    "path": "classes/legion-revenant/legion-revenant.ts",
+    "kind": "classes",
+    "name": "Legion Revenant DPS",
+    "desc": "Buff-first caster rotation: Depravity upkeep, Purgatory/Shade on cooldown to seed Infinita Nox, Anathema nuke, Malevolent Burst battery.",
+    "autoload": "Legion Revenant",
+    "sha256": "8530df7682c48c1640c9f839eab0a4fbea64d8b5098dc410edbf29011cbf7aa3"
   },
   {
     "path": "classes/mage/mage.ts",
@@ -125,7 +133,7 @@
     "name": "Mage starter",
     "desc": "Elemental combo rotation: Ice Shard sets Frozen Blood, Fireball spends it doubled, Explosion detonates Scorched, shield when hurt.",
     "autoload": "Mage",
-    "sha256": "2bfc1a0b16c7fd8b8f96931036436668787ebcf85e9a4aa15c98e5168bbe1993"
+    "sha256": "832ed0931beb1971ef9a0dccabfe29af579557ccb8f25da5121161d72dd4e12b"
   },
   {
     "path": "classes/rogue/rogue.ts",
@@ -133,7 +141,7 @@
     "name": "Rogue starter",
     "desc": "Poison rotation: execute as Viper's Kiss runs out, poison upkeep, Footwork while down, Stiletto for the execute buff.",
     "autoload": "Rogue",
-    "sha256": "f768f720aed5e77386e78a63ddc0c55a6912faecfac9071cdd85ee9a33a0aeea"
+    "sha256": "c165f9dc195f86b417eb99cb19588065616c0aa63ada1f23109762c3a8745085"
   },
   {
     "path": "classes/stonecrusher/stonecrusher.ts",
@@ -141,7 +149,7 @@
     "name": "StoneCrusher support DPS",
     "desc": "Earth support rotation: shield when exposed, nukes inside Magnitude windows, Stalagmite upkeep, Echoing Earth on cooldown.",
     "autoload": "StoneCrusher",
-    "sha256": "9e5aefb149e838795d718011a78ee532f172f6dd7ed01417aed703473fa89309"
+    "sha256": "3ed053d139884205d6c805e4efe9906db4858f4e2624a5e3c3f162cbd1fd3965"
   },
   {
     "path": "classes/swordmaster/swordmaster.ts",
@@ -149,7 +157,7 @@
     "name": "SwordMaster dodge DPS",
     "desc": "Dodge melee rotation: Evasion wall upkeep, Nukiuchi nuke, Sever cripple, Bladefury crit buff.",
     "autoload": "SwordMaster",
-    "sha256": "90e88c549089d22508fae1f01b111fc987fb34902ec8dee0b9e7421cc4a439c5"
+    "sha256": "792d170269463fe8655b5a02c7d52cea4b1bbc1c8121475bc2665d64e2202e6a"
   },
   {
     "path": "classes/vampire-lord/farming.ts",
@@ -157,7 +165,7 @@
     "name": "Vampire Lord farming",
     "desc": "AoE farming rotation: Deafened uptime, Gouge/Devour on cooldown, Bat burst window.",
     "autoload": null,
-    "sha256": "002f03f224aef29bbcaab065901bee930952bacb1a6d1a2da9ae97aeffe655b0"
+    "sha256": "41a3de54740d94005a661c06889ea50f0228fdb37e3988d1023404fdf1c70f83"
   },
   {
     "path": "classes/warrior/warrior.ts",
@@ -165,7 +173,7 @@
     "name": "Warrior starter",
     "desc": "Single-target rotation: stun nuke on cooldown, Armor Shred upkeep, Prepared crits under guard, guard when hurt.",
     "autoload": "Warrior",
-    "sha256": "6d4f55a8757ab78cfb4d3dfb3ecc5450a8d0e6cc53afbb9415d90c87440452b2"
+    "sha256": "1b8aeba38189c8a4aa664971eb9c319aca7dd8b03ba089142f49f37d0a71058b"
   },
   {
     "path": "classes/yami-no-ronin/dodge-dps.ts",
@@ -173,7 +181,7 @@
     "name": "Yami no Ronin dodge DPS",
     "desc": "Guide DPS rotation: Tachi/Kettou spam, Maku upkeep for Spinning Dragon, Jigen on the fading Yami. The nuke consumes Flash/Revealed \u2014 the dodge reset.",
     "autoload": "Yami no Ronin",
-    "sha256": "cd60242c411537556efb2dc0942f445da59897fb55af23132e4fb9affbeee676"
+    "sha256": "2ed5dec6de73eb2306da0fe3393e713e6589a6030709c97a4ed7c53d8a88612e"
   },
   {
     "path": "lib/bot.ts",

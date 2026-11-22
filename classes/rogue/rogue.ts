@@ -3,8 +3,7 @@
 /// autoload: Rogue
 
 // Rogue (starter dodge melee). Refs, costs, and cooldowns from
-// aqwwiki.wikidot.com/rogue (unconfirmed live — aura names are the wiki's;
-// confirm against the aura tracker if a window ever looks off):
+// aqwwiki.wikidot.com/rogue:
 // aa Auto Attack (0/1.5s), a1 Viper's Kiss (10/3s), a2 Footwork (20/16s),
 // a3 Stiletto (20/20s), a4 Opportunity's Strike (10/4s).
 // - Viper's Kiss (a1): weapon hit plus poison dealing damage over 7s.
@@ -16,30 +15,42 @@
 //   expiring.
 // - Passives: Elusive (+15% dodge), Incisive (+10% hit, +15% crit).
 //
-// Contract: the engine calls `rotation(me, target)` every tick. It returns
-// skill refs in preference order; the engine fires the first one that is
-// ready (cooldown + mana, enforced from the live table) and falls back to
-// auto attack when none is. So this function ranks by aura state only.
-function rotation(me, target) {
-  const skills = [];
+// Contract: the engine calls `policy(s)` every tick with the live snapshot
+// and fires the one skill it names (or holds on null). Readiness and mana
+// are the snapshot's own answers (`s.usable`), so this function decides by
+// aura state only.
+function policy(s) {
+  const me = s.self;
+  const target = s.target;
+
+  if (!me || !me.alive) return null;
+
+  const footwork = me.aura("Footwork");
+  if ((!footwork || footwork.remainingMs < 1200) && s.usable("Footwork")) {
+    return "Footwork";
+  }
+
+  if (!target) return null;
+
   const poison = target.aura("Viper's Kiss");
-  // Execute first: Opportunity's Strike scales as the poison runs out.
-  if (poison && target.auraBelow("Viper's Kiss", 1500)) {
-    skills.push("a4");
+  const concealed = me.aura("Concealed Blade");
+
+  // Opportunity's Strike gains damage as Viper's Kiss approaches expiration.
+  if (poison && poison.remainingMs < 1600 && s.usable("Opportunity's Strike")) {
+    return "Opportunity's Strike";
   }
-  // Poison upkeep: weapon hit plus the 7s DoT.
-  if (target.auraBelow("Viper's Kiss", 1500)) {
-    skills.push("a1");
-  }
-  // Footwork whenever down: haste and dodge feed mana, HP, and crits.
-  if (!me.aura("Footwork")) {
-    skills.push("a2");
-  }
-  // Stiletto: moderate hit plus the sub-40% execute buff for everything
-  // after it.
-  skills.push("a3");
-  // Fallbacks keep the poison and the execute cycling on slow ticks.
-  skills.push("a1");
-  skills.push("a4");
-  return skills;
+
+  if (!poison && s.usable("Viper's Kiss")) return "Viper's Kiss";
+
+  // Stiletto grants Concealed Blade for 12 seconds, increasing damage
+  // against targets below 40% health. Keep it up when the target is in
+  // execute range.
+  if (target.hpPct < 40 && (!concealed || concealed.remainingMs < 1500)
+      && s.usable("Stiletto")) return "Stiletto";
+
+  if (s.usable("Viper's Kiss")) return "Viper's Kiss";
+  if (s.usable("Stiletto")) return "Stiletto";
+  if (s.usable("Opportunity's Strike")) return "Opportunity's Strike";
+
+  return s.usable("Auto Attack") ? "Auto Attack" : null;
 }

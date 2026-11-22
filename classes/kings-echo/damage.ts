@@ -3,9 +3,7 @@
 /// autoload: King's Echo
 
 // King's Echo (power caster DPS). Refs, costs, and cooldowns from
-// aqwwiki.wikidot.com/king-s-echo, loop from solarisaqw.lol
-// (unconfirmed live — aura names are the wiki's; confirm against the aura
-// tracker if a window ever looks off):
+// aqwwiki.wikidot.com/king-s-echo, loop from solarisaqw.lol:
 // aa Dragon Sword (0/2.5s), a1 Liberation Mace (0/3s), a2 Bolt of Authority
 // (25/3s), a3 King's Shield (50/5s), a4 CORVAK! (0/16s).
 // - Dragon Sword (aa): 55%-715% magic-as-physical, scaling with Spell
@@ -21,28 +19,58 @@
 //   (+25% haste/crit), My Four Dearest (-20% mana costs, +10% hit/magic).
 // - Solaris full-damage loop: 2 → 3 (x8) → 5 → repeat.
 //
-// Contract: the engine calls `rotation(me, target)` every tick. It returns
-// skill refs in preference order; the engine fires the first one that is
-// ready (cooldown + mana, enforced from the live table) and falls back to
-// auto attack when none is. So this function ranks by aura state only.
-function rotation(me, target) {
-  const skills = [];
-  const res = target.aura("Residual Energy");
-  const stacks = res && res.stacks ? res.stacks : 0;
-  // CORVAK on a full battery: unavoidable crit off missing mana, 200 MP
-  // back, and the stacks infuse Dragon Sword for 20s.
-  if (stacks >= 8) {
-    skills.push("a4");
+// Contract: the engine calls `policy(s)` every tick with the live snapshot
+// and fires the one skill it names (or holds on null). Readiness and mana
+// are the snapshot's own answers (`s.usable`), so this function decides by
+// aura state only.
+//
+// Note: Residual Energy stacks on the caster (the battery), not the target.
+function policy(s) {
+  const me = s.self;
+  const target = s.target;
+
+  if (!me || !me.alive) return null;
+
+  const energy = me.aura("Residual Energy");
+  const stacks = energy ? energy.stacks : 0;
+
+  // King's Shield: 50 mana, 5 s. Two seconds of invulnerability and Focus,
+  // then Royal Resolve: 50% Damage Resistance and a HoT for 6 s. The
+  // invulnerability cannot repeat until CORVAK! is used, so hold it for
+  // when you are hurt, not on a full bar. This is the emergency button.
+  if (me.hpPct < 55 && s.usable("King's Shield")) return "King's Shield";
+
+  // CORVAK!: consumes missing mana for 300-1260% magic damage, refills mana
+  // completely, and infuses Residual Energy into Dragon Sword for 20 s.
+  // Cast it in the high-stack, low-mana window, and whenever mana is too
+  // low to keep casting. It re-enables the next Shield's invulnerability.
+  if (s.usable("CORVAK!")
+      && ((stacks >= 6 && me.mp < 40) || me.mp < 20 || stacks >= 8)) {
+    return "CORVAK!";
   }
-  // Censure upkeep: -20% enemy DR, crit, and dodge for 10s.
-  if (target.auraBelow("Censure", 2000)) {
-    skills.push("a1");
+
+  if (!target) return null;
+
+  const censure = target.aura("Censure");
+
+  // Liberation Mace: 0 mana, 3 s, 250% magical damage. Applies Censure,
+  // -20% Damage Resistance, Crit Chance and Dodge for 10 s. While Royal
+  // Resolve is active it applies Overthrown instead, -8% outgoing damage
+  // per stack up to 4. Keep Censure up.
+  if (s.usable("Liberation Mace") && (!censure || censure.remainingMs < 3000)) {
+    return "Liberation Mace";
   }
-  // Bolt: the stack builder. 3s cooldown, always worth firing.
-  skills.push("a2");
-  // Mace fallback keeps Censure from lapsing on slow ticks.
-  skills.push("a1");
-  // CORVAK fallback so the loop never stalls waiting on the stack read.
-  skills.push("a4");
-  return skills;
+
+  // Bolt of Authority: 25 mana, 3 s, 110% magic damage. Applies Residual
+  // Energy, stacking to 8 for 10 s. Each stack makes Dragon Sword hit harder,
+  // and CORVAK! spends them all at once. Stack it to 8 before spending,
+  // unless mana is already low.
+  if (s.usable("Bolt of Authority") && stacks < 8) return "Bolt of Authority";
+
+  // Filler: spend stacks first, then damage, then Dragon Sword.
+  if (s.usable("CORVAK!")) return "CORVAK!";
+  if (s.usable("Liberation Mace")) return "Liberation Mace";
+  if (s.usable("Bolt of Authority")) return "Bolt of Authority";
+
+  return s.usable("Auto Attack") ? "Auto Attack" : null;
 }

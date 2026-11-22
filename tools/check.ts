@@ -7,7 +7,7 @@
 //   from a plain synchronous call stack)
 // - `bot.*` calls in bots/: known method, right arity, from a table parsed
 //   out of lib/bot.ts itself so the table cannot drift from the stdlib
-// - every classes/ file defines `rotation(me, target)`
+// - every classes/ file defines `function policy(s)`
 // - index.json matches the tree (same bytes gen-index would write)
 
 import * as fs from "node:fs";
@@ -322,8 +322,8 @@ function main(): void {
     if (entry.kind === "bots") {
       checkBotsCalls(entry, stripped, table, failures);
     }
-    if (entry.kind === "classes" && !/function\s+rotation\s*\(/.test(stripped)) {
-      failures.push({ path: entry.path, line: null, message: "classes/ file defines no rotation(me, target)" });
+    if (entry.kind === "classes" && !/function\s+policy\s*\(\s*s\s*\)/.test(stripped)) {
+      failures.push({ path: entry.path, line: null, message: "classes/ file defines no policy(s)" });
     }
   }
 

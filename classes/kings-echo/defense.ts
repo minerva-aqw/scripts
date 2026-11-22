@@ -5,9 +5,7 @@
    in LIBRARY when the fight needs the wall instead of the loop. */
 
 // King's Echo (power caster wall). Refs, costs, and cooldowns from
-// aqwwiki.wikidot.com/king-s-echo, loops from solarisaqw.lol
-// (unconfirmed live — aura names are the wiki's; confirm against the aura
-// tracker if a window ever looks off):
+// aqwwiki.wikidot.com/king-s-echo, loops from solarisaqw.lol:
 // aa Dragon Sword (0/2.5s), a1 Liberation Mace (0/3s), a2 Bolt of Authority
 // (25/3s), a3 King's Shield (50/5s), a4 CORVAK! (0/16s).
 // - King's Shield (a3): 2s damage-null bubble plus Focus, and Royal
@@ -22,32 +20,49 @@
 //   3 (x2) → 5 → repeat; this file keeps the simpler loop and lets the
 //   shield branch re-fire whenever Resolve is down.
 //
-// Contract: the engine calls `rotation(me, target)` every tick. It returns
-// skill refs in preference order; the engine fires the first one that is
-// ready (cooldown + mana, enforced from the live table) and falls back to
-// auto attack when none is. So this function ranks by aura state only.
-function rotation(me, target) {
-  const skills = [];
-  const lowHp = me.maxHp > 0 && me.hp < me.maxHp * 0.6;
-  // Shield first: the bubble plus Resolve whenever exposed or bleeding.
-  if (lowHp || !me.aura("Royal Resolve")) {
-    skills.push("a3");
+// Contract: the engine calls `policy(s)` every tick with the live snapshot
+// and fires the one skill it names (or holds on null). Readiness and mana
+// are the snapshot's own answers (`s.usable`), so this function decides by
+// aura state only.
+//
+// Note: Residual Energy stacks on the caster (the battery), not the target.
+function policy(s) {
+  const me = s.self;
+  const target = s.target;
+
+  if (!me || !me.alive) return null;
+
+  const energy = me.aura("Residual Energy");
+  const stacks = energy ? energy.stacks : 0;
+  const resolve = me.aura("Royal Resolve");
+
+  // King's Shield: the bubble plus Resolve whenever exposed or bleeding.
+  // One shot per CORVAK — the game ignores repeats until CORVAK resets the
+  // lock, so the ready gate paces it.
+  if ((me.hpPct < 60 || !resolve) && s.usable("King's Shield")) {
+    return "King's Shield";
   }
-  // Censure upkeep, plus Overthrown while Resolve holds.
-  if (target.auraBelow("Censure", 2000)) {
-    skills.push("a1");
+
+  if (!target) return null;
+
+  const censure = target.aura("Censure");
+
+  // Liberation Mace: Censure upkeep, plus Overthrown while Resolve holds.
+  if (s.usable("Liberation Mace") && (!censure || censure.remainingMs < 2000)) {
+    return "Liberation Mace";
   }
+
   // CORVAK on a full battery: re-arms the shield lock, refills 200 MP.
-  const res = target.aura("Residual Energy");
-  const stacks = res && res.stacks ? res.stacks : 0;
-  if (stacks >= 8) {
-    skills.push("a4");
-  }
+  if (stacks >= 8 && s.usable("CORVAK!")) return "CORVAK!";
+
   // Bolt: the stack builder.
-  skills.push("a2");
+  if (s.usable("Bolt of Authority") && stacks < 8) return "Bolt of Authority";
+
   // Mace fallback keeps both debuffs from lapsing on slow ticks.
-  skills.push("a1");
+  if (s.usable("Liberation Mace")) return "Liberation Mace";
+
   // CORVAK fallback so the reset never waits on the stack read.
-  skills.push("a4");
-  return skills;
+  if (s.usable("CORVAK!")) return "CORVAK!";
+
+  return s.usable("Auto Attack") ? "Auto Attack" : null;
 }

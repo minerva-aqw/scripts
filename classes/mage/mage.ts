@@ -3,8 +3,7 @@
 /// autoload: Mage
 
 // Mage (starter offensive caster). Refs, costs, and cooldowns from
-// aqwwiki.wikidot.com/mage (unconfirmed live — aura names are the wiki's;
-// confirm against the aura tracker if a window ever looks off):
+// aqwwiki.wikidot.com/mage:
 // aa Auto Attack (0/2s), a1 Fireball (20/6s), a2 Ice Shard (15/6s),
 // a3 Explosion (10/3s), a4 Arcane Shield (0/20s).
 // - Fireball (a1): damage plus Scorched (DoT). Consumes Frozen Blood for
@@ -18,33 +17,38 @@
 // - Passives: Hot Headed (+10% magic out, +10% hit), Chilled Out (-10%
 //   damage taken).
 //
-// Contract: the engine calls `rotation(me, target)` every tick. It returns
-// skill refs in preference order; the engine fires the first one that is
-// ready (cooldown + mana, enforced from the live table) and falls back to
-// auto attack when none is. So this function ranks by aura state only.
-function rotation(me, target) {
-  const skills = [];
-  // Spend the combo first: Frozen Blood plus Fireball is double damage.
-  if (target.aura("Frozen Blood")) {
-    skills.push("a1");
+// Contract: the engine calls `policy(s)` every tick with the live snapshot
+// and fires the one skill it names (or holds on null). Readiness and mana
+// are the snapshot's own answers (`s.usable`), so this function decides by
+// aura state only.
+function policy(s) {
+  const me = s.self;
+  const target = s.target;
+
+  if (!me || !me.alive) return null;
+
+  const shield = me.aura("Arcane Shield");
+  if (me.hpPct < 70 && (!shield || shield.remainingMs < 1500)
+      && s.usable("Arcane Shield")) return "Arcane Shield";
+
+  if (!target) return null;
+
+  const scorched = target.aura("Scorched");
+  const frozen = target.aura("Frozen Blood");
+
+  // Explosion detonates and consumes Scorched, so spend it near the end of
+  // its duration rather than applying Fireball and immediately consuming
+  // the DoT.
+  if (scorched && scorched.remainingMs < 1800 && s.usable("Explosion")) {
+    return "Explosion";
   }
-  // Scorched detonates through Explosion — also the multi-target button.
-  if (target.aura("Scorched")) {
-    skills.push("a3");
-  }
-  // Set Frozen Blood only while Scorched is down: the shard cannot land it
-  // over Scorched, so firing blind here just re-applies the block.
-  if (!target.aura("Scorched")) {
-    skills.push("a2");
-  }
-  // Shield when hurt: 10s of damage-to-mana, free and 20s apart.
-  const lowHp = me.maxHp > 0 && me.hp < me.maxHp * 0.5;
-  if (lowHp) {
-    skills.push("a4");
-  }
-  // Fallbacks keep the elements cycling on slow ticks.
-  skills.push("a1");
-  skills.push("a2");
-  skills.push("a3");
-  return skills;
+
+  if (!scorched && !frozen && s.usable("Ice Shard")) return "Ice Shard";
+  if (!scorched && s.usable("Fireball")) return "Fireball";
+
+  if (s.usable("Explosion")) return "Explosion";
+  if (s.usable("Fireball")) return "Fireball";
+  if (s.usable("Ice Shard")) return "Ice Shard";
+
+  return s.usable("Auto Attack") ? "Auto Attack" : null;
 }

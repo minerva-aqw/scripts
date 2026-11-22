@@ -3,8 +3,7 @@
 /// autoload: Warrior
 
 // Warrior (starter tank melee). Refs, costs, and cooldowns from
-// aqwwiki.wikidot.com/warrior-class (unconfirmed live — aura names are the
-// wiki's; confirm against the aura tracker if a window ever looks off):
+// aqwwiki.wikidot.com/warrior-class:
 // aa Auto Attack (0/2s), a1 Decisive Strike (5/2s), a2 Imbalancing Strike
 // (20/10s), a3 Prepared Strike (10/12s), a4 On Guard (15/10s).
 // - Decisive Strike (a1): 130% weapon damage. Applies Armor Shred: -10%
@@ -15,31 +14,41 @@
 // - On Guard (a4): self buff — +50% damage resistance, 5s.
 // - Passives: Aggression (+10% hit, +10% physical out), Resolute (+10% DR).
 //
-// Contract: the engine calls `rotation(me, target)` every tick. It returns
-// skill refs in preference order; the engine fires the first one that is
-// ready (cooldown + mana, enforced from the live table) and falls back to
-// auto attack when none is. So this function ranks by aura state only.
-function rotation(me, target) {
-  const skills = [];
-  // Nuke: 240% plus a 3s stun. Highest damage in the kit — fire whenever
-  // the engine says ready.
-  skills.push("a2");
-  // Shred upkeep: -10% enemy DR for 5s. Reapply as it fades.
-  if (target.auraBelow("Armor Shred", 2000)) {
-    skills.push("a1");
+// Contract: the engine calls `policy(s)` every tick with the live snapshot
+// and fires the one skill it names (or holds on null). Readiness and mana
+// are the snapshot's own answers (`s.usable`), so this function decides by
+// aura state only.
+function policy(s) {
+  const me = s.self;
+  const target = s.target;
+
+  if (!me || !me.alive) return null;
+
+  const guard = me.aura("On Guard");
+  const prepared = me.aura("Prepared Strike");
+
+  // On Guard grants 50% damage resistance for five seconds. Keep its
+  // defensive window up while engaged, with an early cast when health is
+  // already low.
+  if ((!guard || guard.remainingMs < (me.hpPct < 55 ? 1500 : 500))
+      && s.usable("On Guard")) return "On Guard";
+
+  if (!target) return null;
+
+  const shred = target.aura("Armor Shred");
+  if ((!shred || shred.remainingMs < 1200) && s.usable("Decisive Strike")) {
+    return "Decisive Strike";
   }
-  // Prepared while guarded: the next 2 autos crit unavoidably for double.
-  if (me.aura("On Guard")) {
-    skills.push("a3");
-  }
-  // Guard when hurt: +50% DR for 5s.
-  const lowHp = me.maxHp > 0 && me.hp < me.maxHp * 0.5;
-  if (lowHp) {
-    skills.push("a4");
-  }
-  // Crit-auto setup when nothing bigger is ready.
-  skills.push("a3");
-  // Shred fallback so the debuff never lapses on a slow tick.
-  skills.push("a1");
-  return skills;
+
+  // Prepared Strike empowers the next two auto attacks. Let the buff be
+  // spent before refreshing it; when On Guard is active those attacks deal
+  // double.
+  if (!prepared && s.usable("Prepared Strike")) return "Prepared Strike";
+
+  if (s.usable("Imbalancing Strike")) return "Imbalancing Strike";
+
+  if (prepared && s.usable("Auto Attack")) return "Auto Attack";
+  if (s.usable("Decisive Strike")) return "Decisive Strike";
+
+  return s.usable("Auto Attack") ? "Auto Attack" : null;
 }
