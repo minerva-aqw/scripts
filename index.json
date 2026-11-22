@@ -32,6 +32,14 @@
     "sha256": "274bf9a6c1b1aac9c27e6bc72a3883a90f4f2bcd073d5f5f5949150c43d4413f"
   },
   {
+    "path": "bots/storylines/elegy-of-madness/03-astraviacastle.ts",
+    "kind": "bots",
+    "name": "Elegy of Madness 03 - Astravia Castle",
+    "desc": "Astravia Castle chapter, quests 8247-8256. Skips completed quests, so re-runs resume where they left off.",
+    "autoload": null,
+    "sha256": "bbb73e4c339de7ff808b1549f19ca8bacb13e30a4315d2d3917bb0b68aadf5ab"
+  },
+  {
     "path": "classes/archpaladin/archpaladin.ts",
     "kind": "classes",
     "name": "ArchPaladin solo support",
