@@ -83,9 +83,9 @@
     "path": "classes/swordmaster/swordmaster.ts",
     "kind": "classes",
     "name": "SwordMaster dodge DPS",
-    "desc": "Dodge melee rotation: stun and Spinning Dragon on cooldown, Evasion wall upkeep, Sever cripple, Bladefury crit buff.",
+    "desc": "Dodge melee rotation: Evasion wall upkeep, Nukiuchi nuke, Sever cripple, Bladefury crit buff.",
     "autoload": "SwordMaster",
-    "sha256": "cf839e6f49d8626ff9241a7ee236c7bc2a4fb6715ebc1e8414f248a36428ad23"
+    "sha256": "90e88c549089d22508fae1f01b111fc987fb34902ec8dee0b9e7421cc4a439c5"
   },
   {
     "path": "classes/vampire-lord/farming.ts",

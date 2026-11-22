@@ -1,5 +1,5 @@
 /// name: SwordMaster dodge DPS
-/// desc: Dodge melee rotation: stun and Spinning Dragon on cooldown, Evasion wall upkeep, Sever cripple, Bladefury crit buff.
+/// desc: Dodge melee rotation: Evasion wall upkeep, Nukiuchi nuke, Sever cripple, Bladefury crit buff.
 /// autoload: SwordMaster
 
 // SwordMaster (dodge melee; same kit as BladeMaster and the Merge). Refs,
@@ -21,21 +21,36 @@
 // - Passives: Keen Reflexes (+20% crit damage, +25% dodge), Technique
 //   (Vitals DoT plus forced procs; +20% DEX), Tanden (+20% outgoing).
 //
+// Ported from the Beatrix SwordMaster policy (`modules/bx/classes/`):
+// Evasion is the class's mana and healing engine under the Rogue dodge
+// model, so the wall goes first — refresh the moment it drops or fades
+// inside 3s. Technique applies Vitals (a DoT scaled by skill damage) to
+// the next skill to hit every 5s and forces that skill's chance effects
+// through, so below the wall the order is strongest-first: the biggest
+// ready strike seeds the biggest DoT and keeps its guaranteed proc.
+// Bladefury is free damage plus the crit buff and fills every gap.
+//
 // Contract: the engine calls `rotation(me, target)` every tick. It returns
 // skill refs in preference order; the engine fires the first one that is
 // ready (cooldown + mana, enforced from the live table) and falls back to
 // auto attack when none is. So this function ranks by aura state only.
 function rotation(me, target) {
   const skills = [];
-  // Nukiuchi: stun plus Spinning Dragon. Premium control, 10s apart.
-  skills.push("a4");
-  // Evasion wall: dodge and crit for 25s. Never let it lapse.
-  if (!me.aura("Evasion")) {
+  // Uke Negashi: Evasion wall, dodge and crit for 25s on a 25s cooldown.
+  // Missing reads as lapsed (`auraBelow` returns true), so the wall is
+  // re-raised the moment it drops and refreshed inside 3s. Never lapses.
+  if (me.auraBelow("Evasion", 3000)) {
     skills.push("a2");
   }
-  // Sever: -70% enemy outgoing plus the Precise Cut lottery.
+  // Nukiuchi: the nuke. Stun plus Spinning Dragon both go certain under
+  // Technique, so it leads below the wall and seeds the Vitals DoT with
+  // the largest strike.
+  skills.push("a4");
+  // Sever: -70% enemy outgoing plus the Precise Cut lottery. Keep it
+  // cycling; the mitigation is worth more than the cooldown it leaves.
   skills.push("a3");
-  // Bladefury: free crit buff and AoE. Refresh as it fades.
+  // Bladefury: free AoE, crit buff for the next window. Refresh as it
+  // fades so the buff and the damage never wait on the bigger cooldowns.
   if (!me.aura("Bladefury")) {
     skills.push("a1");
   }
