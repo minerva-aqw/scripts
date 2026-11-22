@@ -63,7 +63,9 @@ const bot = {
   },
   // `hunt(name, map, qty?)`: teleport to `map` when elsewhere, census the
   // live room for the cell holding the most `name` matches, go there, then
-  // kill. `map` is required; `qty` defaults to 1.
+  // kill. `map` is required; `qty` defaults to 1. `"*"` hunts anything in
+  // the richest cell; with a quest in progress the count is a floor — the
+  // hunt tops up until the requirements read held.
   hunt(name: string, map: string, qty?: number): unknown {
     return park({ op: "hunt", name, map, qty: qty ?? 1 });
   },

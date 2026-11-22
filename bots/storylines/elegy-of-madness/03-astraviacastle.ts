@@ -5,15 +5,13 @@ bot.travel("astraviacastle");
 
 if (!bot.quest(8247).completed()) {
   bot.quest(8247).accept();
-  bot.travel("astraviacastle", "r3", "Left");
-  bot.kill("*", 9);
+  bot.hunt("*", "astraviacastle", 9);
   bot.quest(8247).turnIn();
 }
 
 if (!bot.quest(8248).completed()) {
   bot.quest(8248).accept();
-  bot.travel("astraviacastle", "r3", "Left");
-  bot.kill("*", 6);
+  bot.hunt("*", "astraviacastle", 6);
   bot.gather(8891, "astraviacastle", 6);
   bot.quest(8248).turnIn();
 }
@@ -27,16 +25,14 @@ if (!bot.quest(8249).completed()) {
 
 if (!bot.quest(8250).completed()) {
   bot.quest(8250).accept();
-  bot.travel("astraviacastle", "r3", "Left");
-  bot.kill("*", 9);
+  bot.hunt("*", "astraviacastle", 9);
   bot.gather(8893, "astraviacastle");
   bot.quest(8250).turnIn();
 }
 
 if (!bot.quest(8251).completed()) {
   bot.quest(8251).accept();
-  bot.travel("astraviacastle", "r3", "Left");
-  bot.kill("*", 6);
+  bot.hunt("*", "astraviacastle", 6);
   bot.gather(8894, "astraviacastle");
   bot.quest(8251).turnIn();
 }
