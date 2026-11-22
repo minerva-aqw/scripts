@@ -82,6 +82,12 @@ const bot = {
     const turnIn = opts && opts.turnIn === false ? false : true;
     const choice = opts && opts.choice !== undefined ? opts.choice : -1;
     const qty = opts && opts.qty !== undefined ? opts.qty : 1;
+    // Quiet rounds: handler runs that move nothing at all. One quiet round
+    // is normal (drop RNG, or a "*" hunt feeding a sibling requirement
+    // while its own top-up scope covers only what its kills granted), so
+    // the run only fails after several in a row — still fast for a truly
+    // stuck quest, patient for real farming.
+    let quiet = 0;
     for (let round = 0; round < 9999; round++) {
       const st = park({ op: "quest_status", id }) as QuestStatus;
       if (st.completed === true) return true;
@@ -118,15 +124,33 @@ const bot = {
           next.name + "' (" + next.id + " " + next.have + "/" + next.need + ")"
         );
       }
-      const before = next.have === undefined ? -1 : next.have;
+      const held: Record<number, number> = {};
+      for (const r of reqs) held[r.id] = r.have === undefined ? -1 : r.have;
       handlers[key]();
       const after = park({ op: "quest_status", id }) as QuestStatus;
+      // Any forward movement counts: one hunt can feed several
+      // requirements while the targeted one waits its turn.
+      let moved = false;
+      for (const r of after.requirements || []) {
+        const have = r.have === undefined ? -1 : r.have;
+        if (have > (held[r.id] === undefined ? -1 : held[r.id])) {
+          moved = true;
+          break;
+        }
+      }
       const cur = (after.requirements || []).filter(function (r) { return r.id === next.id; })[0];
-      if (cur !== undefined && cur.have <= before && cur.have < cur.need) {
-        throw new Error(
-          "quest " + id + " requirement '" + next.name +
-          "' stalled: " + cur.have + "/" + cur.need
-        );
+      if (!moved && (cur === undefined || cur.have < cur.need)) {
+        quiet += 1;
+        if (quiet >= 5) {
+          throw new Error(
+            "quest " + id + " requirement '" + next.name +
+            "' (" + next.id + ") stalled: " +
+            (cur === undefined ? "?" : cur.have) + "/" + next.need +
+            " (no progress in 5 rounds)"
+          );
+        }
+      } else {
+        quiet = 0;
       }
     }
     // Re-read before turning in: creeping progress can exhaust the rounds
