@@ -171,9 +171,9 @@
     "path": "classes/yami-no-ronin/dodge-dps.ts",
     "kind": "classes",
     "name": "Yami no Ronin dodge DPS",
-    "desc": "Dodge-safe damage rotation: nuke on the fading Yami, DoT upkeep, safe Tachi spam, Kettou only while the dodge buffer holds.",
+    "desc": "Guide DPS rotation: Tachi/Kettou spam, Maku upkeep for Spinning Dragon, Jigen on the fading Yami. The nuke consumes Flash/Revealed \u2014 the dodge reset.",
     "autoload": "Yami no Ronin",
-    "sha256": "701ac437649e5c6df050f4a9bba295b9e24b8c889a617a9ea04a2f8ea5845d6c"
+    "sha256": "cd60242c411537556efb2dc0942f445da59897fb55af23132e4fb9affbeee676"
   },
   {
     "path": "lib/bot.ts",
