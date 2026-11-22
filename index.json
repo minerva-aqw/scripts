@@ -48,6 +48,14 @@
     "sha256": "48c2ecba9b2acd541af3c5dd9c54adb141c1197f3370c00fe49471132bbaba91"
   },
   {
+    "path": "bots/storylines/elegy-of-madness/05-eridanipast.ts",
+    "kind": "bots",
+    "name": "Elegy of Madness 05 - Eridani Past",
+    "desc": "Eridani Past chapter, quests 8521-8530. Skips completed quests, so re-runs resume where they left off.",
+    "autoload": null,
+    "sha256": "1154c9525c6a58e3c60d69e658682b7b73a31218453cd2a3864ac09a8e91458b"
+  },
+  {
     "path": "classes/archpaladin/archpaladin.ts",
     "kind": "classes",
     "name": "ArchPaladin solo support",
