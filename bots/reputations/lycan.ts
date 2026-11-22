@@ -14,13 +14,20 @@
 // collision anyway.
 const RANK = 10;
 
-const fac = bot.rep("Lycan");
+// Fresh accounts have no Lycan entry yet: run one cycle first — a real
+// turn-in registers the faction. Still missing after that means the
+// name is wrong, and we fail instead of farming blind.
+const masks = {
+  "3750": function () { bot.hunt("Sanguine", "lycan", 1); }, // Sanguine Mask
+};
+bot.quest(537, masks);
+
+let fac = bot.rep("Lycan");
 if (!fac.found) {
-  throw new Error("no faction named Lycan (check bot.rep spelling)");
+  throw new Error("no Lycan faction after a turn-in (check bot.rep spelling)");
 }
 
-while (bot.rep("Lycan").rank < RANK) {
-  bot.quest(537, {
-    "3750": function () { bot.hunt("Sanguine", "lycan", 1); }, // Sanguine Mask
-  });
+while (fac.rank < RANK) {
+  bot.quest(537, masks);
+  fac = bot.rep("Lycan");
 }

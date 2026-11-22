@@ -29,7 +29,7 @@
     "name": "Evil rep",
     "desc": "Farms Evil reputation to rank 10: quest 364 Youthanize to rank 4, then 367 Bone-afide (member: 366 Dangerous Decor). Requires Evil alignment.",
     "autoload": null,
-    "sha256": "1af6c05baf14aa1e4aba56e166b1304aad08e2192144b1f3f8fe81c834eceb36"
+    "sha256": "26a5b06b0a51d4990c6ad3c58190bfe46b724308157fd99fdb1c20d1423621b3"
   },
   {
     "path": "bots/reputations/lycan.ts",
@@ -37,7 +37,7 @@
     "name": "Lycan rep",
     "desc": "Farms Lycan reputation to rank 10 via quest 537 Sanguine in /lycan. Requires the Wolfwing storyline done and quest 537 completed at least once.",
     "autoload": null,
-    "sha256": "0f6aed00098410e204437d73052143b58378f47eca1253cbeddc7f0ef313bb66"
+    "sha256": "5e8bf8563f9c271aba71ccf949b3feadebd2a306a8bb67db99590486a743b468"
   },
   {
     "path": "bots/reputations/vampire.ts",
@@ -45,7 +45,7 @@
     "name": "Vampire rep",
     "desc": "Farms Vampire reputation to rank 10 via quest 522 Twisted Paw in /safiria. Requires the Wolfwing storyline done and quest 522 unlocked.",
     "autoload": null,
-    "sha256": "bc997cfdee56dbe40a53f770ac3a99d5255c964329c36d9cff4121179ae0ad8d"
+    "sha256": "bf15b9c2c74cd49c5316e50cd0780e5b7bfa622e7f21506ff32d994e17a1d9fc"
   },
   {
     "path": "bots/smoke-eridani.ts",

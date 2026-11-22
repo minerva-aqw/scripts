@@ -18,13 +18,20 @@
 // floor sweep stays off and junk never touches the backpack.
 const RANK = 10;
 
-const fac = bot.rep("Vampire");
+// Fresh accounts have no Vampire entry yet: run one cycle first — a real
+// turn-in registers the faction. Still missing after that means the
+// name is wrong, and we fail instead of farming blind.
+const heads = {
+  "2933": function () { bot.hunt("Twisted Paw", "safiria", 1); }, // Twisted Paw's Head
+};
+bot.quest(522, heads);
+
+let fac = bot.rep("Vampire");
 if (!fac.found) {
-  throw new Error("no faction named Vampire (check bot.rep spelling)");
+  throw new Error("no Vampire faction after a turn-in (check bot.rep spelling)");
 }
 
-while (bot.rep("Vampire").rank < RANK) {
-  bot.quest(522, {
-    "2933": function () { bot.hunt("Twisted Paw", "safiria", 1); }, // Twisted Paw's Head
-  });
+while (fac.rank < RANK) {
+  bot.quest(522, heads);
+  fac = bot.rep("Vampire");
 }

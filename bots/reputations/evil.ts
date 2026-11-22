@@ -13,29 +13,36 @@
 // IDs win on collision anyway.
 const RANK = 10;
 
-const fac = bot.rep("Evil");
+// Fresh accounts have no Evil entry yet: run one cycle first — a real
+// turn-in registers the faction. Still missing after that means the
+// name (or Evil alignment) is wrong, and we fail instead of farming
+// blind into a rank that can never rise.
+const youth = {
+  "1812": function () { bot.hunt("Slime", "swordhavenbridge", 1); }, // Youthanize
+};
+bot.quest(364, youth);
+
+let fac = bot.rep("Evil");
 if (!fac.found) {
-  throw new Error("no faction named Evil (check bot.rep spelling)");
+  throw new Error("no Evil faction after a turn-in (check spelling; 364 needs Evil alignment)");
 }
 
-while (bot.rep("Evil").rank < 4) {
-  bot.quest(364, {
-    "1812": function () { bot.hunt("Slime", "swordhavenbridge", 1); }, // Youthanize
-  });
+while (fac.rank < 4) {
+  bot.quest(364, youth);
+  fac = bot.rep("Evil");
 }
 
 const member = bot.me().upgraded === true;
-while (bot.rep("Evil").rank < RANK) {
-  if (member) {
-    bot.quest(366, {
-      "1815": function () { bot.hunt("Chair", "sleuthhound", 1); },
-      "1816": function () { bot.hunt("Table", "sleuthhound", 1); },
-      "1817": function () { bot.hunt("Bookcase", "sleuthhound", 1); },
-    });
-  } else {
-    bot.quest(367, {
-      "1818": function () { bot.hunt("*", "castleundead", 1, "Enter", "Left"); }, // Replacement Tibia
-      "1819": function () { bot.hunt("*", "castleundead", 1, "Enter", "Left"); }, // Phalanges
-    });
-  }
+const chair = {
+  "1815": function () { bot.hunt("Chair", "sleuthhound", 1); },
+  "1816": function () { bot.hunt("Table", "sleuthhound", 1); },
+  "1817": function () { bot.hunt("Bookcase", "sleuthhound", 1); },
+};
+const bone = {
+  "1818": function () { bot.hunt("*", "castleundead", 1, "Enter", "Left"); }, // Replacement Tibia
+  "1819": function () { bot.hunt("*", "castleundead", 1, "Enter", "Left"); }, // Phalanges
+};
+while (fac.rank < RANK) {
+  bot.quest(member ? 366 : 367, member ? chair : bone);
+  fac = bot.rep("Evil");
 }
