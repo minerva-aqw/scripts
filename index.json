@@ -1,5 +1,13 @@
 [
   {
+    "path": "bots/class/archfiend.ts",
+    "kind": "bots",
+    "name": "ArchFiend class",
+    "desc": "Gets the ArchFiend class (no rank-up): Evil rep, Nation materials, Abyssal Contract quest, purchase.",
+    "autoload": null,
+    "sha256": "03a0caf6ffc8ba90a91c73cf3ef4d8638db04ff8f5500456fca45e7313cb4d29"
+  },
+  {
     "path": "bots/farms/swag-token-a.ts",
     "kind": "bots",
     "name": "Swag Token A farm",
@@ -14,6 +22,14 @@
     "desc": "Travel to kitsune, locate the Kitsune boss cell, kill and claim until Hanzamune Dragon Koi Blade lands.",
     "autoload": null,
     "sha256": "80730b649870d1c93092c45d68770073d24aaad3c5026e716cf50b05e6ee8cd8"
+  },
+  {
+    "path": "bots/reputations/evil.ts",
+    "kind": "bots",
+    "name": "Evil rep",
+    "desc": "Farms Evil reputation to rank 10: quest 364 Youthanize to rank 4, then 367 Bone-afide (member: 366 Dangerous Decor). Requires Evil alignment.",
+    "autoload": null,
+    "sha256": "1af6c05baf14aa1e4aba56e166b1304aad08e2192144b1f3f8fe81c834eceb36"
   },
   {
     "path": "bots/reputations/lycan.ts",
