@@ -37,7 +37,7 @@
     "name": "Elegy of Madness 03 - Astravia Castle",
     "desc": "Astravia Castle chapter, quests 8247-8256. Skips completed quests, so re-runs resume where they left off.",
     "autoload": null,
-    "sha256": "d238a87e9f2b7b8e19804f44213aa7aeba997a8c7f56081d9d0513fa0f8f4724"
+    "sha256": "9fb085459ac759fd4bb08851162fed4268aa18bb2e24cd6cfa8f1f377b2435af"
   },
   {
     "path": "classes/archpaladin/archpaladin.ts",
@@ -133,6 +133,6 @@
     "name": null,
     "desc": null,
     "autoload": null,
-    "sha256": "f48c9d5cfeae61acb04766b4e1e3bc16b12a2326953486f055fddd3116b4e1e3"
+    "sha256": "7b4dd57c8a8522574a77b43dc7066562b5c2907c5765a4d3ef2dbb20ea775157"
   }
 ]

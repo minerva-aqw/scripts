@@ -4,16 +4,16 @@
 bot.travel("astraviacastle");
 
 if (!bot.quest(8247).completed()) {
-  bot.quest(8247).accept();
-  bot.hunt("*", "astraviacastle", 9);
-  bot.quest(8247).turnIn();
+  bot.quest(8247, {
+    "63014": () => bot.hunt("*", "astraviacastle", 9, "r3", "Left"),
+  });
 }
 
 if (!bot.quest(8248).completed()) {
-  bot.quest(8248).accept();
-  bot.hunt("*", "astraviacastle", 6);
-  bot.gather(8891, "astraviacastle", 6);
-  bot.quest(8248).turnIn();
+  bot.quest(8248, {
+    "63016": () => bot.hunt("*", "astraviacastle", 6, "r3", "Left"),
+    "63015": () => bot.gather(8891, "astraviacastle", 6),
+  });
 }
 
 if (!bot.quest(8249).completed()) {
@@ -24,17 +24,17 @@ if (!bot.quest(8249).completed()) {
 }
 
 if (!bot.quest(8250).completed()) {
-  bot.quest(8250).accept();
-  bot.hunt("*", "astraviacastle", 9);
-  bot.gather(8893, "astraviacastle");
-  bot.quest(8250).turnIn();
+  bot.quest(8250, {
+    "63020": () => bot.hunt("*", "astraviacastle", 9, "r3", "Left"),
+    "63019": () => bot.gather(8893, "astraviacastle"),
+  });
 }
 
 if (!bot.quest(8251).completed()) {
-  bot.quest(8251).accept();
-  bot.hunt("*", "astraviacastle", 6);
-  bot.gather(8894, "astraviacastle");
-  bot.quest(8251).turnIn();
+  bot.quest(8251, {
+    "63021": () => bot.hunt("*", "astraviacastle", 6, "r3", "Left"),
+    "63022": () => bot.gather(8894, "astraviacastle"),
+  });
 }
 
 if (!bot.quest(8252).completed()) {

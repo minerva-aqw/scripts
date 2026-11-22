@@ -26,6 +26,14 @@
 // `pickup(idOrName | "*")` -> bare boolean, `"*"` clears the floor).
 declare function park(v: unknown): unknown;
 
+type QuestHandlers = Record<string, () => unknown>;
+type QuestOpts = { choice?: number; qty?: number; turnIn?: boolean };
+type QuestReq = { id: number; name: string; need: number; have: number };
+type QuestStatus = {
+  completed: boolean;
+  requirements: QuestReq[];
+};
+
 const bot = {
   // Already in `map` reads as done with no rejoin; a non-default `cell`
   // goes through the verified cell move instead of the join's blind args.
@@ -38,36 +46,100 @@ const bot = {
   kill(name: string, count?: number): unknown {
     return park({ op: "kill", name, count: count ?? 1 });
   },
-  // `quest(407).accept()` / `quest(407).turnIn(choice?, qty?)` /
-  // `quest(407).completed()`.
-  // `quest(id)` itself never parks: it only captures the id for the parking
-  // calls below, so `const q = bot.quest(id); q.accept();` works.
-  // `choice` defaults to -1 (no reward choice, the SWF default —
-  // `QFrameMC.as:28`); `qty` defaults to 1 and caps at 250.
-  // `completed()` is the re-run guard: read-only, no packets beyond the
-  // definition fetch — resumes bare `true` when the one-time quest already
-  // completed, `false` otherwise (including unknown), so blocks read
-  // `if (!bot.quest(id).completed()) { ... }`.
-  quest(id: number) {
-    return {
-      accept(): unknown {
-        return park({ op: "quest_accept", id });
-      },
-      turnIn(choice?: number, qty?: number): unknown {
-        return park({ op: "quest_turnin", id, choice: choice ?? -1, qty: qty ?? 1 });
-      },
-      completed(): unknown {
-        return park({ op: "quest_completed", id });
-      },
-    };
+  // `quest(id)` / `quest(id, handlers, opts?)`.
+  // Bare `quest(id)` only captures the id for the parking calls below, so
+  // `const q = bot.quest(id); q.accept();` works. `choice` defaults to -1
+  // (no reward choice, the SWF default — `QFrameMC.as:28`); `qty` defaults
+  // to 1 and caps at 250. `completed()` is the re-run guard: read-only, no
+  // packets beyond the definition fetch — resumes bare `true` when the
+  // one-time quest already completed, `false` otherwise (including
+  // unknown), so blocks read `if (!bot.quest(id).completed()) { ... }`.
+  // With `handlers`, the quest runs itself: accept, then the first unmet
+  // requirement's handler until every requirement reads held, then turn
+  // in. Handler keys are turn-in `sName`s (case-insensitive) with the
+  // requirement ItemID as fallback (`'63014'` wins on collision). A
+  // handler that leaves its requirement unmoved fails loudly instead of
+  // spinning; an unhandled requirement names what is missing. `opts`
+  // carries `{ choice, qty }` through to the turn-in, and
+  // `{ turnIn: false }` fills without turning in. Completed quests return
+  // `true` without touching anything.
+  quest(id: number, handlers?: QuestHandlers, opts?: QuestOpts): unknown {
+    if (handlers == null) {
+      return {
+        accept(): unknown {
+          return park({ op: "quest_accept", id });
+        },
+        turnIn(choice?: number, qty?: number): unknown {
+          return park({ op: "quest_turnin", id, choice: choice ?? -1, qty: qty ?? 1 });
+        },
+        completed(): unknown {
+          return park({ op: "quest_completed", id });
+        },
+      };
+    }
+    if (park({ op: "quest_completed", id }) === true) return true;
+    park({ op: "quest_accept", id });
+    const turnIn = opts && opts.turnIn === false ? false : true;
+    const choice = opts && opts.choice !== undefined ? opts.choice : -1;
+    const qty = opts && opts.qty !== undefined ? opts.qty : 1;
+    for (let round = 0; round < 50; round++) {
+      const st = park({ op: "quest_status", id }) as QuestStatus;
+      if (st.completed === true) return true;
+      const reqs = st.requirements || [];
+      let next: QuestReq | undefined = undefined;
+      for (const r of reqs) {
+        if ((r.have === undefined ? -1 : r.have) < r.need) {
+          next = r;
+          break;
+        }
+      }
+      if (next === undefined) break;
+      const keys = Object.keys(handlers);
+      const idKey = String(next.id);
+      let key: string | undefined = undefined;
+      for (const k of keys) {
+        if (k.trim() === idKey) {
+          key = k;
+          break;
+        }
+      }
+      if (key === undefined) {
+        const want = (next.name || "").trim().toLowerCase();
+        for (const k of keys) {
+          if (k.trim().toLowerCase() === want) {
+            key = k;
+            break;
+          }
+        }
+      }
+      if (key === undefined) {
+        throw new Error(
+          "quest " + id + " has no handler for requirement '" +
+          next.name + "' (" + next.id + " " + next.have + "/" + next.need + ")"
+        );
+      }
+      const before = next.have === undefined ? -1 : next.have;
+      handlers[key]();
+      const after = park({ op: "quest_status", id }) as QuestStatus;
+      const cur = (after.requirements || []).filter(function (r) { return r.id === next.id; })[0];
+      if (cur !== undefined && cur.have <= before && cur.have < cur.need) {
+        throw new Error(
+          "quest " + id + " requirement '" + next.name +
+          "' stalled: " + cur.have + "/" + cur.need
+        );
+      }
+    }
+    if (turnIn) return park({ op: "quest_turnin", id, choice, qty });
+    return true;
   },
-  // `hunt(name, map, qty?)`: teleport to `map` when elsewhere, census the
-  // live room for the cell holding the most `name` matches, go there, then
-  // kill. `map` is required; `qty` defaults to 1. `"*"` hunts anything in
-  // the richest cell; with a quest in progress the count is a floor — the
-  // hunt tops up until the requirements read held.
-  hunt(name: string, map: string, qty?: number): unknown {
-    return park({ op: "hunt", name, map, qty: qty ?? 1 });
+  // `hunt(name, map, qty?, cell?, pad?)`: teleport to `map` when elsewhere,
+  // census the live room for the cell holding the most `name` matches, go
+  // there, then kill. `map` is required; `qty` defaults to 1. `"*"` hunts
+  // anything in the richest cell; with a quest in progress the count is a
+  // floor — the hunt tops up until the requirements read held. A `cell`
+  // pins the farm spot and skips the census (Skua's KillMonster shape).
+  hunt(name: string, map: string, qty?: number, cell?: string, pad?: string): unknown {
+    return park({ op: "hunt", name, map, qty: qty ?? 1, cell, pad });
   },
   // `locate(name)`: read-only census of the live room — the cell holding
   // the most `name` matches (same substring rule as `kill`/`hunt`). No
