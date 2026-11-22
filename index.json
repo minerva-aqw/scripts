@@ -40,6 +40,14 @@
     "sha256": "9fb085459ac759fd4bb08851162fed4268aa18bb2e24cd6cfa8f1f377b2435af"
   },
   {
+    "path": "bots/storylines/elegy-of-madness/04-astraviajudgement.ts",
+    "kind": "bots",
+    "name": "Elegy of Madness 04 - Astravia Judgement",
+    "desc": "Astravia Judgement chapter, quests 8386-8395. Skips completed quests, so re-runs resume where they left off.",
+    "autoload": null,
+    "sha256": "48c2ecba9b2acd541af3c5dd9c54adb141c1197f3370c00fe49471132bbaba91"
+  },
+  {
     "path": "classes/archpaladin/archpaladin.ts",
     "kind": "classes",
     "name": "ArchPaladin solo support",
