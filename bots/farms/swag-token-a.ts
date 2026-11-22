@@ -49,36 +49,40 @@ const member = me.upgraded === true;
 
 while (tokenQty("Super-Fan Swag Token A") < WANT) {
   if (member) {
+    // Handlers keyed by ItemID: quest_status reports these requirements
+    // with empty names, so sName keys never match (IDs win on collision).
+    const lab = function () { bot.hunt("*", "collectorlab", 1, "r2", "Left"); };
     bot.quest(1310, {
-      "Doppelganger Documents": function () { bot.hunt("*", "collectorlab", 1, "r2", "Left"); },
+      "9317": lab, // Doppelganger Documents
     });
     bot.quest(1312, {
-      "Lead-based Liquid": function () { bot.hunt("*", "collectorlab", 1, "r2", "Left"); },
-      "XY Elixir": function () { bot.hunt("*", "collectorlab", 1, "r2", "Left"); },
-      "Scientific Super-slush": function () { bot.hunt("*", "collectorlab", 1, "r2", "Left"); },
+      "9377": lab, // Lead-based Liquid
+      "9378": lab, // XY Elixir
+      "9379": lab, // Scientific Super-slush
     });
     bot.quest(1313, {
-      "Sage Uldor's Head Replica": function () { bot.hunt("*", "collectorlab", 1, "r2", "Left"); },
-      "Robina's Head Replica": function () { bot.hunt("*", "collectorlab", 1, "r2", "Left"); },
-      "Slugwrath's Head Replica": function () { bot.hunt("*", "collectorlab", 1, "r2", "Left"); },
-      "Pramithia's Head Replica": function () { bot.hunt("*", "collectorlab", 1, "r2", "Left"); },
-      "Super Death's Head Replica": function () { bot.hunt("*", "collectorlab", 1, "r2", "Left"); },
-      "Rolly Pony's Head Replica": function () { bot.hunt("*", "collectorlab", 1, "r2", "Left"); },
+      "9381": lab, // Sage Uldor's Head Replica
+      "9382": lab, // Robina's Head Replica
+      "9383": lab, // Slugwrath's Head Replica
+      "9384": lab, // Pramithia's Head Replica
+      "9385": lab, // Super Death's Head Replica
+      "9386": lab, // Rolly Pony's Head Replica
     });
     bot.quest(1314, {
-      "Wanted Rock": function () { bot.hunt("*", "collectorlab", 1, "r2", "Left"); },
-      "Winding String": function () { bot.hunt("*", "collectorlab", 1, "r2", "Left"); },
+      "9388": lab, // Wanted Rock
+      "9387": lab, // Winding String
     });
   } else {
+    const terr = function () { bot.hunt("*", "terrarium", 1, "Enter", "Spawn"); };
     bot.quest(1304, {
-      "Running Shoes": function () { bot.hunt("*", "terrarium", 1, "Enter", "Spawn"); },
-      "Track Suit": function () { bot.hunt("*", "terrarium", 1, "Enter", "Spawn"); },
-      Sweatband: function () { bot.hunt("*", "terrarium", 1, "Enter", "Spawn"); },
-      "Water bottle": function () { bot.hunt("*", "terrarium", 1, "Enter", "Spawn"); },
+      "9306": terr, // Running Shoes
+      "9307": terr, // Track Suit
+      "9308": terr, // Sweatband
+      "9309": terr, // Water bottle
     });
     bot.quest(1307, {
-      "Ball of Fluff": function () { bot.hunt("*", "terrarium", 1, "Enter", "Spawn"); },
-      "Dust Bunny Blown Apart!": function () { bot.hunt("*", "terrarium", 1, "Enter", "Spawn"); },
+      "9540": terr, // Ball of Fluff
+      "9313": terr, // Dust Bunny Blown Apart!
     });
   }
   tradeUp();
