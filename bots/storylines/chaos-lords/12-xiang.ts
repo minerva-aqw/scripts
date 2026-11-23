@@ -110,8 +110,8 @@ bot.quest(3166, {
 
 bot.quest(3167, {
   "20801": function () { bot.hunt("RedDeath Moglin", "reddeath", 5); }, // Boneweed
-  "20802": function () { bot.gather(2178, "reddeath"); }, // Powdered Boneweed Incense
-  "20803": function () { bot.gather(2179, "reddeath"); }, // Incense Burnt
+  "20802": function () { bot.gather(2178, "reddeath"); bot.gather(2179, "reddeath"); }, // Powdered Boneweed Incense
+  "20803": function () { bot.gather(2179, "reddeath"); bot.gather(2178, "reddeath"); }, // Incense Burnt
 });
 
 bot.quest(3168, {

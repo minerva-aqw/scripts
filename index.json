@@ -125,7 +125,7 @@
     "name": "Chaos Lords 09 - Khasaanda (Horc)",
     "desc": "Horc path, quests 1232-1473. Completed quests return true without touching anything, so re-runs resume where they left off.",
     "autoload": null,
-    "sha256": "992b82b9172a730fe5eafa7c97d94a06b74cdca9b5b7fe790114a6a26afa9b5d"
+    "sha256": "d429108629f755d974e484697cd1b5932d33347d1685f1bbacc590d7b9778782"
   },
   {
     "path": "bots/storylines/chaos-lords/09-khasaanda-troll.ts",
@@ -133,7 +133,7 @@
     "name": "Chaos Lords 09 - Khasaanda (Troll)",
     "desc": "Troll path, quests 1226-1468. Completed quests return true without touching anything, so re-runs resume where they left off.",
     "autoload": null,
-    "sha256": "14c955452c48c6c020253a3cdd7737448498a69614ac9e732e2877cd586c15bf"
+    "sha256": "cb9a496babcfc92f32bfe91580289919eca6715b01ad116ac99e879bfd50ca49"
   },
   {
     "path": "bots/storylines/chaos-lords/10-iadoa.ts",
@@ -141,7 +141,7 @@
     "name": "Chaos Lords 10 - Iadoa",
     "desc": "Iadoa chapter, quests 2239-2521. Completed quests return true without touching anything, so re-runs resume where they left off.",
     "autoload": null,
-    "sha256": "fed02dbc825c3150671dd1ea3b9794fc4964331b5078ca2c6895f4fa0048a7dc"
+    "sha256": "d99d8e8c6e0dc448e4e26f201f7af6284d2e9aaf162667e46613bca9ffc63244"
   },
   {
     "path": "bots/storylines/chaos-lords/11-lionfang.ts",
@@ -157,7 +157,7 @@
     "name": "Chaos Lords 12 - Xiang",
     "desc": "Xiang chapter, quests 2909-3189. Completed quests return true without touching anything, so re-runs resume where they left off.",
     "autoload": null,
-    "sha256": "7e236c0ce46c30aea4905ecf0fa12a012c212dbca7b08bc920a7f82646acbaa6"
+    "sha256": "d379559e3c42c2bd51a422069ffe1e0e57833f8fe49aa0ec60336d1a69fdaed2"
   },
   {
     "path": "bots/storylines/chaos-lords/13-alteon.ts",

@@ -33,8 +33,8 @@ bot.quest(1229, {
 bot.quest(1230, {});
 
 bot.quest(1231, {
-  "8936": function () { bot.gather(524, "crossroads", 10); }, // Jungle Leaves
-  "8931": function () { bot.gather(522, "crossroads", 5); }, // Trollola Blossoms
+  "8936": function () { bot.gather(524, "crossroads", 10); bot.gather(522, "crossroads", 5); }, // Jungle Leaves
+  "8931": function () { bot.gather(522, "crossroads", 5); bot.gather(524, "crossroads", 10); }, // Trollola Blossoms
   "8932": function () { bot.hunt("Crystal-Rock", "bloodtusk", 3); }, // Singing Crystals
   "8934": function () { bot.hunt("Koalion", "crossroads", 5); }, // Koalion Claw
   "8935": function () { bot.hunt("Lemurphant", "crossroads", 5); }, // Lemurphant Tusks
@@ -152,8 +152,8 @@ bot.quest(1465, {
 });
 
 bot.quest(1466, {
-  "10172": function () { bot.gather(739, "dreamnexus", 11); }, // Aether Flame
-  "10215": function () { bot.gather(738, "dreamnexus", 10); }, // Aether Petals
+  "10172": function () { bot.gather(739, "dreamnexus", 11); bot.gather(738, "dreamnexus", 10); }, // Aether Flame
+  "10215": function () { bot.gather(738, "dreamnexus", 10); bot.gather(739, "dreamnexus", 11); }, // Aether Petals
 });
 
 bot.quest(1467, {

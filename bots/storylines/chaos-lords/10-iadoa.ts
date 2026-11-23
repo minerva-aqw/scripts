@@ -89,8 +89,8 @@ bot.quest(2377, {
 });
 
 bot.quest(2378, {
-  "13692": function () { bot.gather(1469, "aqlesson"); }, // Tome of Hope Read
-  "13691": function () { bot.gather(1468, "aqlesson", 8); }, // Elemental Orb Located
+  "13692": function () { bot.gather(1469, "aqlesson"); bot.gather(1468, "aqlesson", 8); }, // Tome of Hope Read
+  "13691": function () { bot.gather(1468, "aqlesson", 8); bot.gather(1469, "aqlesson"); }, // Elemental Orb Located
 });
 
 bot.quest(2379, {
@@ -103,8 +103,8 @@ bot.quest(2379, {
 bot.quest(2380, {
   "13697": function () { bot.hunt("Ice Elemental", "aqlesson", 3); }, // Frigid Liquid Acquired
   "13698": function () { bot.hunt("Fire Elemental", "aqlesson", 3); }, // Heart of Lava Acquired
-  "13699": function () { bot.gather(1473, "aqlesson", 3); }, // Adamantite Acquired
-  "13700": function () { bot.gather(1472, "aqlesson", 3); }, // Balanced Breeze Acquired
+  "13699": function () { bot.gather(1473, "aqlesson", 3); bot.gather(1472, "aqlesson", 3); }, // Adamantite Acquired
+  "13700": function () { bot.gather(1472, "aqlesson", 3); bot.gather(1473, "aqlesson", 3); }, // Balanced Breeze Acquired
 });
 
 bot.quest(2381, {
