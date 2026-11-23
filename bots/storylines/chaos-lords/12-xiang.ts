@@ -4,8 +4,8 @@
 // Ported from Skua Story/LordsofChaos Core13LoC.Xiang.
 // Handler keys are requirement ItemIDs (stable); map-item IDs and
 // monster names come from the same source, quantities from quest-data.
-// 3187 farms its three products under the helper quests Skua registers,
-// then turns in from mirrorportal, like Skua's join there.
+// 3187 fills each helper quest once (their products are the turn-in
+// rewards) and turns in from mirrorportal, like Skua's join there.
 // 3188 skips the equip/unequip packet dance (no bot equip verb) and the
 // leftover-potion sale. 3189 skips the gear-store swaps (no bot bank verb).
 
@@ -140,42 +140,27 @@ bot.quest(3183, {
 
 if (!bot.quest(3187).completed()) {
   bot.quest(3187).accept();
-  let rounds = 0;
-  while (!bot.ensureItem("Perfect Prism")) {
-    if (rounds >= 25) {
-      throw new Error("no Perfect Prism after 25 turn-ins of 3184");
-    }
-    bot.quest(3184, {
-      "20887": function () { bot.hunt("Shard Spinner", "earthstorm", 5); }, // Reflective Fragment
-    });
-    bot.pickup("Perfect Prism");
-    rounds += 1;
-  }
-  rounds = 0;
-  while (!bot.ensureItem("Unchaorrupted Sample")) {
-    if (rounds >= 25) {
-      throw new Error("no Unchaorrupted Sample after 25 turn-ins of 3185");
-    }
-    bot.quest(3185, {
-      "20888": function () { bot.hunt("Chaotic Horcboar", "bloodtuskwar", 5); }, // Vials of Blood
-    });
-    bot.pickup("Unchaorrupted Sample");
-    rounds += 1;
-  }
-  rounds = 0;
-  while (!bot.ensureItem("Harpy Feather")) {
-    if (rounds >= 25) {
-      throw new Error("no Harpy Feather after 25 turn-ins of 3186");
-    }
-    bot.quest(3186, {
-      "20889": function () { bot.hunt("Chaos Tigriff", "bloodtuskwar", 5); }, // Feathers
-    });
-    bot.pickup("Harpy Feather");
-    rounds += 1;
-  }
+  // 3184/3185/3186 pay their product as the turn-in reward, and all three
+  // products are temp items (bTemp 1): ensureItem/inventory only read the
+  // backpack, so a while(!ensureItem) loop can never exit. Each helper runs
+  // once — fill, turn in, claim the floor copy by ID — and 3187 below is
+  // temp-aware: it turns in when all three are held, else throws naming
+  // the product still missing.
+  bot.quest(3184, {
+    "20887": function () { bot.hunt("Shard Spinner", "earthstorm", 5); }, // Reflective Fragment
+  });
+  bot.pickup(20890); // Perfect Prism
+  bot.quest(3185, {
+    "20888": function () { bot.hunt("Chaotic Horcboar", "bloodtuskwar", 5); }, // Vials of Blood
+  });
+  bot.pickup(20891); // Unchaorrupted Sample
+  bot.quest(3186, {
+    "20889": function () { bot.hunt("Chaos Tigriff", "bloodtuskwar", 5); }, // Feathers
+  });
+  bot.pickup(20892); // Harpy Feather
   bot.travel("mirrorportal");
-  bot.quest(3187).turnIn();
-  bot.pickup("Shriekward Potion");
+  bot.quest(3187, {}); // Ward Off the Beast
+  bot.pickup(20771); // Shriekward Potion
 }
 
 if (!bot.quest(3188).completed()) {

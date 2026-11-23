@@ -37,20 +37,18 @@ bot.quest(326, {
 });
 
 bot.quest(327, {
-  "1600": function () { bot.hunt("Pine Troll", "pines"); }, // Pine Air Freshener
+  "1600": function () { bot.hunt("Pine Troll", "pines"); bot.pickup(1596); }, // Pine Air Freshener
 });
 
 if (!bot.quest(323).completed()) {
-  let rounds = 0;
-  while (!bot.ensureItem("Snowbeard's Gold")) {
-    if (rounds >= 10) {
-      throw new Error("no Snowbeard's Gold after 10 Pine Troll kills");
-    }
-    bot.hunt("Pine Troll", "pines");
-    bot.pickup("Snowbeard's Gold");
-    rounds += 1;
-  }
-  bot.quest(323, {});
+  // Snowbeard's Gold is a temp drop (bTemp 1): ensureItem/inventory only
+  // read the backpack, so they can never see it. The quest runner reads
+  // temp counts itself — one declarative call hunts until held, then
+  // turns in. Skua picks the gold up during 327's hunt, so claim there too.
+  bot.pickup(1596);
+  bot.quest(323, {
+    "1596": function () { bot.hunt("Pine Troll", "pines", 10); bot.pickup(1596); }, // Snowbeard's Gold
+  });
 }
 
 bot.quest(344, {

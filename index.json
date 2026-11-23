@@ -93,7 +93,7 @@
     "name": "Chaos Lords 03 - Vath",
     "desc": "Vath chapter, quests 319-363. Completed quests return true without touching anything, so re-runs resume where they left off.",
     "autoload": null,
-    "sha256": "c42db01ecb33be9805fd154144043cf2e74452e57f9a191ad7060a9078281d8b"
+    "sha256": "4d982fcd49e73cdaf0a99a97183d4a4aab52e914505617764884ee390301e55d"
   },
   {
     "path": "bots/storylines/chaos-lords/04-kitsune.ts",
@@ -173,7 +173,7 @@
     "name": "Chaos Lords 12 - Xiang",
     "desc": "Xiang chapter, quests 2909-3189. Completed quests return true without touching anything, so re-runs resume where they left off.",
     "autoload": null,
-    "sha256": "4708b414005755ce8f7ab57c86c1920d60f0993c129a78ee300d4bb7bfd5ebeb"
+    "sha256": "4eb896ce77fb9759b27e630a82676f00721479a9ddc9d192333c3f8e122e92df"
   },
   {
     "path": "bots/storylines/chaos-lords/13-alteon.ts",
