@@ -44,16 +44,14 @@ bot.quest(6216, {
   // The bond is shop stock (1559): buy first — a run that already holds
   // the prison pile (map item 39 grants under its own temp id, which
   // gather polls as the map id and can never see) completes here with no
-  // gather at all. Otherwise gather stocks the pile, then buy: the gather
-  // throw is swallowed because its sends still granted, the buy below is
-  // the real check, and the orchestrator names 42993 if still short.
+  // gather at all. Otherwise gather stocks the pile, then buy: op errors
+  // are fatal to the run, so a gather that cannot see its grant still
+  // fails here — but its sends already landed, so the re-run buys
+  // straight through and the orchestrator names 42993 if still short.
   "42993": function () {
     bot.travel("prison");
     if (!bot.buyItem(1559, 42993)) {
-      try {
-        bot.gather(39, "prison", 5);
-      } catch (gatherErr) {
-      }
+      bot.gather(39, "prison", 5);
       bot.buyItem(1559, 42993);
     }
   }, // Unlife Insurance Bond

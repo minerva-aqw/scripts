@@ -27,20 +27,13 @@ function tokenQty(name) {
   return inv.found ? inv.qty : 0;
 }
 
-// The pending list reads a miss immediately; an id `pickup` sends
+// The pending list reads a miss immediately, while an id `pickup` sends
 // `getDrop` blind and polls the grant to `op_timeout` (30s) on a miss.
-// Probe once: when the list is up, claim by name (fast miss) gated on
-// the floor listing the token; when it is off (Custom Drops UI),
-// fall back to the direct id pickup.
-let listOk = true;
-try {
-  bot.drops();
-} catch (err) {
-  listOk = false;
-}
-
+// The loader builds the session-only drop list on the first entered
+// frame, so claim by name (fast miss) gated on the floor actually
+// listing the token: the wait after a turn-in is cheap list reads,
+// never 30s grant polls.
 function floorHasName(name) {
-  if (!listOk) return true;
   const d = bot.drops();
   for (const e of d) {
     if (e.name === name) return true;
@@ -48,20 +41,15 @@ function floorHasName(name) {
   return false;
 }
 
-function claim(name, id) {
-  if (listOk) return bot.pickup(name);
-  return bot.pickup(id);
-}
-
 // Quest rewards can land on the floor instead of joining the backpack, so
 // every turn-in round is followed by a claim pass before any travel
 // leaves the room. Only send when the floor actually lists the token,
 // so the wait is cheap list reads instead of 30s grant polls.
-function drainTokens(names, ids, before) {
+function drainTokens(names, before) {
   let guard = 0;
   while (progress() <= before && guard < 60) {
     for (let i = 0; i < names.length; i++) {
-      if (floorHasName(names[i])) claim(names[i], ids[i]);
+      if (floorHasName(names[i])) bot.pickup(names[i]);
     }
     guard += 1;
   }
@@ -71,7 +59,7 @@ function drainTokens(names, ids, before) {
     clearing = false;
     for (let i = 0; i < names.length; i++) {
       if (floorHasName(names[i])) {
-        claim(names[i], ids[i]);
+        bot.pickup(names[i]);
         clearing = true;
       }
     }
@@ -120,7 +108,6 @@ const pad = member ? "Left" : "Spawn";
 const claimed = member
   ? ["Super-Fan Swag Token C"]
   : ["Super-Fan Swag Token D", "Super-Fan Swag Token C"];
-const claimedIds = member ? [9395] : [9396, 9395];
 
 // One "*" hunt per requirement: qty is a floor, the hunt tops up until
 // the watch reads held, sweeping floor drops as it goes.
@@ -181,7 +168,7 @@ while (tokenQty("Super-Fan Swag Token A") < WANT) {
   // throws when nothing moved; the trip to the shop only happens when a
   // hand-in actually paid — never a map change per round that gains
   // nothing.
-  drainTokens(claimed, claimedIds, before);
+  drainTokens(claimed, before);
   tradeUp();
   rounds += 1;
 }

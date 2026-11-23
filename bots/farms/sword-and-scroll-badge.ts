@@ -24,17 +24,13 @@ function floorHas(id) {
   // Cheap floor check with a fast miss: id pickup sends `getDrop` blind
   // and polls the grant to `op_timeout` (30s) on a miss, so a blind
   // `pickup(id)` on an empty floor idles ~30s. The pending list reads
-  // false immediately, so gate the blind send on it. List off (Custom
-  // Drops UI) reads as "maybe", falling back to the direct pickup.
-  try {
-    const d = bot.drops();
-    for (const e of d) {
-      if (e.id === id) return true;
-    }
-    return false;
-  } catch (err) {
-    return true;
+  // false immediately — the loader builds it on the first entered
+  // frame — so gate the blind send on it.
+  const d = bot.drops();
+  for (const e of d) {
+    if (e.id === id) return true;
   }
+  return false;
 }
 
 function drain(before) {

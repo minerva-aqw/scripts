@@ -21,7 +21,7 @@
     "name": "La's Gratitude farm",
     "desc": "Farms La's Gratitude to 300 via repeatable quest 8001 in astravia.",
     "autoload": null,
-    "sha256": "d1522605534aae494f00cd6927af1cb9db55419f99132c7fb8f8b206737f6e93"
+    "sha256": "addefb69ad5ec535980cef8413f2abb539c5b008240907c442a6cb69048ec8bf"
   },
   {
     "path": "bots/farms/swag-token-a.ts",
@@ -29,15 +29,15 @@
     "name": "Swag Token A farm",
     "desc": "Farms Super-Fan Swag Token A to 100, member and non-member paths. Member farms Token C in collectorlab r2, non-member farms Token D in terrarium, then trades up D-C-B-A at shop 325 in /collection.",
     "autoload": null,
-    "sha256": "fbf578598108a1704e2dd006baf27b842605bc4be9efcbf301135ca7f4327472"
+    "sha256": "6adee89c3508ba2eef00c339f16d1ea9ec5bcf364fc365f4dd6213b67624d387"
   },
   {
     "path": "bots/farms/sword-and-scroll-badge.ts",
     "kind": "bots",
     "name": "Sword and Scroll Badge farm",
-    "desc": "Farms Sword and Scroll Badge to WANT via repeatable quest 7505 Studying the Rogue in wardwarf.",
+    "desc": "Farms Sword and Scroll Badge to 100 via repeatable quest 7505 Studying the Rogue in wardwarf.",
     "autoload": null,
-    "sha256": "d985723b9c634023f4c7f4b6bb2938f983ed7ad3eb74e12ef159eeddda5c9f22"
+    "sha256": "9dd6ec5337b0d0225fb30e433037fa4ec664c9d42055b4f9d36069931ff2c56a"
   },
   {
     "path": "bots/items/blade-of-awe.ts",
@@ -101,7 +101,7 @@
     "name": "Chaos Lords 01 - Prologue",
     "desc": "Prologue, quests 183-6219. Completed quests return true without touching anything, so re-runs resume where they left off.",
     "autoload": null,
-    "sha256": "ae652593b6091ff9d661e7a54793014979eac956b6278d238c55c73dd66bb952"
+    "sha256": "75ebfdefb80b17924a224e6bd1927a36e2beb9b374d7231c4b48d3d96eefe1af"
   },
   {
     "path": "bots/storylines/chaos-lords/02-escherion.ts",
