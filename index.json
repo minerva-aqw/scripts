@@ -152,6 +152,14 @@
     "sha256": "687fcc0fcd0ec56b9d1c3a1d5b3d0a7fe1e7840733ffd7c9d45419b60467e1bf"
   },
   {
+    "path": "classes/horc-evader/dodge-dps.ts",
+    "kind": "classes",
+    "name": "Horc Evader dodge DPS",
+    "desc": "Dodge-wall upkeep, Blood Trail stacked to 4, Hunter's Call nuke on full stacks or Weak Spot, Whistle rage on a held wall.",
+    "autoload": "Horc Evader",
+    "sha256": "bd9abbe682d510841efeb86bc4f7a10f63941316ff129362c418a8ec3ba96799"
+  },
+  {
     "path": "classes/kings-echo/damage.ts",
     "kind": "classes",
     "name": "King's Echo damage",
