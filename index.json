@@ -48,6 +48,14 @@
     "sha256": "83c86e77655f3f559fdf85af307ebe10310defd2b1390a3d69f0a740e00fb04d"
   },
   {
+    "path": "bots/items/blinding-light-of-destiny.ts",
+    "kind": "bots",
+    "name": "Blinding Light of Destiny",
+    "desc": "Farms BLoD via necropolis merge 422 + battleunder quests. Non-member, daily-gated (mine metals). Blade path.",
+    "autoload": null,
+    "sha256": "8f8943f9cc46d85c497c5c2ff10b9375c79ba2c20d09d83cca02cf0edda182d0"
+  },
+  {
     "path": "bots/kitsune-farm.ts",
     "kind": "bots",
     "name": "Kitsune farm",
