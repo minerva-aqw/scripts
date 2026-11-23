@@ -56,12 +56,44 @@
     "sha256": "0a074b70d2989e708337476f295314a4f54004c6be36a74c2726da08e6d2b375"
   },
   {
+    "path": "bots/storylines/chaos-lords/01-prologue.ts",
+    "kind": "bots",
+    "name": "Chaos Lords 01 - Prologue",
+    "desc": "Prologue, quests 183-6219. Completed quests return true without touching anything, so re-runs resume where they left off.",
+    "autoload": null,
+    "sha256": "ae652593b6091ff9d661e7a54793014979eac956b6278d238c55c73dd66bb952"
+  },
+  {
     "path": "bots/storylines/chaos-lords/02-escherion.ts",
     "kind": "bots",
     "name": "Chaos Lords 02 - Escherion",
     "desc": "Escherion chapter, quests 245-272. Completed quests return true without touching anything, so re-runs resume where they left off.",
     "autoload": null,
     "sha256": "76589671e92b8e2be8daf1b5a0d4c36d80d1a2d534223f7492182bdec57f9cec"
+  },
+  {
+    "path": "bots/storylines/chaos-lords/03-vath.ts",
+    "kind": "bots",
+    "name": "Chaos Lords 03 - Vath",
+    "desc": "Vath chapter, quests 319-363. Completed quests return true without touching anything, so re-runs resume where they left off.",
+    "autoload": null,
+    "sha256": "c42db01ecb33be9805fd154144043cf2e74452e57f9a191ad7060a9078281d8b"
+  },
+  {
+    "path": "bots/storylines/chaos-lords/04-kitsune.ts",
+    "kind": "bots",
+    "name": "Chaos Lords 04 - Kitsune",
+    "desc": "Kitsune chapter, quests 380-488. Completed quests return true without touching anything, so re-runs resume where they left off.",
+    "autoload": null,
+    "sha256": "bff0c4b4d321401d6b7cfc1cc13c9cc11b5f78a2ea7cef835cd29c38cc86dcd3"
+  },
+  {
+    "path": "bots/storylines/chaos-lords/05-wolfwing.ts",
+    "kind": "bots",
+    "name": "Chaos Lords 05 - Wolfwing",
+    "desc": "Wolfwing chapter, quests 494-598. Completed quests return true without touching anything, so re-runs resume where they left off.",
+    "autoload": null,
+    "sha256": "e0aebbd7ebb82624de4f58db12baaeb275aa2e763ed0a331ccae88918d92501c"
   },
   {
     "path": "bots/storylines/chaos-lords/06-kimberly.ts",
@@ -72,12 +104,84 @@
     "sha256": "bee3faed1409787da941fc9fa97b882a3c831204e3263057d3e49cb600092946"
   },
   {
+    "path": "bots/storylines/chaos-lords/07-ledgermayne.ts",
+    "kind": "bots",
+    "name": "Chaos Lords 07 - Ledgermayne",
+    "desc": "Ledgermayne chapter, quests 805-847. Completed quests return true without touching anything, so re-runs resume where they left off.",
+    "autoload": null,
+    "sha256": "11847502fd4ed35c523c5ebbd4f02691a1b63bc677987245af966266e89fb8b8"
+  },
+  {
+    "path": "bots/storylines/chaos-lords/08-tibicenas.ts",
+    "kind": "bots",
+    "name": "Chaos Lords 08 - Tibicenas",
+    "desc": "Tibicenas chapter, quests 930-1005. Completed quests return true without touching anything, so re-runs resume where they left off.",
+    "autoload": null,
+    "sha256": "2dfabe86e3503bc05a11e9d29570ab87b56a2fe4db7c8955be5c1e9fe676db08"
+  },
+  {
     "path": "bots/storylines/chaos-lords/09-khasaanda-horc.ts",
     "kind": "bots",
     "name": "Chaos Lords 09 - Khasaanda (Horc)",
     "desc": "Horc path, quests 1232-1473. Completed quests return true without touching anything, so re-runs resume where they left off.",
     "autoload": null,
     "sha256": "992b82b9172a730fe5eafa7c97d94a06b74cdca9b5b7fe790114a6a26afa9b5d"
+  },
+  {
+    "path": "bots/storylines/chaos-lords/09-khasaanda-troll.ts",
+    "kind": "bots",
+    "name": "Chaos Lords 09 - Khasaanda (Troll)",
+    "desc": "Troll path, quests 1226-1468. Completed quests return true without touching anything, so re-runs resume where they left off.",
+    "autoload": null,
+    "sha256": "14c955452c48c6c020253a3cdd7737448498a69614ac9e732e2877cd586c15bf"
+  },
+  {
+    "path": "bots/storylines/chaos-lords/10-iadoa.ts",
+    "kind": "bots",
+    "name": "Chaos Lords 10 - Iadoa",
+    "desc": "Iadoa chapter, quests 2239-2521. Completed quests return true without touching anything, so re-runs resume where they left off.",
+    "autoload": null,
+    "sha256": "fed02dbc825c3150671dd1ea3b9794fc4964331b5078ca2c6895f4fa0048a7dc"
+  },
+  {
+    "path": "bots/storylines/chaos-lords/11-lionfang.ts",
+    "kind": "bots",
+    "name": "Chaos Lords 11 - Lionfang",
+    "desc": "Lionfang chapter, quests 2612-2814. Completed quests return true without touching anything, so re-runs resume where they left off.",
+    "autoload": null,
+    "sha256": "ada839cbc0307a37669c26eb3cbfec750a8a9cf561729a33de780f66cacc04f7"
+  },
+  {
+    "path": "bots/storylines/chaos-lords/12-xiang.ts",
+    "kind": "bots",
+    "name": "Chaos Lords 12 - Xiang",
+    "desc": "Xiang chapter, quests 2909-3189. Completed quests return true without touching anything, so re-runs resume where they left off.",
+    "autoload": null,
+    "sha256": "203afd5db8f6689b05acc396f1c8ef4f3f5efd61eedac220a63213b25988618a"
+  },
+  {
+    "path": "bots/storylines/chaos-lords/13-alteon.ts",
+    "kind": "bots",
+    "name": "Chaos Lords 13 - Alteon",
+    "desc": "Alteon chapter, quests 3077-3160. Completed quests return true without touching anything, so re-runs resume where they left off.",
+    "autoload": null,
+    "sha256": "0b4f7bb8238b7ce72c511d4e6de211e0e23c188276caf7f71b7548dcc8aa4822"
+  },
+  {
+    "path": "bots/storylines/chaos-lords/14-hero.ts",
+    "kind": "bots",
+    "name": "Chaos Lords 14 - Hero",
+    "desc": "Chaos finale, quests 3578-3881. Completed quests return true without touching anything, so re-runs resume where they left off.",
+    "autoload": null,
+    "sha256": "d2b13d9f8ad417339aa2e4bbcb1ef490cb5dbb08f9da03bd6fa070363f2b85d2"
+  },
+  {
+    "path": "bots/storylines/chaos-lords/15-extra.ts",
+    "kind": "bots",
+    "name": "Chaos Lords 15 - Extra",
+    "desc": "Dreadhaven extra, quests 3812-3824. Completed quests return true without touching anything, so re-runs resume where they left off.",
+    "autoload": null,
+    "sha256": "f7a38d01472fd8ef40ccef3a1a6891ad61685fc8537d4677e6df7f6dff0e1331"
   },
   {
     "path": "bots/storylines/elegy-of-madness/01-eridani.ts",
