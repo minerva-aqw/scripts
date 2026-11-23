@@ -8,6 +8,14 @@
     "sha256": "420b1b3a694fc1e18b549193f3b0d62cbcfae0332646659954692ddd58807dcd"
   },
   {
+    "path": "bots/class/ninja.ts",
+    "kind": "bots",
+    "name": "Ninja class",
+    "desc": "Gets the Ninja class: Rogue from classhalla, Mazumi quests 90-92, Ninja purchase.",
+    "autoload": null,
+    "sha256": "127d0e6e63298cb9cf85bfff3b2af17ffacc977f6450f2fc859f1467ad54ac15"
+  },
+  {
     "path": "bots/farms/las-gratitude.ts",
     "kind": "bots",
     "name": "La's Gratitude farm",
