@@ -32,6 +32,14 @@
     "sha256": "fbf578598108a1704e2dd006baf27b842605bc4be9efcbf301135ca7f4327472"
   },
   {
+    "path": "bots/farms/sword-and-scroll-badge.ts",
+    "kind": "bots",
+    "name": "Sword and Scroll Badge farm",
+    "desc": "Farms Sword and Scroll Badge to WANT via repeatable quest 7505 Studying the Rogue in wardwarf.",
+    "autoload": null,
+    "sha256": "d985723b9c634023f4c7f4b6bb2938f983ed7ad3eb74e12ef159eeddda5c9f22"
+  },
+  {
     "path": "bots/items/blade-of-awe.ts",
     "kind": "bots",
     "name": "Blade of Awe",
