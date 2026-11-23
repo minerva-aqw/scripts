@@ -22,21 +22,43 @@ function held() {
   return inv.found ? inv.qty : 0;
 }
 
+function floorHas(id) {
+  // Cheap floor check with a fast miss: id pickup sends `getDrop` blind
+  // and polls the grant to `op_timeout` (30s) on a miss, so a blind
+  // `pickup(id)` after every turn-in — and the trailing
+  // `while (pickup(id))` remainder clear, and the no-turn-in round's
+  // pickup — each idles ~30s on an empty floor. The pending list reads
+  // false immediately, so gate the blind send on it. List off (Custom
+  // Drops UI) reads as "maybe", falling back to the direct pickup.
+  try {
+    const d = bot.drops();
+    for (const e of d) {
+      if (e.id === id) return true;
+    }
+    return false;
+  } catch (err) {
+    return true;
+  }
+}
+
 function drain(before) {
   // The reward drop may not be on the floor yet right after turn-in, and
-  // a bare pickup reads a miss without waiting (Skua's Wait.ForPickup
-  // does). Each call round-trips to the host, so retrying doubles as the
-  // wait: keep claiming until the count grows past what turn-in started
-  // with, then clear any remainder on the floor.
+  // a bare id pickup reads a miss only after polling the grant to the op
+  // timeout (Skua's Wait.ForPickup does not exist here). Each call
+  // round-trips to the host, so retrying doubles as the wait — but only
+  // send when the floor actually lists the reward, so the wait is cheap
+  // list reads instead of 30s grant polls. Keep claiming until the count
+  // grows past what turn-in started with, then clear any remainder the
+  // same gated way.
   let guard = 0;
-  while (held() <= before && guard < 20) {
-    bot.pickup(GRATITUDE);
+  while (held() <= before && guard < 60) {
+    if (floorHas(GRATITUDE)) bot.pickup(GRATITUDE);
     guard += 1;
   }
   guard = 0;
-  while (bot.pickup(GRATITUDE)) {
+  while (floorHas(GRATITUDE) && guard < 10) {
+    bot.pickup(GRATITUDE);
     guard += 1;
-    if (guard >= 500) break;
   }
   if (held() <= before) {
     throw new Error(
@@ -66,8 +88,10 @@ function sweptConcern(swept) {
   return "nothing changed";
 }
 
-// The quest has no reward to pick, so -1 is right.
-bot.quest.register(8001, { choice: -1 });
+// The quest has no reward to pick, so -1 is right. Interval 0 sweeps
+// before every parked call, so the re-accept after a turn-in lands during
+// the drain/claim parks instead of waiting out the 2000ms tick.
+bot.quest.register(8001, { choice: -1, interval: 0 });
 
 // The tick accepts, but it does not wait — and a kill that lands before the
 // quest reaches the tracker does not count for it (the hunt also reads the
@@ -82,11 +106,16 @@ for (let look = 0; look < 20; look++) {
   if (inTracker()) break;
 }
 
-bot.pickup(GRATITUDE);
+if (floorHas(GRATITUDE)) bot.pickup(GRATITUDE);
 
 let stall = 0;
 while (held() < WANT) {
   const before = held();
+  // Re-accept before filling: accept and turn-in never share one sweep
+  // pass, so after a turn-in the quest is out of the tracker and a hunt
+  // would run with an empty watch (fixed kill count, no top-up, no drops
+  // counting). The pre-sweep takes it again so this round's hunt fills.
+  bot.quest.sweep();
   // Both requirements drop off the same monster, so one hunt fills the
   // whole quest: qty is a floor, the hunt tops up until the watch reads
   // held, sweeping floor drops as it goes.
@@ -100,9 +129,9 @@ while (held() < WANT) {
   }).length;
   if (turnedIn > 0) {
     drain(before);
-  } else {
-    // No hand-in yet: still claim a reward left on the floor from a
-    // previous round before counting the round as empty.
+  } else if (floorHas(GRATITUDE)) {
+    // No hand-in this round, but a reward left on the floor from an
+    // earlier round is still worth claiming before counting the round.
     bot.pickup(GRATITUDE);
   }
   if (held() > before) {
