@@ -29,7 +29,7 @@ bot.quest(809, {
 });
 
 bot.quest(810, {
-  "5572": function () { bot.sellItem(43280); bot.buyItem(1100, 5572); }, // Mana Potion
+  "5572": function () { bot.sellItem(43280); bot.travel("embersea"); bot.buyItem(1100, 5572); }, // Mana Potion
   "5604": function () { bot.gather(141, "cloister", 3); }, // Revived Bough
 });
 

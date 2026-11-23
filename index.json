@@ -109,7 +109,7 @@
     "name": "Chaos Lords 07 - Ledgermayne",
     "desc": "Ledgermayne chapter, quests 805-847. Completed quests return true without touching anything, so re-runs resume where they left off.",
     "autoload": null,
-    "sha256": "11847502fd4ed35c523c5ebbd4f02691a1b63bc677987245af966266e89fb8b8"
+    "sha256": "e047d8539fe871b3079eafaa6f46c0d2e75bafb24735dad07a19672289e93794"
   },
   {
     "path": "bots/storylines/chaos-lords/08-tibicenas.ts",
@@ -157,7 +157,7 @@
     "name": "Chaos Lords 12 - Xiang",
     "desc": "Xiang chapter, quests 2909-3189. Completed quests return true without touching anything, so re-runs resume where they left off.",
     "autoload": null,
-    "sha256": "203afd5db8f6689b05acc396f1c8ef4f3f5efd61eedac220a63213b25988618a"
+    "sha256": "7e236c0ce46c30aea4905ecf0fa12a012c212dbca7b08bc920a7f82646acbaa6"
   },
   {
     "path": "bots/storylines/chaos-lords/13-alteon.ts",

@@ -180,6 +180,7 @@ if (!bot.quest(3187).completed()) {
 
 if (!bot.quest(3188).completed()) {
   bot.quest(3188).accept();
+  bot.travel("mirrorportal");
   bot.buyItem(774, "Shriekward Potion", 99);
   bot.hunt("Chaos Harpy", "mirrorportal", 1, "r3", "Left");
   bot.quest(3188).turnIn();
