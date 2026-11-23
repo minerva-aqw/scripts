@@ -56,6 +56,14 @@
     "sha256": "0a074b70d2989e708337476f295314a4f54004c6be36a74c2726da08e6d2b375"
   },
   {
+    "path": "bots/storylines/brightoak.ts",
+    "kind": "bots",
+    "name": "Bright Oak",
+    "desc": "Brightoak extra storyline, quests 4463-4810. Completed quests return true without touching anything, so re-runs resume where they left off.",
+    "autoload": null,
+    "sha256": "5511783f6bbcdd8e27468e998e0d17f2f95e1c6b66cbf189fe1d3831d89a7c7a"
+  },
+  {
     "path": "bots/storylines/chaos-lords/01-prologue.ts",
     "kind": "bots",
     "name": "Chaos Lords 01 - Prologue",
