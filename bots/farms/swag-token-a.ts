@@ -7,16 +7,18 @@
 //
 // Routes ported from Skua `CoreFarms.SwagTokenA` (non-member quests
 // 1304/1307 in terrarium, member quests 1310/1312/1313/1314 in
-// collectorlab r2 Left). Kills are "*" — the temp quest items drop off
-// anything in those cells while the quests are accepted. Trade-up ratios
-// from the same source: 10 D -> 1 C (cap 500), 10 C -> 1 B (cap 200),
-// 20 B -> 1 A (cap 100), all at shop 325 in /collection.
+// collectorlab r2 Left). Temp quest items drop off anything in those
+// cells, so every handler hunts "*" and tops up until the watch reads
+// held. Trade-up ratios from the same source: 10 D -> 1 C (cap 500),
+// 10 C -> 1 B (cap 200), 20 B -> 1 A (cap 100), all at shop 325 in
+// /collection.
 //
-// This is the registered form of the farm (Skua's `RegisterQuests`): every
-// quest of the path is registered once, and the engine's tick accepts them
-// and hands them in as their bags fill — the script never waits on a quest,
-// it only kills, claims what fell on the floor, and trades up. The sweep cost
-// is one projection round trip per interval, not per quest.
+// Declarative form: `bot.quest(id, handlers, { choice })` accepts, fills
+// each requirement through its handler, then turns in. Handler keys are
+// requirement ItemIDs (stable, from quest-data); quantities from the
+// same. 1304/1307 pay a reward choice (9396 = Super-Fan Swag Token D;
+// C is the other choice); the member quests have no reward to pick, so
+// -1 is right for them.
 
 const WANT = 100;
 
@@ -25,17 +27,61 @@ function tokenQty(name) {
   return inv.found ? inv.qty : 0;
 }
 
+// The pending list reads a miss immediately; an id `pickup` sends
+// `getDrop` blind and polls the grant to `op_timeout` (30s) on a miss.
+// Probe once: when the list is up, claim by name (fast miss) gated on
+// the floor listing the token; when it is off (Custom Drops UI),
+// fall back to the direct id pickup.
+let listOk = true;
+try {
+  bot.drops();
+} catch (err) {
+  listOk = false;
+}
+
+function floorHasName(name) {
+  if (!listOk) return true;
+  const d = bot.drops();
+  for (const e of d) {
+    if (e.name === name) return true;
+  }
+  return false;
+}
+
+function claim(name, id) {
+  if (listOk) return bot.pickup(name);
+  return bot.pickup(id);
+}
+
 // Quest rewards can land on the floor instead of joining the backpack, so
-// every turn-in is followed by a claim pass before any travel leaves the
-// room. `pickup` with a name claims one per call and reads false on a miss,
-// so loop until the floor is clear of it.
-function pickupTokens(names) {
-  for (const n of names) {
-    let guard = 0;
-    while (bot.pickup(n)) {
-      guard += 1;
-      if (guard >= 500) break;
+// every turn-in round is followed by a claim pass before any travel
+// leaves the room. Only send when the floor actually lists the token,
+// so the wait is cheap list reads instead of 30s grant polls.
+function drainTokens(names, ids, before) {
+  let guard = 0;
+  while (progress() <= before && guard < 60) {
+    for (let i = 0; i < names.length; i++) {
+      if (floorHasName(names[i])) claim(names[i], ids[i]);
     }
+    guard += 1;
+  }
+  guard = 0;
+  let clearing = true;
+  while (clearing && guard < 10) {
+    clearing = false;
+    for (let i = 0; i < names.length; i++) {
+      if (floorHasName(names[i])) {
+        claim(names[i], ids[i]);
+        clearing = true;
+      }
+    }
+    guard += 1;
+  }
+  if (progress() <= before) {
+    throw new Error(
+      "swag turn-ins left no tokens on the floor or in the bags (" + before + " held): " +
+      "re-run resumes where it left off"
+    );
   }
 }
 
@@ -63,34 +109,54 @@ function tradeUp() {
   }
 }
 
-// What the last sweep did, for the stall message: the reason a farm that is
-// killing and claiming is not gaining tokens should be on screen, not guessed.
-function sweptConcern(swept) {
-  const list = (swept && swept.swept) || [];
-  for (const d of list) {
-    if (d.did === "refused") {
-      return "quest " + d.id + " turn-in refused: " + (d.why || "no message");
-    }
-    if (d.did === "error") {
-      return "quest " + d.id + " failed: " + (d.why || "no message");
-    }
-  }
-  for (const d of list) {
-    if (d.did === "accept") {
-      return "quest " + d.id + " is not staying in the tracker";
-    }
-  }
-  return "nothing changed";
-}
-
 const me = bot.me();
 const member = me.upgraded === true;
 
-// Hand the whole path to the tick. 1304/1307 pay a reward choice (9396 =
-// Super-Fan Swag Token D; Skua farms D, C is the other choice); the member
-// quests have no reward to pick, so -1 is right for them.
 const quests = member ? [1310, 1312, 1313, 1314] : [1304, 1307];
-bot.quest.register(quests, { choice: member ? -1 : 9396 });
+const choice = member ? -1 : 9396;
+const map = member ? "collectorlab" : "terrarium";
+const cell = member ? "r2" : "Enter";
+const pad = member ? "Left" : "Spawn";
+const claimed = member
+  ? ["Super-Fan Swag Token C"]
+  : ["Super-Fan Swag Token D", "Super-Fan Swag Token C"];
+const claimedIds = member ? [9395] : [9396, 9395];
+
+// One "*" hunt per requirement: qty is a floor, the hunt tops up until
+// the watch reads held, sweeping floor drops as it goes.
+const handlers = member ? {
+  1310: {
+    "9317": function () { bot.hunt("*", map, 1, cell, pad); }, // Doppelganger Documents
+  },
+  1312: {
+    "9377": function () { bot.hunt("*", map, 5, cell, pad); }, // Lead-based Liquid
+    "9378": function () { bot.hunt("*", map, 7, cell, pad); }, // XY Elixir
+    "9379": function () { bot.hunt("*", map, 3, cell, pad); }, // Scientific Super-slush
+  },
+  1313: {
+    "9381": function () { bot.hunt("*", map, 1, cell, pad); }, // Sage Uldor's Head Replica
+    "9382": function () { bot.hunt("*", map, 1, cell, pad); }, // Robina's Head Replica
+    "9383": function () { bot.hunt("*", map, 1, cell, pad); }, // Slugwrath's Head Replica
+    "9384": function () { bot.hunt("*", map, 1, cell, pad); }, // Pramithia's Head Replica
+    "9385": function () { bot.hunt("*", map, 1, cell, pad); }, // Super Death's Head Replica
+    "9386": function () { bot.hunt("*", map, 1, cell, pad); }, // Rolly Pony's Head Replica
+  },
+  1314: {
+    "9388": function () { bot.hunt("*", map, 10, cell, pad); }, // Wanted Rock
+    "9387": function () { bot.hunt("*", map, 5, cell, pad); }, // Winding String
+  },
+} : {
+  1304: {
+    "9306": function () { bot.hunt("*", map, 1, cell, pad); }, // Running Shoes
+    "9307": function () { bot.hunt("*", map, 1, cell, pad); }, // Track Suit
+    "9308": function () { bot.hunt("*", map, 1, cell, pad); }, // Sweatband
+    "9309": function () { bot.hunt("*", map, 1, cell, pad); }, // Water bottle
+  },
+  1307: {
+    "9540": function () { bot.hunt("*", map, 10, cell, pad); }, // Ball of Fluff
+    "9313": function () { bot.hunt("*", map, 10, cell, pad); }, // Dust Bunny Blown Apart!
+  },
+};
 
 // The two tokens a round can actually move: A always, and the one this path
 // farms (C for members, D otherwise). Measured before the hunt and after the
@@ -102,56 +168,20 @@ function progress() {
   );
 }
 
-// The tick accepts, but it does not wait — and a kill that lands before the
-// quest reaches the tracker does not count for it (the hunt also reads the
-// in-progress set when it starts, so an early hunt sees nothing to fill). So
-// the fill does not begin until the tracker holds the path. Twenty short
-// looks; after that the farm hunts anyway and the stall watchdog speaks.
-function inTracker() {
-  for (const id of quests) {
-    const q = bot.quest(id);
-    if (q.active() !== true && q.done() !== true) return false;
-  }
-  return true;
-}
-for (let look = 0; look < 20; look++) {
-  if (inTracker()) break;
-}
-
-const map = member ? "collectorlab" : "terrarium";
-const cell = member ? "r2" : "Enter";
-const pad = member ? "Left" : "Spawn";
-const claimed = member
-  ? ["Super-Fan Swag Token C"]
-  : ["Super-Fan Swag Token D", "Super-Fan Swag Token C"];
-
-let stall = 0;
+let rounds = 0;
 while (tokenQty("Super-Fan Swag Token A") < WANT) {
-  const before = progress();
-  // One hunt fills every registered quest at once: "*" matches no requirement
-  // by name, so it tops up against the whole watch instead of one at a time.
-  bot.hunt("*", map, 1, cell, pad);
-  // Forced pass: the tick may be mid-interval and this is the moment the bags
-  // are full. The hand-ins land here, so the floor can be claimed below.
-  const swept = bot.quest.sweep();
-  const turnedIn = ((swept && swept.swept) || []).filter(function (d) {
-    return d.did === "turnin";
-  }).length;
-  pickupTokens(claimed);
-  if (progress() > before) {
-    stall = 0;
-  } else {
-    // The composite this replaced failed the run after five empty rounds; a
-    // full hunt mission plus a claim pass is a much larger round, so eight of
-    // them with no token movement is already a wedged farm.
-    stall += 1;
-    if (stall >= 8) {
-      throw new Error("swag tokens are not moving: " + sweptConcern(swept));
-    }
+  if (rounds >= 500) {
+    throw new Error("swag tokens stalled at " + tokenQty("Super-Fan Swag Token A") + "/" + WANT);
   }
-  // Only leave the farming map when a hand-in actually paid. A trip to the
-  // shop with nothing to trade is a map change per round that gains nothing —
-  // the bot sits in /collection looking stuck while the kill loop waits for it.
-  if (turnedIn > 0) tradeUp();
+  const before = progress();
+  for (const id of quests) {
+    bot.quest(id, handlers[id], { choice: choice });
+  }
+  // Rewards always pay on a successful round, so the claim pass below
+  // throws when nothing moved; the trip to the shop only happens when a
+  // hand-in actually paid — never a map change per round that gains
+  // nothing.
+  drainTokens(claimed, claimedIds, before);
+  tradeUp();
+  rounds += 1;
 }
-bot.quest.unregister();

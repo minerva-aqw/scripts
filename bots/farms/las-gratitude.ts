@@ -1,18 +1,16 @@
 /// name: La's Gratitude farm
 /// desc: Farms La's Gratitude to 300 via repeatable quest 8001 in astravia.
 
- // Ported from Skua CoreDarkon.LasGratitude (default quantity 300).
+// Ported from Skua CoreDarkon.LasGratitude (default quantity 300).
 // Quest 8001 "Let Sleeping Dogs Lie": 20 Broken Dog Tag + 5 Intact
 // Dog Tag off Creature 27 in astravia.
 //
-// Registered form (Skua's `RegisterQuests`): the quest is registered once
-// and the tick accepts it and hands it in as the bags fill — the script
-// never waits on an accept, it only hunts, claims what fell on the floor,
-// and picks up the reward. The sweep cost is one projection round trip
-// per interval, not per turn-in. This replaces the composite
-// `bot.quest(8001, handlers)` form, where every round paid a blocking
-// accept (1200ms quest gap + two stable tracker reads) plus a blocking
-// turn-in.
+// Declarative form: `bot.quest(id, handlers)` accepts, fills each
+// requirement through its handler, then turns in. Handler keys are
+// requirement ItemIDs (stable); quantities from quest-data. Repeatables
+// always read incomplete, so the call re-runs every loop round.
+// IDs, not names, for counting and claiming: id claims work in every UI
+// mode, while name matching needs the drop list.
 
 const WANT = 300;
 const GRATITUDE = 60198; // La's Gratitude
@@ -25,9 +23,7 @@ function held() {
 function floorHas(id) {
   // Cheap floor check with a fast miss: id pickup sends `getDrop` blind
   // and polls the grant to `op_timeout` (30s) on a miss, so a blind
-  // `pickup(id)` after every turn-in — and the trailing
-  // `while (pickup(id))` remainder clear, and the no-turn-in round's
-  // pickup — each idles ~30s on an empty floor. The pending list reads
+  // `pickup(id)` on an empty floor idles ~30s. The pending list reads
   // false immediately, so gate the blind send on it. List off (Custom
   // Drops UI) reads as "maybe", falling back to the direct pickup.
   try {
@@ -68,79 +64,18 @@ function drain(before) {
   }
 }
 
-// What the last sweep did, for the stall message: the reason a farm that is
-// killing and claiming is not gaining gratitude should be on screen, not guessed.
-function sweptConcern(swept) {
-  const list = (swept && swept.swept) || [];
-  for (const d of list) {
-    if (d.did === "refused") {
-      return "quest " + d.id + " turn-in refused: " + (d.why || "no message");
-    }
-    if (d.did === "error") {
-      return "quest " + d.id + " failed: " + (d.why || "no message");
-    }
-  }
-  for (const d of list) {
-    if (d.did === "accept") {
-      return "quest " + d.id + " is not staying in the tracker";
-    }
-  }
-  return "nothing changed";
-}
-
-// The quest has no reward to pick, so -1 is right. Interval 0 sweeps
-// before every parked call, so the re-accept after a turn-in lands during
-// the drain/claim parks instead of waiting out the 2000ms tick.
-bot.quest.register(8001, { choice: -1, interval: 0 });
-
-// The tick accepts, but it does not wait — and a kill that lands before the
-// quest reaches the tracker does not count for it (the hunt also reads the
-// in-progress set when it starts, so an early hunt sees nothing to fill). So
-// the fill does not begin until the tracker holds the quest. Twenty short
-// looks; after that the farm hunts anyway and the stall watchdog speaks.
-function inTracker() {
-  const q = bot.quest(8001);
-  return q.active() === true || q.done() === true;
-}
-for (let look = 0; look < 20; look++) {
-  if (inTracker()) break;
-}
-
 if (floorHas(GRATITUDE)) bot.pickup(GRATITUDE);
 
-let stall = 0;
+let rounds = 0;
 while (held() < WANT) {
+  if (rounds >= 400) {
+    throw new Error("La's Gratitude stalled at " + held() + "/" + WANT);
+  }
   const before = held();
-  // Re-accept before filling: accept and turn-in never share one sweep
-  // pass, so after a turn-in the quest is out of the tracker and a hunt
-  // would run with an empty watch (fixed kill count, no top-up, no drops
-  // counting). The pre-sweep takes it again so this round's hunt fills.
-  bot.quest.sweep();
-  // Both requirements drop off the same monster, so one hunt fills the
-  // whole quest: qty is a floor, the hunt tops up until the watch reads
-  // held, sweeping floor drops as it goes.
-  bot.hunt("Creature 27", "astravia", 1);
-  // Forced pass: the tick may be mid-interval and this is the moment the
-  // bags are full. The hand-in lands here, so the floor can be claimed
-  // below.
-  const swept = bot.quest.sweep();
-  const turnedIn = ((swept && swept.swept) || []).filter(function (d) {
-    return d.did === "turnin";
-  }).length;
-  if (turnedIn > 0) {
-    drain(before);
-  } else if (floorHas(GRATITUDE)) {
-    // No hand-in this round, but a reward left on the floor from an
-    // earlier round is still worth claiming before counting the round.
-    bot.pickup(GRATITUDE);
-  }
-  if (held() > before) {
-    stall = 0;
-  } else {
-    stall += 1;
-    if (stall >= 8) {
-      throw new Error("La's Gratitude is not moving: " + sweptConcern(swept));
-    }
-  }
+  bot.quest(8001, {
+    "60196": function () { bot.hunt("Creature 27", "astravia", 20); }, // Broken Dog Tag
+    "60197": function () { bot.hunt("Creature 27", "astravia", 5); }, // Intact Dog Tag
+  });
+  drain(before);
+  rounds += 1;
 }
-bot.quest.unregister();
