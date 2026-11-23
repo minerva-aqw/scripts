@@ -4,13 +4,20 @@
 // Ported from Skua CoreDarkon.LasGratitude (default quantity 300).
 // Quest 8001 "Let Sleeping Dogs Lie": 20 Broken Dog Tag + 5 Intact
 // Dog Tag off Creature 27 in astravia. Repeatables always read
-// incomplete, so bot.quest re-runs every loop round; the reward can
-// land on the floor, so drain it after every turn-in.
+// incomplete, so bot.quest re-runs every loop round; the quest stays
+// accepted across turn-ins, so round 2+ skips the accept send by design
+// (same as Skua's RegisterQuests loop) — a missing accept line after
+// the first round is normal.
+// IDs, not names, for counting and claiming: id claims work in every UI
+// mode, while name matching needs the drop list.
 
 const WANT = 300;
+const GRATITUDE = 60198; // La's Gratitude
+const BROKEN = 60196; // Broken Dog Tag
+const INTACT = 60197; // Intact Dog Tag
 
 function held() {
-  const inv = bot.inventory("La's Gratitude");
+  const inv = bot.inventory(GRATITUDE);
   return inv.found ? inv.qty : 0;
 }
 
@@ -21,18 +28,24 @@ function drain(before) {
   // wait: keep claiming until the count grows past what turn-in started
   // with, then clear any remainder on the floor.
   let guard = 0;
-  while (held() <= before && guard < 60) {
-    bot.pickup("La's Gratitude");
+  while (held() <= before && guard < 20) {
+    bot.pickup(GRATITUDE);
     guard += 1;
   }
   guard = 0;
-  while (bot.pickup("La's Gratitude")) {
+  while (bot.pickup(GRATITUDE)) {
     guard += 1;
     if (guard >= 500) break;
   }
+  if (held() <= before) {
+    throw new Error(
+      "quest 8001 turned in but no La's Gratitude arrived (" + before + " held): " +
+      "reward still on the floor or the quest closed server-side — re-run resumes where it left off"
+    );
+  }
 }
 
-bot.pickup("La's Gratitude");
+bot.pickup(GRATITUDE);
 
 let rounds = 0;
 while (held() < WANT) {
