@@ -16,6 +16,14 @@
     "sha256": "127d0e6e63298cb9cf85bfff3b2af17ffacc977f6450f2fc859f1467ad54ac15"
   },
   {
+    "path": "bots/class/shadow-dragon-shinobi.ts",
+    "kind": "bots",
+    "name": "Shadow Dragon Shinobi class",
+    "desc": "Gets the Shadow Dragon Shinobi class: Dragon Shinobi Tokens via 7815 in blackfridaywar, buy from merge shop 756. Seasonal (Black Friday only).",
+    "autoload": null,
+    "sha256": "48c8acda3896bce8e3037e7604ebac459f86ef30a514dce3450182b097ef19b8"
+  },
+  {
     "path": "bots/farms/las-gratitude.ts",
     "kind": "bots",
     "name": "La's Gratitude farm",
