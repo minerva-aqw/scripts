@@ -264,6 +264,14 @@
     "sha256": "4b2867b7c7f230e213db4dbca8f172067671197384d8d83e611177a74c60acb9"
   },
   {
+    "path": "bots/storylines/hollowborn.ts",
+    "kind": "bots",
+    "name": "Hollowborn",
+    "desc": "Hollowborn storyline, quests 8289-9986. Completed quests return true without touching anything, so re-runs resume where they left off.",
+    "autoload": null,
+    "sha256": "9d0a1b6168d278c00c4126ac74030ceca17b835acec2b4bfa1146e61110c6406"
+  },
+  {
     "path": "classes/archpaladin/archpaladin.ts",
     "kind": "classes",
     "name": "ArchPaladin solo support",
