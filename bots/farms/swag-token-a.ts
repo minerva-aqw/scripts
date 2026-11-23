@@ -102,25 +102,42 @@ function progress() {
   );
 }
 
+// The tick accepts, but it does not wait — and a kill that lands before the
+// quest reaches the tracker does not count for it (the hunt also reads the
+// in-progress set when it starts, so an early hunt sees nothing to fill). So
+// the fill does not begin until the tracker holds the path. Twenty short
+// looks; after that the farm hunts anyway and the stall watchdog speaks.
+function inTracker() {
+  for (const id of quests) {
+    const q = bot.quest(id);
+    if (q.active() !== true && q.done() !== true) return false;
+  }
+  return true;
+}
+for (let look = 0; look < 20; look++) {
+  if (inTracker()) break;
+}
+
+const map = member ? "collectorlab" : "terrarium";
+const cell = member ? "r2" : "Enter";
+const pad = member ? "Left" : "Spawn";
+const claimed = member
+  ? ["Super-Fan Swag Token C"]
+  : ["Super-Fan Swag Token D", "Super-Fan Swag Token C"];
+
 let stall = 0;
 while (tokenQty("Super-Fan Swag Token A") < WANT) {
   const before = progress();
-  if (member) {
-    // One hunt fills every registered quest at once: "*" matches no
-    // requirement by name, so the hunt tops up against the whole watch
-    // instead of one requirement at a time.
-    bot.hunt("*", "collectorlab", 1, "r2", "Left");
-  } else {
-    bot.hunt("*", "terrarium", 1, "Enter", "Spawn");
-  }
-  // Forced pass: the tick may be mid-interval, and this is the moment the
-  // bags are full. Turn-ins land here, then the floor is claimed.
+  // One hunt fills every registered quest at once: "*" matches no requirement
+  // by name, so it tops up against the whole watch instead of one at a time.
+  bot.hunt("*", map, 1, cell, pad);
+  // Forced pass: the tick may be mid-interval and this is the moment the bags
+  // are full. The hand-ins land here, so the floor can be claimed below.
   const swept = bot.quest.sweep();
-  pickupTokens(
-    member
-      ? ["Super-Fan Swag Token C"]
-      : ["Super-Fan Swag Token D", "Super-Fan Swag Token C"]
-  );
+  const turnedIn = ((swept && swept.swept) || []).filter(function (d) {
+    return d.did === "turnin";
+  }).length;
+  pickupTokens(claimed);
   if (progress() > before) {
     stall = 0;
   } else {
@@ -132,6 +149,9 @@ while (tokenQty("Super-Fan Swag Token A") < WANT) {
       throw new Error("swag tokens are not moving: " + sweptConcern(swept));
     }
   }
-  tradeUp();
+  // Only leave the farming map when a hand-in actually paid. A trip to the
+  // shop with nothing to trade is a map change per round that gains nothing —
+  // the bot sits in /collection looking stuck while the kill loop waits for it.
+  if (turnedIn > 0) tradeUp();
 }
 bot.quest.unregister();

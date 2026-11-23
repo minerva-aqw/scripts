@@ -21,7 +21,7 @@
     "name": "Swag Token A farm",
     "desc": "Farms Super-Fan Swag Token A to 100, member and non-member paths. Member farms Token C in collectorlab r2, non-member farms Token D in terrarium, then trades up D-C-B-A at shop 325 in /collection.",
     "autoload": null,
-    "sha256": "f3facb43325c267a2d0e48cbf1682f59217cc713ab7aaed42465caac3f93a14b"
+    "sha256": "fbf578598108a1704e2dd006baf27b842605bc4be9efcbf301135ca7f4327472"
   },
   {
     "path": "bots/kitsune-farm.ts",
