@@ -24,6 +24,14 @@
     "sha256": "fbf578598108a1704e2dd006baf27b842605bc4be9efcbf301135ca7f4327472"
   },
   {
+    "path": "bots/items/blade-of-awe.ts",
+    "kind": "bots",
+    "name": "Blade of Awe",
+    "desc": "Unlock quests 2933-2937, farm Blade of Awe rep to rank 6 via 2935, buy Blade of Awe from museum shop 631.",
+    "autoload": null,
+    "sha256": "83c86e77655f3f559fdf85af307ebe10310defd2b1390a3d69f0a740e00fb04d"
+  },
+  {
     "path": "bots/kitsune-farm.ts",
     "kind": "bots",
     "name": "Kitsune farm",
