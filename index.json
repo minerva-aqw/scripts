@@ -8,6 +8,14 @@
     "sha256": "420b1b3a694fc1e18b549193f3b0d62cbcfae0332646659954692ddd58807dcd"
   },
   {
+    "path": "bots/farms/las-gratitude.ts",
+    "kind": "bots",
+    "name": "La's Gratitude farm",
+    "desc": "Farms La's Gratitude to 300 via repeatable quest 8001 in astravia.",
+    "autoload": null,
+    "sha256": "691044724366e7d5dee6c0af7a282c418ca6ff5a1d877135320e326277698bbc"
+  },
+  {
     "path": "bots/farms/swag-token-a.ts",
     "kind": "bots",
     "name": "Swag Token A farm",
