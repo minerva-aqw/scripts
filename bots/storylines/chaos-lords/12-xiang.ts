@@ -143,33 +143,33 @@ if (!bot.quest(3187).completed()) {
   let rounds = 0;
   while (!bot.ensureItem("Perfect Prism")) {
     if (rounds >= 25) {
-      throw new Error("no Perfect Prism after 25 earthstorm fills");
+      throw new Error("no Perfect Prism after 25 turn-ins of 3184");
     }
     bot.quest(3184, {
       "20887": function () { bot.hunt("Shard Spinner", "earthstorm", 5); }, // Reflective Fragment
-    }, { turnIn: false });
+    });
     bot.pickup("Perfect Prism");
     rounds += 1;
   }
   rounds = 0;
   while (!bot.ensureItem("Unchaorrupted Sample")) {
     if (rounds >= 25) {
-      throw new Error("no Unchaorrupted Sample after 25 bloodtuskwar fills");
+      throw new Error("no Unchaorrupted Sample after 25 turn-ins of 3185");
     }
     bot.quest(3185, {
       "20888": function () { bot.hunt("Chaotic Horcboar", "bloodtuskwar", 5); }, // Vials of Blood
-    }, { turnIn: false });
+    });
     bot.pickup("Unchaorrupted Sample");
     rounds += 1;
   }
   rounds = 0;
   while (!bot.ensureItem("Harpy Feather")) {
     if (rounds >= 25) {
-      throw new Error("no Harpy Feather after 25 bloodtuskwar fills");
+      throw new Error("no Harpy Feather after 25 turn-ins of 3186");
     }
     bot.quest(3186, {
       "20889": function () { bot.hunt("Chaos Tigriff", "bloodtuskwar", 5); }, // Feathers
-    }, { turnIn: false });
+    });
     bot.pickup("Harpy Feather");
     rounds += 1;
   }
