@@ -64,6 +64,26 @@ if (!bot.quest(8249).completed()) {
 }
 ```
 
+### Registered quests
+
+When a quest should be handed in the moment its bags fill — not when the
+script happens to look — register it. The engine sweeps the registered set
+before every parked call (at most once per `interval`, default 2000 ms):
+accept what is not in the tracker, turn in what the client offers, and never
+wait or throw. A refused turn-in costs a sweep, not the run.
+
+```ts
+bot.quest.register([8300, 8301], { choice: 0, qty: 1, interval: 2000 });
+bot.hunt("Slime", "yulgar", 20);   // the hand-ins happen from the tick
+bot.quest.unregister();            // or unregister([8300])
+```
+
+`bot.quest.sweep()` runs one pass immediately and resumes `{ swept: [{ id,
+did }] }`, with `did` one of `accept`, `turnin`, `filling`, `refused`
+(the server's own words in `why`), `choice` (a reward must be named),
+`wait` (cold definition), `done` or `error`. `bot.quest.registered()` lists
+what is registered.
+
 ## index.json
 
 Generated, never hand-edited:

@@ -8,12 +8,15 @@
 // Routes ported from Skua `CoreFarms.SwagTokenA` (non-member quests
 // 1304/1307 in terrarium, member quests 1310/1312/1313/1314 in
 // collectorlab r2 Left). Kills are "*" — the temp quest items drop off
-// anything in those cells while the quest is accepted, and `bot.quest`
-// accepts, fills via the handlers, and turns in by itself. Rewards can
-// land on the floor, so every quest is followed by a pickup drain before
-// any travel. Trade-up ratios from the same source: 10 D -> 1 C
-// (cap 500), 10 C -> 1 B (cap 200), 20 B -> 1 A (cap 100), all at
-// shop 325 in /collection.
+// anything in those cells while the quests are accepted. Trade-up ratios
+// from the same source: 10 D -> 1 C (cap 500), 10 C -> 1 B (cap 200),
+// 20 B -> 1 A (cap 100), all at shop 325 in /collection.
+//
+// This is the registered form of the farm (Skua's `RegisterQuests`): every
+// quest of the path is registered once, and the engine's tick accepts them
+// and hands them in as their bags fill — the script never waits on a quest,
+// it only kills, claims what fell on the floor, and trades up. The sweep cost
+// is one projection round trip per interval, not per quest.
 
 const WANT = 100;
 
@@ -22,12 +25,10 @@ function tokenQty(name) {
   return inv.found ? inv.qty : 0;
 }
 
-// Quest rewards can land on the floor instead of joining the backpack,
-// and nothing claims them by itself — not the hunt sweep (it only
-// covers watched requirements) and not the turn-in (fire-and-forget).
-// Drain each token name after every quest, before any travel leaves
-// the room. `pickup` with a name claims one per call and reads false
-// on a miss, so loop until the floor is clear of it.
+// Quest rewards can land on the floor instead of joining the backpack, so
+// every turn-in is followed by a claim pass before any travel leaves the
+// room. `pickup` with a name claims one per call and reads false on a miss,
+// so loop until the floor is clear of it.
 function pickupTokens(names) {
   for (const n of names) {
     let guard = 0;
@@ -62,50 +63,75 @@ function tradeUp() {
   }
 }
 
+// What the last sweep did, for the stall message: the reason a farm that is
+// killing and claiming is not gaining tokens should be on screen, not guessed.
+function sweptConcern(swept) {
+  const list = (swept && swept.swept) || [];
+  for (const d of list) {
+    if (d.did === "refused") {
+      return "quest " + d.id + " turn-in refused: " + (d.why || "no message");
+    }
+    if (d.did === "error") {
+      return "quest " + d.id + " failed: " + (d.why || "no message");
+    }
+  }
+  for (const d of list) {
+    if (d.did === "accept") {
+      return "quest " + d.id + " is not staying in the tracker";
+    }
+  }
+  return "nothing changed";
+}
+
 const me = bot.me();
 const member = me.upgraded === true;
 
+// Hand the whole path to the tick. 1304/1307 pay a reward choice (9396 =
+// Super-Fan Swag Token D; Skua farms D, C is the other choice); the member
+// quests have no reward to pick, so -1 is right for them.
+const quests = member ? [1310, 1312, 1313, 1314] : [1304, 1307];
+bot.quest.register(quests, { choice: member ? -1 : 9396 });
+
+// The two tokens a round can actually move: A always, and the one this path
+// farms (C for members, D otherwise). Measured before the hunt and after the
+// claim pass, so a round that turns nothing in is visible.
+function progress() {
+  return (
+    tokenQty("Super-Fan Swag Token A") +
+    (member ? tokenQty("Super-Fan Swag Token C") : tokenQty("Super-Fan Swag Token D"))
+  );
+}
+
+let stall = 0;
 while (tokenQty("Super-Fan Swag Token A") < WANT) {
+  const before = progress();
   if (member) {
-    // Handlers keyed by ItemID: quest_status reports these requirements
-    // with empty names, so sName keys never match (IDs win on collision).
-    const lab = function () { bot.hunt("*", "collectorlab", 1, "r2", "Left"); };
-    bot.quest(1310, {
-      "9317": lab, // Doppelganger Documents
-    });
-    bot.quest(1312, {
-      "9377": lab, // Lead-based Liquid
-      "9378": lab, // XY Elixir
-      "9379": lab, // Scientific Super-slush
-    });
-    bot.quest(1313, {
-      "9381": lab, // Sage Uldor's Head Replica
-      "9382": lab, // Robina's Head Replica
-      "9383": lab, // Slugwrath's Head Replica
-      "9384": lab, // Pramithia's Head Replica
-      "9385": lab, // Super Death's Head Replica
-      "9386": lab, // Rolly Pony's Head Replica
-    });
-    bot.quest(1314, {
-      "9388": lab, // Wanted Rock
-      "9387": lab, // Winding String
-    });
-    pickupTokens(["Super-Fan Swag Token C"]);
+    // One hunt fills every registered quest at once: "*" matches no
+    // requirement by name, so the hunt tops up against the whole watch
+    // instead of one requirement at a time.
+    bot.hunt("*", "collectorlab", 1, "r2", "Left");
   } else {
-    const terr = function () { bot.hunt("*", "terrarium", 1, "Enter", "Spawn"); };
-    bot.quest(1304, {
-      "9306": terr, // Running Shoes
-      "9307": terr, // Track Suit
-      "9308": terr, // Sweatband
-      "9309": terr, // Water bottle
-    }, { choice: 9396 }); // Super-Fan Swag Token D (Skua farms D; C is the other choice)
-    // 1304 pays one choice per turn-in (D here).
-    pickupTokens(["Super-Fan Swag Token D", "Super-Fan Swag Token C"]);
-    bot.quest(1307, {
-      "9540": terr, // Ball of Fluff
-      "9313": terr, // Dust Bunny Blown Apart!
-    }, { choice: 9396 }); // Super-Fan Swag Token D
-    pickupTokens(["Super-Fan Swag Token D", "Super-Fan Swag Token C"]);
+    bot.hunt("*", "terrarium", 1, "Enter", "Spawn");
+  }
+  // Forced pass: the tick may be mid-interval, and this is the moment the
+  // bags are full. Turn-ins land here, then the floor is claimed.
+  const swept = bot.quest.sweep();
+  pickupTokens(
+    member
+      ? ["Super-Fan Swag Token C"]
+      : ["Super-Fan Swag Token D", "Super-Fan Swag Token C"]
+  );
+  if (progress() > before) {
+    stall = 0;
+  } else {
+    // The composite this replaced failed the run after five empty rounds; a
+    // full hunt mission plus a claim pass is a much larger round, so eight of
+    // them with no token movement is already a wedged farm.
+    stall += 1;
+    if (stall >= 8) {
+      throw new Error("swag tokens are not moving: " + sweptConcern(swept));
+    }
   }
   tradeUp();
 }
+bot.quest.unregister();

@@ -208,6 +208,17 @@ function botTable(libSrc: string): Map<string, [number, number]> {
     }).length;
     if (!table.has(name)) table.set(name, [required, params.length]);
   }
+  // `quest` is a callable with statics (`Object.assign(questStep, {...})`), so
+  // the parse above cannot see it or its helpers: declare them here.
+  if (!table.has("quest")) table.set("quest", [1, 3]);
+  for (const [name, bounds] of [
+    ["register", [1, 2]],
+    ["unregister", [0, 1]],
+    ["registered", [0, 0]],
+    ["sweep", [0, 0]],
+  ] as [string, [number, number]][]) {
+    if (!table.has(name)) table.set(name, bounds);
+  }
   // The chained calls live on quest()'s return; ensure all are known even
   // if the parse above missed them.
   if (!table.has("accept")) table.set("accept", [0, 0]);
@@ -288,6 +299,14 @@ function checkBotsCalls(
         checkArity(chain[1], `bot.quest(...).${chain[1]}`, close + 1, cArgs.count);
       }
     }
+  }
+  // `bot.quest.register(...)` and friends: statics on the quest handle.
+  for (const match of stripped.matchAll(
+    /(?<![\w$.])bot\.quest\.([A-Za-z_$][\w$]*)\s*\(/g,
+  )) {
+    const open = match.index + match[0].length - 1;
+    const { count } = argCount(stripped, open);
+    checkArity(match[1], `bot.quest.${match[1]}`, match.index, count);
   }
   for (const alias of aliases) {
     const re = new RegExp(`\\b${alias}\\.(accept|turnIn|completed)\\s*\\(`, "g");
