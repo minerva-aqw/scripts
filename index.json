@@ -360,6 +360,14 @@
     "sha256": "832ed0931beb1971ef9a0dccabfe29af579557ccb8f25da5121161d72dd4e12b"
   },
   {
+    "path": "classes/ninja/ninja.ts",
+    "kind": "classes",
+    "name": "Ninja survival",
+    "desc": "Vanish upkeep for +100% dodge, Smoke Bomb hit-down on target, Sharpened Edge for crit mana economy, Shuriken filler.",
+    "autoload": "Ninja",
+    "sha256": "e73c8624efe29f4a50317c6216bcbe54d4ee361e7a2566251753f7e0223dad28"
+  },
+  {
     "path": "classes/rogue/rogue.ts",
     "kind": "classes",
     "name": "Rogue starter",
