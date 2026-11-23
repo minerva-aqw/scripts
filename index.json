@@ -40,6 +40,14 @@
     "sha256": "9dd6ec5337b0d0225fb30e433037fa4ec664c9d42055b4f9d36069931ff2c56a"
   },
   {
+    "path": "bots/farms/unidentified-13.ts",
+    "kind": "bots",
+    "name": "Unidentified 13 farm",
+    "desc": "Farms Unidentified 13 to 13 (max stack). Pet/sword paths when held, else the Supplies wheel (Relic of Chaos) with The Assistant (gold) fallback.",
+    "autoload": null,
+    "sha256": "2cf7ae19dc67b5cb356429fa9bbe7e6f6f6d1b11b65c26000470ec08ab5c6209"
+  },
+  {
     "path": "bots/items/blade-of-awe.ts",
     "kind": "bots",
     "name": "Blade of Awe",

@@ -1,0 +1,85 @@
+/// name: Unidentified 13 farm
+/// desc: Farms Unidentified 13 to 13 (max stack). Pet/sword paths when held, else the Supplies wheel (Relic of Chaos) with The Assistant (gold) fallback.
+
+// Ported from Skua Nation/Materials/Unidentified13.cs + CoreNation.FarmUni13.
+// Handler keys are requirement ItemIDs from quest-data; maps and monster
+// names from the same source. Flat sequencing, re-runs resume.
+
+function qty(id) {
+  const inv = bot.inventory(id);
+  return inv.found ? inv.qty : 0;
+}
+
+const WANT = 13;
+const UNI13 = 4762;
+
+if (bot.ensureItem(UNI13, WANT)) {
+  // Done: re-run resumes here with no travel.
+} else {
+  // Crag path first (Skua order): 15 Diamonds per turn-in. Diamonds are not
+  // farmed here, they accumulate from the wheel below; skip when short.
+  let diamondRounds = 0;
+  while (qty(UNI13) < WANT && bot.ensureItem(4845) && qty(4771) >= 15 && diamondRounds < 20) {
+    bot.quest(869, {
+      "15397": function () { bot.hunt("Dark Makai", "tercessuinotlim", 1, "m1", "Left"); }, // Dark Makai Sigil
+    });
+    diamondRounds += 1;
+  }
+
+  // Pet/sword paths pay Uni13 directly (choice 4762). Gate items are the
+  // quests' own accept requirements: Drone 42573, Gift 46999, swords
+  // 38275/38254, all non-member.
+  const NEW_WORLDS = {
+    "38236": function () { bot.hunt("Slugfit", "mobius", 5, "Slugfit", "Bottom"); }, // Slugfit Horn x5
+    "42574": function () { bot.hunt("Cyclops Warlord", "mobius", 3); }, // Cyclops Horn x3
+    "38238": function () { bot.hunt("Dark Makai", "tercessuinotlim", 5, "m2", "Top"); }, // Makai Fang x5
+    "38239": function () { bot.hunt("Fire Imp", "hydra", 3, "Rune2", "Left"); }, // Imp Flame x3
+    "42575": function () { bot.hunt("Big Bad Boar", "greenguardwest", 2, "West12", "Up"); }, // Wereboar Tusk x2
+  };
+  let droneRounds = 0;
+  while (qty(UNI13) < WANT && bot.ensureItem(42573) && droneRounds < 20) {
+    bot.quest(6183, NEW_WORLDS, { choice: UNI13 });
+    droneRounds += 1;
+  }
+  let giftRounds = 0;
+  while (qty(UNI13) < WANT && bot.ensureItem(46999) && giftRounds < 20) {
+    bot.quest(6697, NEW_WORLDS, { choice: UNI13 });
+    giftRounds += 1;
+  }
+  const VOID_KNIGHT = {
+    "38276": function () { bot.hunt("Crystalized Jellyfish", "battleunderc", 3); }, // Aquamarine of Nulgath x3
+    "38236": function () { bot.hunt("Slugfit", "mobius", 5, "Slugfit", "Bottom"); }, // Slugfit Horn x5
+    "38237": function () { bot.hunt("Aracara", "faerie"); }, // Aracara Silk
+    "38238": function () { bot.hunt("*", "tercessuinotlim", 5, "m2", "Left"); }, // Makai Fang x5
+    "38239": function () { bot.hunt("Fire Imp", "hydra", 3); }, // Imp Flame x3
+  };
+  let swordRounds = 0;
+  while (qty(UNI13) < WANT && bot.ensureItem(38275) && swordRounds < 20) {
+    bot.quest(5662, VOID_KNIGHT, { choice: UNI13 });
+    swordRounds += 1;
+  }
+  while (qty(UNI13) < WANT && bot.ensureItem(38254) && swordRounds < 20) {
+    bot.quest(5659, VOID_KNIGHT, { choice: UNI13 });
+    swordRounds += 1;
+  }
+
+  // Supplies wheel fallback, no pet needed: every turn-in offers Uni13 as a
+  // reward choice (quests 555/556/2857/2859 all list 4762). Relic from
+  // Escherion, Memorabilia bought with gold; quiet raised past boss-drop RNG.
+  let wheelRounds = 0;
+  while (qty(UNI13) < WANT && wheelRounds < 30) {
+    if (qty(UNI13) >= WANT) break;
+    if (bot.buyItem(41, 52824)) {
+      bot.quest(2859, {}, { choice: UNI13, quiet: 20 });
+    } else {
+      bot.quest(2857, {
+        "67266": function () { bot.hunt("Escherion", "escherion", 1, "Boss", "Left"); }, // Relic of Chaos
+      }, { choice: UNI13, quiet: 20 });
+    }
+    wheelRounds += 1;
+  }
+
+  if (qty(UNI13) < WANT) {
+    throw new Error("Unidentified 13 stalled at " + qty(UNI13) + "/" + WANT + " (relic dry or gold dry: Escherion Boss/Left, or 100k gold per Memorabilia at yulgar 41)");
+  }
+}
