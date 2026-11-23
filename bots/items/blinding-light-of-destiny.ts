@@ -19,12 +19,15 @@ function ensureQty(name, want, what) {
 if (bot.ensureItem("Blinding Light of Destiny")) {
   // Done: re-run resumes here with no travel.
 } else {
-  // Unlock: handle + medal are shop stock, essences are hunts.
+  // Unlock: handle + medal are shop stock (doomwood 276), essences are
+  // hunts. The buys MUST happen from doomwood: a cross-map shop load gets
+  // the session kicked, so the handlers travel first (no-op when already
+  // there).
   bot.quest(2066, {
-    "8687": function () { bot.buyItem(276, 8687); }, // Handle
+    "8687": function () { bot.travel("doomwood"); bot.buyItem(276, 8687); }, // Handle
   });
   bot.quest(2067, {
-    "7691": function () { bot.buyItem(276, 7691); }, // Bonegrinder Medal
+    "7691": function () { bot.travel("doomwood"); bot.buyItem(276, 7691); }, // Bonegrinder Medal
   });
   bot.quest(2082, {
     "6697": function () { bot.hunt("Skeleton Warrior", "battleunderb"); }, // Undead Essence x25
@@ -70,6 +73,8 @@ if (bot.ensureItem("Blinding Light of Destiny")) {
     "11285": function () { bot.hunt("Skeleton Warrior", "battleunderb", 25); }, // Undead Energy x25
   });
   if (!bot.ensureItem("Celestial Copper of Destiny")) {
+    // Dwarfhold 434 merge, same map rule as above.
+    bot.travel("dwarfhold");
     if (!bot.buyItem(434, "Celestial Copper of Destiny")) {
       throw new Error("BLoD short: Celestial Copper of Destiny not in dwarfhold 434 (2107 done?)");
     }

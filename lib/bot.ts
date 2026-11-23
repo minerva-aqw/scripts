@@ -388,7 +388,10 @@ const bot = {
   },
   // `buyItem(shopId, idOrName, qty?)`: buy `qty` more of the item from the
   // shop — same call for merge shops (their records just carry `turnin`).
-  // Loads the shop first unless already on it. Resumes bare `true`/`false`:
+  // Travel to the shop's map first: the server kicks the session when a
+  // shop is loaded cross-map, so a buy without a preceding travel to that
+  // map reads as a disconnect, not a refusal. Loads the shop first unless
+  // already on it. Resumes bare `true`/`false`:
   // not stocked, a zero gate (locked, broke, capped, short on merge
   // materials), and a grant that never lands all read `false`. `qty`
   // defaults to 1 and must fit in one purchase.

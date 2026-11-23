@@ -64,11 +64,14 @@ if (bot.ensureItem(UNI13, WANT)) {
   }
 
   // Supplies wheel fallback, no pet needed: every turn-in offers Uni13 as a
-  // reward choice (quests 555/556/2857/2859 all list 4762). Relic from
-  // Escherion, Memorabilia bought with gold; quiet raised past boss-drop RNG.
+  // reward choice (quests 2857/2859 both list 4762). Relic from Escherion,
+  // Memorabilia bought with gold. The buy MUST happen from yulgar (shop 41
+  // is yulgar/digitalyulgar/battleontown/meateortown): a cross-map shop
+  // load gets the session kicked, so travel first every round.
   let wheelRounds = 0;
   while (qty(UNI13) < WANT && wheelRounds < 30) {
     if (qty(UNI13) >= WANT) break;
+    bot.travel("yulgar");
     if (bot.buyItem(41, 52824)) {
       bot.quest(2859, {}, { choice: UNI13, quiet: 20 });
     } else {

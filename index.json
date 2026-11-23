@@ -45,7 +45,7 @@
     "name": "Unidentified 13 farm",
     "desc": "Farms Unidentified 13 to 13 (max stack). Pet/sword paths when held, else the Supplies wheel (Relic of Chaos) with The Assistant (gold) fallback.",
     "autoload": null,
-    "sha256": "2cf7ae19dc67b5cb356429fa9bbe7e6f6f6d1b11b65c26000470ec08ab5c6209"
+    "sha256": "4642abdece5542151d132b7d83aaca2385704169b3181967842eac5e9873504d"
   },
   {
     "path": "bots/items/blade-of-awe.ts",
@@ -61,7 +61,7 @@
     "name": "Blinding Light of Destiny",
     "desc": "Farms BLoD via necropolis merge 422 + battleunder quests. Non-member, daily-gated (mine metals). Blade path.",
     "autoload": null,
-    "sha256": "8f8943f9cc46d85c497c5c2ff10b9375c79ba2c20d09d83cca02cf0edda182d0"
+    "sha256": "0687616de463b9d0dbfb5d6314742c23bfa23da9d076c94238c8e3fc30dff421"
   },
   {
     "path": "bots/kitsune-farm.ts",
@@ -437,6 +437,6 @@
     "name": null,
     "desc": null,
     "autoload": null,
-    "sha256": "5fb026407a206f68066dfb322589e00f80e1c51529406aa0a86a519d77a63e10"
+    "sha256": "23c172209b532b863d773718efa1d2ae61c6f29ee10272861a06093c2a4cf483"
   }
 ]
