@@ -180,7 +180,7 @@ bot.quest(2479, {
 
 bot.quest(2504, {
   "15015": function () { bot.gather(1580, "mqlesson"); }, // Rocket on your Back
-}, { turnIn: false });
+});
 
 bot.quest(2505, {
   "15016": function () { bot.hunt("Asteroid", "mqlesson", 3); }, // Iadoa's Mind Fragments

@@ -141,7 +141,7 @@
     "name": "Chaos Lords 10 - Iadoa",
     "desc": "Iadoa chapter, quests 2239-2521. Completed quests return true without touching anything, so re-runs resume where they left off.",
     "autoload": null,
-    "sha256": "d99d8e8c6e0dc448e4e26f201f7af6284d2e9aaf162667e46613bca9ffc63244"
+    "sha256": "ea8782212de90cad6f00af7734ab0c51c25c1a545c3a3d3482316310fe8e779e"
   },
   {
     "path": "bots/storylines/chaos-lords/11-lionfang.ts",
