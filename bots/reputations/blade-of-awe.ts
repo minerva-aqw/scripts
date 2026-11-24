@@ -27,4 +27,7 @@ if (!fac.found) {
 while (fac.rank < RANK) {
   bot.quest(2935, hilt);
   fac = bot.rep("Blade of Awe");
+  bot.notify("Blade of Awe turn-in done, rank " + fac.rank);
 }
+
+bot.notify("Blade of Awe rank 10 done");

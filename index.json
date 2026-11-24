@@ -80,12 +80,20 @@
     "sha256": "80730b649870d1c93092c45d68770073d24aaad3c5026e716cf50b05e6ee8cd8"
   },
   {
+    "path": "bots/probe.ts",
+    "kind": "bots",
+    "name": "Blade of Awe quest probe",
+    "desc": "Phase 0 probe for quest 2935 (Hilt). Reports the projection, then runs one declarative round.",
+    "autoload": null,
+    "sha256": "d3c84d486736629c6d002877402ba857c952addad722fee9b84a8001d91bd1ef"
+  },
+  {
     "path": "bots/reputations/blade-of-awe.ts",
     "kind": "bots",
     "name": "Blade of Awe rep",
     "desc": "Farms Blade of Awe reputation to rank 10 via 2935 Hilt turn-ins. Assumes the 2933-2937 unlock chain is done.",
     "autoload": null,
-    "sha256": "e7e9b51655e1d86cc88591d226917e98f2fc2b16713226902e433e13d9a6923a"
+    "sha256": "82401a5bea2d19fd5ac2e5b90c5d6e05b45dd733a4ff54005105e2429f85c8ae"
   },
   {
     "path": "bots/reputations/evil.ts",
@@ -461,6 +469,6 @@
     "name": null,
     "desc": null,
     "autoload": null,
-    "sha256": "23c172209b532b863d773718efa1d2ae61c6f29ee10272861a06093c2a4cf483"
+    "sha256": "b984a076e8b37d89e4744abff78216eaab90ab10b0a5711f6043aabfbdc52c9c"
   }
 ]

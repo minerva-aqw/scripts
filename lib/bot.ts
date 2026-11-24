@@ -27,6 +27,7 @@
 // `setQuestValue(slot, value)` -> bare boolean on the server echo,
 // `drops()` -> pending drop array,
 // `pickup(idOrName | "*")` -> bare boolean, `"*"` clears the floor).
+// `notify(message)` -> bare boolean once queued (explicit notification).
 declare function park(v: unknown): unknown;
 
 type QuestHandlers = Record<string, () => unknown>;
@@ -344,9 +345,14 @@ const bot = {
   // `hunt(name, map, qty?, cell?, pad?)`: teleport to `map` when elsewhere,
   // census the live room for the cell holding the most `name` matches, go
   // there, then kill. `map` is required; `qty` defaults to 1. `"*"` hunts
-  // anything in the richest cell; with a quest in progress the count is a
-  // floor — the hunt tops up until the requirements read held. A `cell`
-  // pins the farm spot and skips the census (Skua's KillMonster shape).
+  // anything in the richest cell. With a quest in progress the hunt fills
+  // its own requirements instead of counting monsters: the scope (the
+  // composite's current requirement plus name/granted matches) is checked
+  // before the first kill — zero kills when already held — then one kill
+  // per round with a sweep each until the scope reads held (`qty` is
+  // unused on this path). Without a watched quest the count is the
+  // contract. A `cell` pins the farm spot and skips the census (Skua's
+  // KillMonster shape).
   hunt(name: string, map: string, qty?: number, cell?: string, pad?: string): unknown {
     return step({ op: "hunt", name, map, qty: qty ?? 1, cell, pad });
   },
@@ -467,5 +473,12 @@ const bot = {
     return typeof idOrName === "number"
       ? step({ op: "pickup", id: idOrName })
       : step({ op: "pickup", name: idOrName });
+  },
+  // `notify(message)`: explicit bot notification — posts a high-visibility
+  // Android notification (default sound) and logs the line. No game touch,
+  // no waiting: resumes bare `true` once queued. Use for "got class ..."
+  // moments inside a farm loop.
+  notify(message: string): unknown {
+    return step({ op: "notify", message });
   },
 };
