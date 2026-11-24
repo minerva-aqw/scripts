@@ -56,6 +56,14 @@
     "sha256": "4642abdece5542151d132b7d83aaca2385704169b3181967842eac5e9873504d"
   },
   {
+    "path": "bots/items/armor-of-awe/cape-of-awe.ts",
+    "kind": "bots",
+    "name": "Cape of Awe",
+    "desc": "Hunts Binky in doomvault for the Cape Shard, turns in quest 4180, merges Cape Fragment to Cape Relic to Cape of Awe in museum shop 1129.",
+    "autoload": null,
+    "sha256": "28f3fa45666e104ad87409bc4596bc6fe1c5f9ffa81ff2da634d57f463ef60c1"
+  },
+  {
     "path": "bots/items/blade-of-awe.ts",
     "kind": "bots",
     "name": "Blade of Awe",
