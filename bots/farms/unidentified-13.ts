@@ -13,9 +13,27 @@ function qty(id) {
 const WANT = 13;
 const UNI13 = 4762;
 
+// Announce each newly granted Uni 13 (quest reward choice), with the stack
+// count, so a background run beeps as it fills. Tracks the last announced
+// count: re-runs start silent, completion notifies once below.
+let announced = 0;
+function noteUni13() {
+  const have = qty(UNI13);
+  if (have > announced) {
+    announced = have;
+    if (have >= WANT) {
+      bot.notify("Unidentified 13 complete: " + have + "/" + WANT);
+    } else {
+      bot.notify("Unidentified 13 drop: " + have + "/" + WANT);
+    }
+  }
+  return have;
+}
+
 if (bot.ensureItem(UNI13, WANT)) {
   // Done: re-run resumes here with no travel.
 } else {
+  announced = qty(UNI13);
   // Crag path first (Skua order): 15 Diamonds per turn-in. Diamonds are not
   // farmed here, they accumulate from the wheel below; skip when short.
   let diamondRounds = 0;
@@ -23,6 +41,7 @@ if (bot.ensureItem(UNI13, WANT)) {
     bot.quest(869, {
       "15397": function () { bot.hunt("Dark Makai", "tercessuinotlim", 1, "m1", "Left"); }, // Dark Makai Sigil
     });
+    noteUni13();
     diamondRounds += 1;
   }
 
@@ -39,11 +58,13 @@ if (bot.ensureItem(UNI13, WANT)) {
   let droneRounds = 0;
   while (qty(UNI13) < WANT && bot.ensureItem(42573) && droneRounds < 20) {
     bot.quest(6183, NEW_WORLDS, { choice: UNI13 });
+    noteUni13();
     droneRounds += 1;
   }
   let giftRounds = 0;
   while (qty(UNI13) < WANT && bot.ensureItem(46999) && giftRounds < 20) {
     bot.quest(6697, NEW_WORLDS, { choice: UNI13 });
+    noteUni13();
     giftRounds += 1;
   }
   const VOID_KNIGHT = {
@@ -56,10 +77,12 @@ if (bot.ensureItem(UNI13, WANT)) {
   let swordRounds = 0;
   while (qty(UNI13) < WANT && bot.ensureItem(38275) && swordRounds < 20) {
     bot.quest(5662, VOID_KNIGHT, { choice: UNI13 });
+    noteUni13();
     swordRounds += 1;
   }
   while (qty(UNI13) < WANT && bot.ensureItem(38254) && swordRounds < 20) {
     bot.quest(5659, VOID_KNIGHT, { choice: UNI13 });
+    noteUni13();
     swordRounds += 1;
   }
 
@@ -79,6 +102,7 @@ if (bot.ensureItem(UNI13, WANT)) {
         "67266": function () { bot.hunt("Escherion", "escherion", 1, "Boss", "Left"); }, // Relic of Chaos
       }, { choice: UNI13, quiet: 20 });
     }
+    noteUni13();
     wheelRounds += 1;
   }
 
