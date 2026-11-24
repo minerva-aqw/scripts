@@ -40,6 +40,14 @@
     "sha256": "c87ffcfecf168039927005b95fe3daa1682192f251971fa70e3c4f2027a02051"
   },
   {
+    "path": "bots/class/lord-of-order.ts",
+    "kind": "bots",
+    "name": "Lord of Order class",
+    "desc": "Gets the Lord of Order class: daily chain 7156-7165, one quest per run, choice 0 on the final turn-in.",
+    "autoload": null,
+    "sha256": "cf5e840d56683715f6ed4d4292915024d78900eb3cd2132f07c0eb060b6ba653"
+  },
+  {
     "path": "bots/class/ninja.ts",
     "kind": "bots",
     "name": "Ninja class",
