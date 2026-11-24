@@ -144,6 +144,14 @@
     "sha256": "ba740560fbf94d30a39919d2800a97d08025f1c2f52b3c473c037b8c49531a54"
   },
   {
+    "path": "bots/reputations/loremaster.ts",
+    "kind": "bots",
+    "name": "Loremaster rep",
+    "desc": "Farms Loremaster reputation to rank 10: quest 7505 in wardwarf (member: 3032 in druids after the 3029-3031 unlock chain). Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "bfa78c379799c0d93892c8b6b80691545906bbcac00893c659881d970bf4101d"
+  },
+  {
     "path": "bots/reputations/lycan.ts",
     "kind": "bots",
     "name": "Lycan rep",
