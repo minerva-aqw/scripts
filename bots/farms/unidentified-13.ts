@@ -34,16 +34,6 @@ if (bot.ensureItem(UNI13, WANT)) {
   // Done: re-run resumes here with no travel.
 } else {
   announced = qty(UNI13);
-  // Crag path first (Skua order): 15 Diamonds per turn-in. Diamonds are not
-  // farmed here, they accumulate from the wheel below; skip when short.
-  let diamondRounds = 0;
-  while (qty(UNI13) < WANT && bot.ensureItem(4845) && qty(4771) >= 15 && diamondRounds < 20) {
-    bot.quest(869, {
-      "15397": function () { bot.hunt("Dark Makai", "tercessuinotlim", 1, "m1", "Left"); }, // Dark Makai Sigil
-    });
-    noteUni13();
-    diamondRounds += 1;
-  }
 
   // Pet/sword paths pay Uni13 directly (choice 4762). Gate items are the
   // quests' own accept requirements: Drone 42573, Gift 46999, swords
@@ -55,18 +45,6 @@ if (bot.ensureItem(UNI13, WANT)) {
     "38239": function () { bot.hunt("Fire Imp", "hydra", 3, "Rune2", "Left"); }, // Imp Flame x3
     "42575": function () { bot.hunt("Big Bad Boar", "greenguardwest", 2, "West12", "Up"); }, // Wereboar Tusk x2
   };
-  let droneRounds = 0;
-  while (qty(UNI13) < WANT && bot.ensureItem(42573) && droneRounds < 20) {
-    bot.quest(6183, NEW_WORLDS, { choice: UNI13 });
-    noteUni13();
-    droneRounds += 1;
-  }
-  let giftRounds = 0;
-  while (qty(UNI13) < WANT && bot.ensureItem(46999) && giftRounds < 20) {
-    bot.quest(6697, NEW_WORLDS, { choice: UNI13 });
-    noteUni13();
-    giftRounds += 1;
-  }
   const VOID_KNIGHT = {
     "38276": function () { bot.hunt("Crystalized Jellyfish", "battleunderc", 3); }, // Aquamarine of Nulgath x3
     "38236": function () { bot.hunt("Slugfit", "mobius", 5, "Slugfit", "Bottom"); }, // Slugfit Horn x5
@@ -74,39 +52,69 @@ if (bot.ensureItem(UNI13, WANT)) {
     "38238": function () { bot.hunt("*", "tercessuinotlim", 5, "m2", "Left"); }, // Makai Fang x5
     "38239": function () { bot.hunt("Fire Imp", "hydra", 3); }, // Imp Flame x3
   };
-  let swordRounds = 0;
-  while (qty(UNI13) < WANT && bot.ensureItem(38275) && swordRounds < 20) {
-    bot.quest(5662, VOID_KNIGHT, { choice: UNI13 });
-    noteUni13();
-    swordRounds += 1;
-  }
-  while (qty(UNI13) < WANT && bot.ensureItem(38254) && swordRounds < 20) {
-    bot.quest(5659, VOID_KNIGHT, { choice: UNI13 });
-    noteUni13();
-    swordRounds += 1;
-  }
 
-  // Supplies wheel fallback, no pet needed: every turn-in offers Uni13 as a
-  // reward choice (quests 2857/2859 both list 4762). Relic from Escherion,
-  // Memorabilia bought with gold. The buy MUST happen from yulgar (shop 41
-  // is yulgar/digitalyulgar/battleontown/meateortown): a cross-map shop
-  // load gets the session kicked, so travel first every round.
-  let wheelRounds = 0;
-  while (qty(UNI13) < WANT && wheelRounds < 30) {
-    if (qty(UNI13) >= WANT) break;
-    bot.travel("yulgar");
-    if (bot.buyItem(41, 52824)) {
-      bot.quest(2859, {}, { choice: UNI13, quiet: 20 });
-    } else {
-      bot.quest(2857, {
-        "67266": function () { bot.hunt("Escherion", "escherion", 1, "Boss", "Left"); }, // Relic of Chaos
-      }, { choice: UNI13, quiet: 20 });
+  // Converter/wheel cycles (Skua order: Crag path first). The Assistant
+  // wheel (2859) and Supplies wheel (2857) IGNORE the reward choice: the
+  // server rolls rate-weighted rewards (Uni 13 is rate 1.0), so a spin
+  // banks ~3 Diamonds of Nulgath plus lucky direct hits instead of paying
+  // Uni 13. The Crag converter (869) is the deterministic leg: 15 banked
+  // diamonds + 1 sigil = 1 guaranteed Uni 13. Cycle converter-then-wheel so
+  // banked diamonds always feed back into guaranteed turn-ins.
+  let cycles = 0;
+  while (qty(UNI13) < WANT && cycles < 8) {
+    let diamondRounds = 0;
+    while (qty(UNI13) < WANT && bot.ensureItem(4845) && qty(4771) >= 15 && diamondRounds < 20) {
+      bot.quest(869, {
+        "15397": function () { bot.hunt("Dark Makai", "tercessuinotlim", 1, "m1", "Left"); }, // Dark Makai Sigil
+      });
+      noteUni13();
+      diamondRounds += 1;
     }
-    noteUni13();
-    wheelRounds += 1;
+    let droneRounds = 0;
+    while (qty(UNI13) < WANT && bot.ensureItem(42573) && droneRounds < 20) {
+      bot.quest(6183, NEW_WORLDS, { choice: UNI13 });
+      noteUni13();
+      droneRounds += 1;
+    }
+    let giftRounds = 0;
+    while (qty(UNI13) < WANT && bot.ensureItem(46999) && giftRounds < 20) {
+      bot.quest(6697, NEW_WORLDS, { choice: UNI13 });
+      noteUni13();
+      giftRounds += 1;
+    }
+    let swordRounds = 0;
+    while (qty(UNI13) < WANT && bot.ensureItem(38275) && swordRounds < 20) {
+      bot.quest(5662, VOID_KNIGHT, { choice: UNI13 });
+      noteUni13();
+      swordRounds += 1;
+    }
+    while (qty(UNI13) < WANT && bot.ensureItem(38254) && swordRounds < 20) {
+      bot.quest(5659, VOID_KNIGHT, { choice: UNI13 });
+      noteUni13();
+      swordRounds += 1;
+    }
+    // Wheel batch: 10 spins to bank diamonds (+ lucky direct Uni 13).
+    // Memorabilia (100k gold each) from yulgar shop 41 — the buy MUST happen
+    // from yulgar (shop 41 is yulgar/digitalyulgar/battleontown/meateortown):
+    // a cross-map shop load gets the session kicked, so travel first every
+    // round. Broke rounds fall through to the free Escherion relic hunt.
+    let spins = 0;
+    while (qty(UNI13) < WANT && spins < 10) {
+      bot.travel("yulgar");
+      if (bot.buyItem(41, 52824)) {
+        bot.quest(2859, {}, { choice: UNI13, quiet: 20 });
+      } else {
+        bot.quest(2857, {
+          "67266": function () { bot.hunt("Escherion", "escherion", 1, "Boss", "Left"); }, // Relic of Chaos
+        }, { choice: UNI13, quiet: 20 });
+      }
+      noteUni13();
+      spins += 1;
+    }
+    cycles += 1;
   }
 
   if (qty(UNI13) < WANT) {
-    throw new Error("Unidentified 13 stalled at " + qty(UNI13) + "/" + WANT + " (relic dry or gold dry: Escherion Boss/Left, or 100k gold per Memorabilia at yulgar 41)");
+    throw new Error("Unidentified 13 stalled at " + qty(UNI13) + "/" + WANT + " with " + qty(4771) + " Diamonds banked (wheel is rate-weighted, not aimed: converter needs Crag & Bamboozle 4845 + 15 diamonds per turn-in; else Escherion Boss/Left for relics, or 100k gold per Memorabilia at yulgar 41)");
   }
 }
