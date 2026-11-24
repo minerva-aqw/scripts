@@ -44,7 +44,7 @@ if (fac.found) {
   // Fresh accounts have no entry yet: one round registers it via the
   // sweep turn-ins. Still missing after that means the quests never
   // filled — fail instead of farming blind.
-  bot.quest.register([3050, 3298]);
+  bot.quest.register([3050, 3298], { choice: 0 });
   round();
   bot.quest.unregister();
   fac = bot.rep("Elemental Master");
@@ -54,7 +54,7 @@ if (fac.found) {
   last = fac.rank;
 }
 
-bot.quest.register([3050, 3298]);
+bot.quest.register([3050, 3298], { choice: 0 });
 let dry = 0;
 while (fac.rank < RANK) {
   round();

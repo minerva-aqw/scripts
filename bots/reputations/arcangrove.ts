@@ -21,7 +21,7 @@ if (fac.found) {
   // Fresh accounts have no Arcangrove entry yet: one round registers it
   // via the sweep turn-ins. Still missing after that means the quests
   // never filled (locked, wrong cells) — fail instead of farming blind.
-  bot.quest.register(QUESTS);
+  bot.quest.register(QUESTS, { choice: 0 });
   bot.hunt("*", "arcangrove", 10, "LeftBack", "Left");
   bot.quest.unregister();
   fac = bot.rep("Arcangrove");
@@ -31,7 +31,7 @@ if (fac.found) {
   last = fac.rank;
 }
 
-bot.quest.register(QUESTS);
+bot.quest.register(QUESTS, { choice: 0 });
 let dry = 0;
 while (fac.rank < RANK) {
   bot.hunt("*", "arcangrove", 10, "LeftBack", "Left");

@@ -13,7 +13,7 @@
     "name": "ArchPaladin class",
     "desc": "Gets the ArchPaladin class (item 36920): Good rep gate, 5463-5470 chain (free 5463-5466 or member aptitude), BLoD mine unlock inline, shop buy in darkthronehub.",
     "autoload": null,
-    "sha256": "9418ea694fb44d236d0fc5c4d6884864217caf44397480ce15e888ad93566db8"
+    "sha256": "d8f746611942514683fc533a7f37db449299f28b3785a20b2cf5d35d93e5201a"
   },
   {
     "path": "bots/class/chaos-slayer/berserker.ts",
@@ -157,7 +157,7 @@
     "name": "Arcangrove rep",
     "desc": "Farms Arcangrove reputation to rank 10: registers quests 794-801, loops Gorillaphant (LeftBack) + Seed Spitter (RightBack). Notifies on every rank-up.",
     "autoload": null,
-    "sha256": "f18b022cd5556dbab90b527112f6bce973e791676acdbd3a9f218e906d90dd86"
+    "sha256": "50cdf285a7faa199db28f5532d403419d8e3bb1f7a9b6800d1a0486dfab0d89f"
   },
   {
     "path": "bots/reputations/baconcat.ts",
@@ -213,7 +213,7 @@
     "name": "Carcossa Court rep",
     "desc": "Farms Carcossa Court reputation to rank 10: registers quests 10810 (+10811/10812 as the story unlocks them), loops templeofdoom r7. Requires the story through Light and Lemming. Notifies on every rank-up.",
     "autoload": null,
-    "sha256": "8df42ba96a5bf0959089f0db6028e1fd1a9add65dc0ec303bb3634c828fc725b"
+    "sha256": "d9b9a53cd1fc0cb578cec3cb74ed58c479da495b8ae4e4c5ef7adaf5f90a30d9"
   },
   {
     "path": "bots/reputations/chaos-militia.ts",
@@ -309,7 +309,7 @@
     "name": "Elemental Master rep",
     "desc": "Farms Elemental Master reputation to rank 10 in gilead: Dragonrune Hall unlock 3052, member daily 3299 first when available, then registered 3050 + 3298. Notifies on every rank-up.",
     "autoload": null,
-    "sha256": "ad17e27cee8387f726d51cb7b273eb116106f08b5223a4641f36cc786c08082e"
+    "sha256": "11d8774e7ff573290b256de970cf93ee8b719aafb38a80cc93ab563eb2351e50"
   },
   {
     "path": "bots/reputations/embersea.ts",
@@ -349,7 +349,7 @@
     "name": "Faerie Court rep",
     "desc": "SEASONAL farm for Faerie Court reputation to rank 10: registered 6775 + 6779, Lucky Harms in rainbow below rank 8, Dark Sylphdrake in faegrove after. Fails while the event maps are away. Notifies on every rank-up.",
     "autoload": null,
-    "sha256": "529061cabb6b3b7c7be3c8fed922e35900ad972444ab7cc9849b5d33552a4ab7"
+    "sha256": "fc191ae8e1259859dff487959b68d8c5b5e6210ba5a9c852fc4a1ba4ac270fe8"
   },
   {
     "path": "bots/reputations/glacera.ts",
@@ -357,7 +357,7 @@
     "name": "Glacera rep",
     "desc": "Farms Glacera reputation to rank 10 in icewindwar/r5 via registered 5597-5600. Requires the Glacera storyline done (quest 5601). Notifies on every rank-up.",
     "autoload": null,
-    "sha256": "c100564470790ff517004dcdf0203be586ece7eb340449c314fb67594c17f774"
+    "sha256": "e0c906ef31c0180e1e834308b2e679c928c948f8abf1ebf3bf021879f7910b02"
   },
   {
     "path": "bots/reputations/good.ts",
@@ -373,7 +373,7 @@
     "name": "Hollowborn rep",
     "desc": "Farms Hollowborn reputation to rank 10: neotower vindicators via 9865 (member: 10298) when the story is there, else Gargrowl + Shadow Guardian in shadowrealm via 7553 + 7555. Notifies on every rank-up.",
     "autoload": null,
-    "sha256": "52600af471f542a2293dc733cb86b36725b58024abb5148c1c5ec9746de57ea6"
+    "sha256": "62af1ac421979ade0d7d30d97bdb259847b027203f42f7b7f6f048729c5dddc8"
   },
   {
     "path": "bots/reputations/horc.ts",
@@ -485,7 +485,7 @@
     "name": "Skyguard rep",
     "desc": "Member-only: farms Swag Token C in collectorlab (r2/Left), exchanges C->B->A at shop 325, turns in quest 1326 to rank 10. Notifies on every rank-up.",
     "autoload": null,
-    "sha256": "97a1f84504a0d52af4ce18c07ea3fdd8cac92ca64567c4cec57ceb70ada5d99a"
+    "sha256": "ae3421c505ef0fc7460d0d3eda9a122dd6f71c143d2625ff9660edada1867229"
   },
   {
     "path": "bots/reputations/somnia.ts",

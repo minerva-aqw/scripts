@@ -37,7 +37,7 @@ if (bot.quest(9865).completed() || bot.quest(10298).completed()) {
   if (fac.found) {
     last = fac.rank;
   } else {
-    bot.quest.register(QUESTS);
+    bot.quest.register(QUESTS, { choice: 0 });
     bot.hunt("Gargrowl", "shadowrealm", 8, "r2", "Left");
     bot.hunt("Shadow Guardian", "shadowrealm", 5, "r2", "Left");
     bot.quest.unregister();
@@ -47,7 +47,7 @@ if (bot.quest(9865).completed() || bot.quest(10298).completed()) {
     }
     last = fac.rank;
   }
-  bot.quest.register(QUESTS);
+  bot.quest.register(QUESTS, { choice: 0 });
   let dry = 0;
   while (fac.rank < RANK) {
     bot.hunt("Gargrowl", "shadowrealm", 8, "r2", "Left"); // Darkseed

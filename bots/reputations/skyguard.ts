@@ -23,7 +23,7 @@ function tokenQty(name) {
 // One token round: shared kills feed the registered set, drain the floor,
 // then push whatever C/B is held one step up the exchange chain.
 function farmTokens() {
-  bot.quest.register([1310, 1312, 1313, 1314]);
+  bot.quest.register([1310, 1312, 1313, 1314], { choice: 0 });
   bot.hunt("*", "collectorlab", 20, "r2", "Left");
   let guard = 0;
   while (bot.pickup("Super-Fan Swag Token C")) {

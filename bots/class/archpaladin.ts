@@ -51,7 +51,7 @@ if (!bot.ensureItem(36920)) {
     bot.quest(2083, { "598": function () { take("Skeleton Warrior", "battleunderb", "Bone Dust", 40); } });
     bot.quest(2084, {
       "12184": function () {
-        bot.quest.register([2082, 2083]);
+        bot.quest.register([2082, 2083], { choice: 0 });
         let guard = 0;
         while (!bot.ensureItem("Spirit Orb", 100)) {
           bot.hunt("*", "battleunderb", 25, "Enter", "Spawn");

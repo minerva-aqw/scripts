@@ -19,7 +19,7 @@ let last;
 if (fac.found) {
   last = fac.rank;
 } else {
-  bot.quest.register(QUESTS);
+  bot.quest.register(QUESTS, { choice: 0 });
   bot.hunt("*", "icewindwar", 30, "r5", "Left");
   bot.quest.unregister();
   fac = bot.rep("Glacera");
@@ -29,7 +29,7 @@ if (fac.found) {
   last = fac.rank;
 }
 
-bot.quest.register(QUESTS);
+bot.quest.register(QUESTS, { choice: 0 });
 let dry = 0;
 while (fac.rank < RANK) {
   bot.hunt("*", "icewindwar", 30, "r5", "Left");

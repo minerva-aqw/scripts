@@ -27,7 +27,7 @@ if (fac.found) {
   // Fresh accounts have no entry yet: one round registers it via the
   // sweep turn-ins. Still missing means nothing filled (story prereq?) —
   // fail instead of farming blind.
-  bot.quest.register(QUESTS);
+  bot.quest.register(QUESTS, { choice: 0 });
   bot.hunt("*", "templeofdoom", PER_ROUND, "r7", "Bottom");
   bot.quest.unregister();
   fac = bot.rep("Carcossa Court");
@@ -37,7 +37,7 @@ if (fac.found) {
   last = fac.rank;
 }
 
-bot.quest.register(QUESTS);
+bot.quest.register(QUESTS, { choice: 0 });
 let dry = 0;
 while (fac.rank < RANK) {
   bot.hunt("*", "templeofdoom", PER_ROUND, "r7", "Bottom");
