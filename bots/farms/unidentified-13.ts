@@ -55,13 +55,21 @@ if (bot.ensureItem(UNI13, WANT)) {
 
   // Converter/wheel cycles (Skua order: Crag path first). The Assistant
   // wheel (2859) and Supplies wheel (2857) IGNORE the reward choice: the
-  // server rolls rate-weighted rewards (Uni 13 is rate 1.0), so a spin
-  // banks ~3 Diamonds of Nulgath plus lucky direct hits instead of paying
-  // Uni 13. The Crag converter (869) is the deterministic leg: 15 banked
-  // diamonds + 1 sigil = 1 guaranteed Uni 13. Cycle converter-then-wheel so
-  // banked diamonds always feed back into guaranteed turn-ins.
-  let cycles = 0;
-  while (qty(UNI13) < WANT && cycles < 8) {
+  // server rolls rate-weighted rewards (Uni 13 is rate 1.0 / ~408 weight on
+  // 2859, ~509 on 2857), so a spin banks ~3 Diamonds of Nulgath plus lucky
+  // direct hits instead of paying Uni 13. The Crag converter (869) is the
+  // deterministic leg: 15 banked diamonds + 1 sigil = 1 guaranteed Uni 13.
+  // Cycle converter-then-wheel so banked diamonds always feed back into
+  // guaranteed turn-ins. No cycle cap: at ~0.3 diamonds/spin, 13 Uni 13 via
+  // the converter needs ~650 spins; a fixed cap always looks like a stall.
+  // Stall is detected by lack of progress across full cycles instead.
+  if (!bot.ensureItem(4845)) {
+    bot.notify("Unidentified 13: no Crag & Bamboozle (4845) — wheel luck only, converter idle. Get the pet for guaranteed turn-ins.");
+  }
+  let stagnant = 0;
+  let lastUni = qty(UNI13);
+  let lastDia = qty(4771);
+  while (qty(UNI13) < WANT) {
     let diamondRounds = 0;
     while (qty(UNI13) < WANT && bot.ensureItem(4845) && qty(4771) >= 15 && diamondRounds < 20) {
       bot.quest(869, {
@@ -111,10 +119,19 @@ if (bot.ensureItem(UNI13, WANT)) {
       noteUni13();
       spins += 1;
     }
-    cycles += 1;
+    // Progress guard: a full cycle that moved neither Uni 13 nor Diamonds
+    // means both legs are dry (gold dry on 2859 AND relic hunt failing on
+    // 2857, or converter gated). Three dry cycles in a row = real stall.
+    const uniNow = qty(UNI13);
+    const diaNow = qty(4771);
+    if (uniNow > lastUni || diaNow > lastDia) {
+      stagnant = 0;
+    } else {
+      stagnant += 1;
+    }
+    lastUni = uniNow;
+    lastDia = diaNow;
+    if (stagnant >= 3) {
+      throw new Error("Unidentified 13 stalled at " + uniNow + "/" + WANT + " with " + diaNow + " Diamonds banked (no progress for 3 cycles: converter needs Crag & Bamboozle 4845 + 15 diamonds per turn-in; else Escherion Boss/Left for relics, or 100k gold per Memorabilia at yulgar 41)");
+    }
   }
-
-  if (qty(UNI13) < WANT) {
-    throw new Error("Unidentified 13 stalled at " + qty(UNI13) + "/" + WANT + " with " + qty(4771) + " Diamonds banked (wheel is rate-weighted, not aimed: converter needs Crag & Bamboozle 4845 + 15 diamonds per turn-in; else Escherion Boss/Left for relics, or 100k gold per Memorabilia at yulgar 41)");
-  }
-}

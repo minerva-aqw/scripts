@@ -53,7 +53,7 @@
     "name": "Unidentified 13 farm",
     "desc": "Farms Unidentified 13 to 13 (max stack). Pet/sword paths when held, else the Supplies wheel (Relic of Chaos) with The Assistant (gold) fallback.",
     "autoload": null,
-    "sha256": "81f97940033f63c55bfbf12ff1e238e698d490a54e6dc90265a0a20558965251"
+    "sha256": "f38589681415b4c03c7216b502cdf5b02100551b4a60624ba6bfd66e8c8b1387"
   },
   {
     "path": "bots/items/armor-of-awe/cape-of-awe.ts",
