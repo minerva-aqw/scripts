@@ -108,7 +108,7 @@ bot.quest(537, {
 bot.quest(552, {});
 
 bot.quest(564, {
-  "4786": function () { bot.hunt("Edvard", "lycanwar", 1, "Boss", "Left"); bot.gather(107, "chaoscave"); }, // Chaos Gate Investigation
+  "4786": function () { bot.travel("lycanwar"); bot.cell("Boss", "Right"); const ed = bot.locate("Edvard"); if (ed.found) { bot.kill("Edvard", 1); } bot.gather(107, "chaoscave"); }, // Chaos Gate Investigation
 });
 
 bot.quest(565, {
