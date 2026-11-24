@@ -8,6 +8,14 @@
     "sha256": "38ec7d917204567f4f0e22ba55edac34bd54c9d8f68be1cb1c06ea1d087b3f6a"
   },
   {
+    "path": "bots/class/archpaladin.ts",
+    "kind": "bots",
+    "name": "ArchPaladin class",
+    "desc": "Gets the ArchPaladin class (item 36920): Good rep gate, 5463-5470 chain (free 5463-5466 or member aptitude), BLoD mine unlock inline, shop buy in darkthronehub.",
+    "autoload": null,
+    "sha256": "9418ea694fb44d236d0fc5c4d6884864217caf44397480ce15e888ad93566db8"
+  },
+  {
     "path": "bots/class/chaos-slayer/berserker.ts",
     "kind": "bots",
     "name": "Chaos Slayer Berserker class",
