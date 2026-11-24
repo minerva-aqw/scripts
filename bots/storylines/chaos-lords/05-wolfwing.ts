@@ -127,7 +127,7 @@ if (!bot.quest(567).completed()) {
 }
 
 if (!bot.quest(598).completed()) {
-  bot.align("good");
+  // Neutral hero: no alignment switch (was good for 597).
   bot.setQuestValue(26, 23);
   bot.quest(597, {});
 }

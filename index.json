@@ -181,7 +181,7 @@
     "name": "Chaos Lords 05 - Wolfwing",
     "desc": "Wolfwing chapter, quests 494-598. Completed quests return true without touching anything, so re-runs resume where they left off.",
     "autoload": null,
-    "sha256": "e0aebbd7ebb82624de4f58db12baaeb275aa2e763ed0a331ccae88918d92501c"
+    "sha256": "21dc5cfb1b964783096199c0fe7b8eb3a47ed7f6f07404c37deb1cda19352f20"
   },
   {
     "path": "bots/storylines/chaos-lords/06-kimberly.ts",
