@@ -176,6 +176,14 @@
     "sha256": "7fdae99e127621b01245af1bfefdf9ac05d2faefbbb907f3bd5644f4f9637603"
   },
   {
+    "path": "bots/reputations/mythsong.ts",
+    "kind": "bots",
+    "name": "Mythsong rep",
+    "desc": "Farms Mythsong reputation to rank 10 via quest 4829 Sugar, Sugar in beehive. Requires Lord of Chaos Kimberly (7th LoC) done to unlock 4829. Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "ff355197cde4c9181f77158d9e4a968b63c5034aae4de5ffd09e94b1bfe18562"
+  },
+  {
     "path": "bots/reputations/vampire.ts",
     "kind": "bots",
     "name": "Vampire rep",
