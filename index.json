@@ -264,6 +264,14 @@
     "sha256": "f7a38d01472fd8ef40ccef3a1a6891ad61685fc8537d4677e6df7f6dff0e1331"
   },
   {
+    "path": "bots/storylines/ebilmegamall.ts",
+    "kind": "bots",
+    "name": "Ebil Mega Mall",
+    "desc": "Ebil Mega Mall storyline, quests 10500-10508. Completed quests return true without touching anything, so re-runs resume where they left off.",
+    "autoload": null,
+    "sha256": "e7798eb035922c304d20979bdf77debdabbb6365978655d15700359eb94797b3"
+  },
+  {
     "path": "bots/storylines/elegy-of-madness/01-eridani.ts",
     "kind": "bots",
     "name": "Elegy of Madness 01 - Eridani",
