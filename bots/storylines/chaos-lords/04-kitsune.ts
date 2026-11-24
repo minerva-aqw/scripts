@@ -56,11 +56,11 @@ bot.quest(469, {
 });
 
 bot.quest(470, {
-  "2662": function () { bot.hunt("Wild Kara-Kasa", "junkyard", 5); }, // Wild Kara-Kasa
-  "2663": function () { bot.hunt("Wild Bura-Bura", "junkyard", 4); }, // Wild Bura-Bura
-  "2665": function () { bot.hunt("Wild Biwa-Bokuboku", "junkyard", 3); }, // Wild Biwa-Bokuboku
-  "2666": function () { bot.hunt("Wild Koto-Furunushi", "junkyard", 2); }, // Wild Koto-Furunushi
-  "2667": function () { bot.hunt("Wild Bakezouri", "junkyard", 1); }, // Wild Bakezouri
+  "2662": function () { bot.hunt("Tsukumo-Gami", "junkyard", 5); }, // Wild Kara-Kasa
+  "2663": function () { bot.hunt("Tsukumo-Gami", "junkyard", 4); }, // Wild Bura-Bura
+  "2665": function () { bot.hunt("Tsukumo-Gami", "junkyard", 3); }, // Wild Biwa-Bokuboku
+  "2666": function () { bot.hunt("Tsukumo-Gami", "junkyard", 2); }, // Wild Koto-Furunushi
+  "2667": function () { bot.hunt("Tsukumo-Gami", "junkyard", 1); }, // Wild Bakezouri
 });
 
 bot.quest(471, {
