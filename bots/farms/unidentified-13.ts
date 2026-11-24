@@ -135,3 +135,4 @@ if (bot.ensureItem(UNI13, WANT)) {
       throw new Error("Unidentified 13 stalled at " + uniNow + "/" + WANT + " with " + diaNow + " Diamonds banked (no progress for 3 cycles: converter needs Crag & Bamboozle 4845 + 15 diamonds per turn-in; else Escherion Boss/Left for relics, or 100k gold per Memorabilia at yulgar 41)");
     }
   }
+}
