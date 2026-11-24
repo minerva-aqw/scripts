@@ -173,7 +173,7 @@
     "name": "Chaos Lords 04 - Kitsune",
     "desc": "Kitsune chapter, quests 380-488. Completed quests return true without touching anything, so re-runs resume where they left off.",
     "autoload": null,
-    "sha256": "bff0c4b4d321401d6b7cfc1cc13c9cc11b5f78a2ea7cef835cd29c38cc86dcd3"
+    "sha256": "6af61958d54fb8b044fcbb7d780f4fe425e2f9c700b459d3ef72d003a1959c4e"
   },
   {
     "path": "bots/storylines/chaos-lords/05-wolfwing.ts",
