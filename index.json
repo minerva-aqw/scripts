@@ -408,6 +408,14 @@
     "sha256": "c165f9dc195f86b417eb99cb19588065616c0aa63ada1f23109762c3a8745085"
   },
   {
+    "path": "classes/shadow-dragon-shinobi/dodge-dps.ts",
+    "kind": "classes",
+    "name": "Shadow Dragon Shinobi dodge DPS",
+    "desc": "Flaming Dragon upkeep, Shadow Kunai stacked to 10, foresight autos, Chi Heal on a hurt bar, Shadow Soul as the emergency.",
+    "autoload": "Shadow Dragon Shinobi",
+    "sha256": "75e662c0e9b414d3be3044ff0e2ce531f1a93a02f34d656b19548c6096eb4bc1"
+  },
+  {
     "path": "classes/stonecrusher/stonecrusher.ts",
     "kind": "classes",
     "name": "StoneCrusher support DPS",
