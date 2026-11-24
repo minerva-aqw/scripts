@@ -13,7 +13,7 @@
     "name": "ArchPaladin class",
     "desc": "Gets the ArchPaladin class (item 36920): Good rep gate, 5463-5470 chain (free 5463-5466 or member aptitude), BLoD mine unlock inline, shop buy in darkthronehub.",
     "autoload": null,
-    "sha256": "d8f746611942514683fc533a7f37db449299f28b3785a20b2cf5d35d93e5201a"
+    "sha256": "2ccfb70514909126936cec3092ca008ce198280ba2478442a84d61e2c9b46bec"
   },
   {
     "path": "bots/class/chaos-slayer/berserker.ts",

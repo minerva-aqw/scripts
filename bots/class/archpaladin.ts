@@ -42,13 +42,23 @@ if (!bot.ensureItem(36920)) {
   const member = bot.me().upgraded === true;
 
   // BLoD mine unlock (5464's Undead Energy gate): buys plus 2082-2084.
+  // 2082-2084 are repeatable (Once=False), so completed() never sticks —
+  // gate each on its quest-value slot 78 (Skua's isCompletedBefore).
   // Spirit Orbs farm like Skua's BoneSomeDust — shared kills over the
   // registered pair until 100 held.
-  if (!bot.quest(2084).completed()) {
+  if (bot.questValue(78) < 1) {
     bot.quest(2066, { "8687": function () { buy(276, "doomwood", "Blinding Light of Destiny Handle"); } });
+  }
+  if (bot.questValue(78) < 2) {
     bot.quest(2067, { "7691": function () { buy(276, "doomwood", "Bonegrinder Medal"); } });
+  }
+  if (bot.questValue(78) < 3) {
     bot.quest(2082, { "6697": function () { take("Skeleton Warrior", "battleunderb", "Undead Essence", 25); } });
+  }
+  if (bot.questValue(78) < 4) {
     bot.quest(2083, { "598": function () { take("Skeleton Warrior", "battleunderb", "Bone Dust", 40); } });
+  }
+  if (bot.questValue(78) < 5) {
     bot.quest(2084, {
       "12184": function () {
         bot.quest.register([2082, 2083], { choice: 0 });
