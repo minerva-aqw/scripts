@@ -3,7 +3,7 @@
 
 // Ported from Skua Good/GearOfAwe/BladeOfAwe.cs + CoreFarms.BladeofAweREP/UnlockBoA.
 // Handler keys are requirement ItemIDs (stable); maps and monster names from the same source.
-// 2937 pins Boss/Left in escherion; Skua's staff-target dance has no bot equivalent, the kill goes through the seated rotation.
+// 2937 pins Boss/Left in escherion via boss.escherion (staff first).
 
 if (!bot.ensureItem(17585)) {
   bot.quest(2933, {
@@ -23,7 +23,7 @@ if (!bot.ensureItem(17585)) {
   });
 
   bot.quest(2937, {
-    "17487": function () { bot.hunt("Escherion", "escherion", 1, "Boss", "Left"); }, // Runes Found!
+    "17487": function () { boss.escherion(); }, // Runes Found! (staff first)
   });
 
   let fac = bot.rep("Blade of Awe");

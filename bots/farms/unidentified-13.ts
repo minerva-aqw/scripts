@@ -126,7 +126,7 @@ if (bot.ensureItem(UNI13, WANT)) {
         spins += 1;
       } else {
         bot.quest(2857, {
-          "67266": function () { bot.hunt("Escherion", "escherion", 1, "Boss", "Left"); }, // Relic of Chaos
+          "67266": function () { boss.escherion(); }, // Relic of Chaos (staff first)
         }, { choice: UNI13, quiet: 20 });
         noteUni13();
         spins += 1;

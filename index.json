@@ -5,7 +5,7 @@
     "name": "ArchFiend class",
     "desc": "Gets the ArchFiend class (no rank-up): Evil rep, Nation materials, Abyssal Contract quest, purchase.",
     "autoload": null,
-    "sha256": "420b1b3a694fc1e18b549193f3b0d62cbcfae0332646659954692ddd58807dcd"
+    "sha256": "38ec7d917204567f4f0e22ba55edac34bd54c9d8f68be1cb1c06ea1d087b3f6a"
   },
   {
     "path": "bots/class/ninja.ts",
@@ -53,7 +53,7 @@
     "name": "Unidentified 13 farm",
     "desc": "Farms Unidentified 13 to 13 (max stack). Pet/sword paths when held, else the Supplies wheel (Relic of Chaos) with The Assistant (gold) fallback.",
     "autoload": null,
-    "sha256": "46a1da3ceb8b39204ceb56f43e7015be99e4dd310feff88089080a92e564fd1c"
+    "sha256": "151827f9e6dda3273294bc2a00c5e0001599b71595fdab9b1517bba8a8331b6a"
   },
   {
     "path": "bots/items/armor-of-awe/cape-of-awe.ts",
@@ -69,7 +69,7 @@
     "name": "Blade of Awe",
     "desc": "Unlock quests 2933-2937, farm Blade of Awe rep to rank 6 via 2935, buy Blade of Awe from museum shop 631.",
     "autoload": null,
-    "sha256": "83c86e77655f3f559fdf85af307ebe10310defd2b1390a3d69f0a740e00fb04d"
+    "sha256": "6121a8e04f0e2acca370536116f3be08a6f524d2e1e510a584cf0c89b4461bd4"
   },
   {
     "path": "bots/items/blinding-light-of-destiny.ts",
@@ -157,7 +157,7 @@
     "name": "Chaos Lords 02 - Escherion",
     "desc": "Escherion chapter, quests 245-272. Completed quests return true without touching anything, so re-runs resume where they left off.",
     "autoload": null,
-    "sha256": "76589671e92b8e2be8daf1b5a0d4c36d80d1a2d534223f7492182bdec57f9cec"
+    "sha256": "8767959297e9864b83e2c372cd58d44f13bca3ec39b013e101000f28d627ad2e"
   },
   {
     "path": "bots/storylines/chaos-lords/03-vath.ts",
@@ -486,5 +486,13 @@
     "desc": null,
     "autoload": null,
     "sha256": "b984a076e8b37d89e4744abff78216eaab90ab10b0a5711f6043aabfbdc52c9c"
+  },
+  {
+    "path": "lib/zboss.ts",
+    "kind": "lib",
+    "name": null,
+    "desc": null,
+    "autoload": null,
+    "sha256": "7e8cb177a72282d58f6dedf32353aa25c7690ba2779709ecb716dc13a84f3e05"
   }
 ]

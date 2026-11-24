@@ -97,7 +97,7 @@ if (bot.rep("Evil").rank < 10) {
 // --- Gem of Nulgath x200 (one choice per turn-in, 200 turn-ins) ---
 while (!needHeld("Gem of Nulgath", 200)) {
   bot.quest(2857, {
-    "67266": function () { bot.hunt("Escherion", "escherion", 1, "Boss", "Left"); }, // Relic of Chaos
+    "67266": function () { boss.escherion(); }, // Relic of Chaos (staff first)
   }, { choice: 6136 }); // Gem of Nulgath
 }
 
@@ -118,14 +118,14 @@ while (!needHeld("Dark Crystal Shard", 200)) {
     "4657": function () { bot.hunt("O-dokuro", "yokaiwar", 1); },
     "15398": function () { bot.hunt("Tibicenas", "djinn", 1); },
     "1528": function () { bot.hunt("*", "tercessuinotlim", 1, "m2", "Left"); }, // Defeated Makai
-    "2431": function () { bot.hunt("Escherion", "escherion", 1, "Boss", "Left"); }, // Escherion's Chain
+    "2431": function () { boss.escherion(); }, // Escherion's Chain (staff first)
   });
 }
 
 // --- Blood Gem of the Archfiend x20 ---
 while (!needHeld("Blood Gem of the Archfiend", 20)) {
   bot.quest(7816, {
-    "1172": function () { bot.hunt("Escherion", "escherion", 1, "Boss", "Left"); },
+    "1172": function () { boss.escherion(); }, // Escherion's Helm (staff first)
     "1757": function () { bot.hunt("Vath", "stalagbite", 1, "r2", "Left"); },
     "43797": function () { bot.hunt("Hydra Head 85", "hydrachallenge", 1); }, // Hydra Scale Piece
   }, { choice: 22332 }); // Blood Gem of the Archfiend

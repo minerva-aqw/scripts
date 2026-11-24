@@ -109,5 +109,5 @@ bot.quest(271, {
 });
 
 bot.quest(272, {
-  "1178": function () { bot.hunt("Escherion", "escherion", 1, "Boss", "Left"); }, // Defeated Escherion
+  "1178": function () { boss.escherion(); }, // Defeated Escherion (staff first, see lib/zboss.ts)
 });
