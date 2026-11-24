@@ -24,10 +24,12 @@ if (!fac.found) {
   throw new Error("no Blade of Awe faction after unlock (check bot.rep spelling)");
 }
 
+let last = fac.rank;
 while (fac.rank < RANK) {
   bot.quest(2935, hilt);
   fac = bot.rep("Blade of Awe");
-  bot.notify("Blade of Awe turn-in done, rank " + fac.rank);
+  if (fac.rank > last) {
+    bot.notify("Blade of Awe rank " + fac.rank + "/" + RANK);
+    last = fac.rank;
+  }
 }
-
-bot.notify("Blade of Awe rank 10 done");

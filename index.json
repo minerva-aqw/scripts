@@ -128,6 +128,14 @@
     "sha256": "d3c84d486736629c6d002877402ba857c952addad722fee9b84a8001d91bd1ef"
   },
   {
+    "path": "bots/reputations/aegis.ts",
+    "kind": "bots",
+    "name": "Aegis rep",
+    "desc": "Farms Aegis reputation to rank 10: registers quests 4900/4910/4914, loops Seraphic Assassin + Virtuous Warrior in skytower. Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "d6543af29b93ed6b2b252dfd33149cdd43e9a39c6eaf3ce8fe877be147d5ce51"
+  },
+  {
     "path": "bots/reputations/arcangrove.ts",
     "kind": "bots",
     "name": "Arcangrove rep",
@@ -136,12 +144,140 @@
     "sha256": "f18b022cd5556dbab90b527112f6bce973e791676acdbd3a9f218e906d90dd86"
   },
   {
+    "path": "bots/reputations/baconcat.ts",
+    "kind": "bots",
+    "name": "BaconCat rep",
+    "desc": "Farms BaconCat reputation to rank 10: registers quests 5112/5120, loops Ice Cream Shark in baconcatlair. Requires quest 5120 (Ziri storyline) unlocked. Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "6a0d2e820f073a07714ac75f3d7f467cc3f763ce02c982da832630566f92920c"
+  },
+  {
+    "path": "bots/reputations/beastmaster.ts",
+    "kind": "bots",
+    "name": "BeastMaster rep",
+    "desc": "Farms BeastMaster reputation to rank 10 (member-only): quest chain 3754 to rank 3, 3755 to rank 4, 3756 to rank 6, 3757 to rank 10. Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "3af956aa3fbdb770f89e319aa85a04fc5b2a938f9551e8415bc19901b1be9702"
+  },
+  {
+    "path": "bots/reputations/blacksmithing.ts",
+    "kind": "bots",
+    "name": "Blacksmithing rep",
+    "desc": "Farms Blacksmithing reputation to rank 10 (monster-farm path, not gold): quest 2777 to rank 4, then 8736 to rank 10. Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "a321acce3dc32259fa5550af351461faf5d27d4a3ce9543c0f7bd9d1df224afa"
+  },
+  {
     "path": "bots/reputations/blade-of-awe.ts",
     "kind": "bots",
     "name": "Blade of Awe rep",
     "desc": "Farms Blade of Awe reputation to rank 10 via 2935 Hilt turn-ins. Assumes the 2933-2937 unlock chain is done.",
     "autoload": null,
-    "sha256": "82401a5bea2d19fd5ac2e5b90c5d6e05b45dd733a4ff54005105e2429f85c8ae"
+    "sha256": "1ac288da30f1f7de86bde46d17df4b95281aec549e0a6d624d8588d8980f994d"
+  },
+  {
+    "path": "bots/reputations/brethwren.ts",
+    "kind": "bots",
+    "name": "Brethwren rep",
+    "desc": "Farms Brethwren reputation to rank 10 via quest 8989 Fowl Farming, looping Turkonian in birdswithharms. Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "a4d2e4e85f75dde85c4923123fbfb63f1e5c4b5087c6d5c3dd401a0dc9f789f8"
+  },
+  {
+    "path": "bots/reputations/brightoak.ts",
+    "kind": "bots",
+    "name": "Brightoak rep",
+    "desc": "Farms Brightoak reputation to rank 10 via quest 4667 Unlocking the Guardian's Mouth, gathering map item 3984 in elfhame. Requires the Brightoak saga done to Elfhame. Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "5cc176f49c3bea626ec7adbf1b2c06ad4cd3d181c36321ab9f4a6240d5fe2b4a"
+  },
+  {
+    "path": "bots/reputations/carcossa-court.ts",
+    "kind": "bots",
+    "name": "Carcossa Court rep",
+    "desc": "Farms Carcossa Court reputation to rank 10: registers quests 10810 (+10811/10812 as the story unlocks them), loops templeofdoom r7. Requires the story through Light and Lemming. Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "8df42ba96a5bf0959089f0db6028e1fd1a9add65dc0ec303bb3634c828fc725b"
+  },
+  {
+    "path": "bots/reputations/chaos-militia.ts",
+    "kind": "bots",
+    "name": "Chaos Militia rep",
+    "desc": "Farms Chaos Militia reputation to rank 10 via quest 5775 Expect the Inquisitors, looping Inquisitor Guard in citadel. Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "27cecb09f502e7658ba9efc6bb4f680aa8fb809b5db6913315785d1c2bd918a8"
+  },
+  {
+    "path": "bots/reputations/chaos.ts",
+    "kind": "bots",
+    "name": "Chaos rep",
+    "desc": "Farms Chaos reputation to rank 10 via quest 3594 Embrace Your Chaos in mountdoomskull. Aligns Chaos itself first. Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "64152924b654e85c130bef55bfce4540992dcb0d8fbf946708ddb426340c7c8f"
+  },
+  {
+    "path": "bots/reputations/chrono-span.ts",
+    "kind": "bots",
+    "name": "ChronoSpan rep",
+    "desc": "Farms ChronoSpan reputation to rank 10 via quest 2204 Do the 'do in thespan (r6 + r4). Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "9ea2a09f84d6e02eb7d50b3eaac191e4c0d9b0d39d32c8aa5ba803f871ea026c"
+  },
+  {
+    "path": "bots/reputations/craggle-rock.ts",
+    "kind": "bots",
+    "name": "CraggleRock rep",
+    "desc": "Farms CraggleRock reputation to rank 10 via quest 7277 Star of the Sandsea, looping Kalestri Worshiper in wanders r2. Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "363dd0e7bd0afafe0aec4bc6a2427d140684b448fddf1ccd453906d84d5b5b43"
+  },
+  {
+    "path": "bots/reputations/death-pit-arena.ts",
+    "kind": "bots",
+    "name": "Death Pit Arena rep",
+    "desc": "Farms Death Pit Arena reputation to rank 10 via quest 5153 Hun'Gar Defeated, looping General Hun'Gar in deathpit. Requires the Death Pit Arena saga (through Pax Defeated). Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "3c2091511071e1324ff4949357a8e94be907ed86b9aca2108f71d94749cd1356"
+  },
+  {
+    "path": "bots/reputations/diabolical.ts",
+    "kind": "bots",
+    "name": "Diabolical rep",
+    "desc": "Farms Diabolical reputation to rank 10: unlocks 7875/7876 once, then repeats 7877 in mudluk. Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "6339c2b4caa2ee6b3f34a3432ca6af7cc0b334673ab44d02d464c1f6344524cf"
+  },
+  {
+    "path": "bots/reputations/doomwood.ts",
+    "kind": "bots",
+    "name": "DoomWood rep",
+    "desc": "Farms DoomWood reputation to rank 10: registers quests 1151/1152/1153, loops shadowfallwar Garden1. Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "572cd584c6ba4745a60e5bf5c4fb160f951053dee5941210dc7dc6ddf362d06f"
+  },
+  {
+    "path": "bots/reputations/dreadfire.ts",
+    "kind": "bots",
+    "name": "Dreadfire rep",
+    "desc": "Farms Dreadfire reputation to rank 10 via quest 5697 Gather Crystals, looping Arcane Crystal in dreadfire r13. Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "8c955daeb17b8789080652e395a2a4dde5c5547caafda6253d6f1b0583b08cb0"
+  },
+  {
+    "path": "bots/reputations/dreadrock.ts",
+    "kind": "bots",
+    "name": "Dreadrock rep",
+    "desc": "Farms Dreadrock reputation to rank 10: registers quests 4862/4863/4865/4868, loops dreadrock r3. Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "33e4d71d7a93a88f8689d4601d2bb5900a39e9a25979cf5ab1da1889a115ddfb"
+  },
+  {
+    "path": "bots/reputations/druid-grove.ts",
+    "kind": "bots",
+    "name": "Druid Grove rep",
+    "desc": "Farms Druid Grove reputation to rank 10 via quest 3049 Help Professor Maedoc, looping Crystal-Rock in bloodtusk. Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "ad34074b310b8295dced51c181e28f2169b4935242ebec7f24c6b74dd51c2bca"
   },
   {
     "path": "bots/reputations/dwarfhold.ts",
@@ -152,12 +288,92 @@
     "sha256": "16a5a3b48943cebeafe83f7252e12f5132a6d35069a35b8f04a3c145cfaa56c2"
   },
   {
+    "path": "bots/reputations/elemental-master.ts",
+    "kind": "bots",
+    "name": "Elemental Master rep",
+    "desc": "Farms Elemental Master reputation to rank 10 in gilead: Dragonrune Hall unlock 3052, member daily 3299 first when available, then registered 3050 + 3298. Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "ad17e27cee8387f726d51cb7b273eb116106f08b5223a4641f36cc786c08082e"
+  },
+  {
+    "path": "bots/reputations/embersea.ts",
+    "kind": "bots",
+    "name": "Embersea rep",
+    "desc": "Farms Embersea reputation to rank 10: quest 4080 in Pyrewatch when unlocked (map item 3162), else Blazebinders in fireforge via 4228. Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "7a05ff1c9c8895bd3bb3f3e119a1d77d69c83eb5a15a30755aa91ef71c65f1f7"
+  },
+  {
+    "path": "bots/reputations/eternal.ts",
+    "kind": "bots",
+    "name": "Eternal rep",
+    "desc": "Farms Eternal reputation to rank 10 via quest 5198 in fourdpyramid (White/Black Gems off Stone Sphynx). Requires the fourdpyramid storyline done to unlock 5198. Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "aadaaf79182f9e3dab4fbf0082e8bb26ca5299ee141f3f819b34c6774bcd5cd3"
+  },
+  {
+    "path": "bots/reputations/etherstorm.ts",
+    "kind": "bots",
+    "name": "Etherstorm rep",
+    "desc": "Farms Etherstorm reputation to rank 10 via quest 3494 Dapper Hats in waterstorm/r5. Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "d4f1ef2d265897d415582d210bd681e097cf438e7900d20e980bfd50ddb487ea"
+  },
+  {
     "path": "bots/reputations/evil.ts",
     "kind": "bots",
     "name": "Evil rep",
     "desc": "Farms Evil reputation to rank 10: quest 364 Youthanize to rank 4, then 367 Bone-afide (member: 366 Dangerous Decor). Aligns Evil itself first.",
     "autoload": null,
     "sha256": "ba740560fbf94d30a39919d2800a97d08025f1c2f52b3c473c037b8c49531a54"
+  },
+  {
+    "path": "bots/reputations/faerie-court.ts",
+    "kind": "bots",
+    "name": "Faerie Court rep",
+    "desc": "SEASONAL farm for Faerie Court reputation to rank 10: registered 6775 + 6779, Lucky Harms in rainbow below rank 8, Dark Sylphdrake in faegrove after. Fails while the event maps are away. Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "529061cabb6b3b7c7be3c8fed922e35900ad972444ab7cc9849b5d33552a4ab7"
+  },
+  {
+    "path": "bots/reputations/glacera.ts",
+    "kind": "bots",
+    "name": "Glacera rep",
+    "desc": "Farms Glacera reputation to rank 10 in icewindwar/r5 via registered 5597-5600. Requires the Glacera storyline done (quest 5601). Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "c100564470790ff517004dcdf0203be586ece7eb340449c314fb67594c17f774"
+  },
+  {
+    "path": "bots/reputations/good.ts",
+    "kind": "bots",
+    "name": "Good rep",
+    "desc": "Farms Good reputation to rank 10: quest 1952 in PoisonForest when the story is done, else 369 to rank 4 then 371 (member) / 372. Aligns Good itself first. Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "b35d73b5c7ae0e83ad8828ebaea54f82e1da8d21f1dc701324ce33bd236cacf0"
+  },
+  {
+    "path": "bots/reputations/hollowborn.ts",
+    "kind": "bots",
+    "name": "Hollowborn rep",
+    "desc": "Farms Hollowborn reputation to rank 10: neotower vindicators via 9865 (member: 10298) when the story is there, else Gargrowl + Shadow Guardian in shadowrealm via 7553 + 7555. Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "52600af471f542a2293dc733cb86b36725b58024abb5148c1c5ec9746de57ea6"
+  },
+  {
+    "path": "bots/reputations/horc.ts",
+    "kind": "bots",
+    "name": "Horc rep",
+    "desc": "Farms Horc reputation to rank 10 via quest 1265 in bloodtuskwar (Chaorrupted drops off the three Chaotic mobs). Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "35162ce1296ae61b4cfd6c1e338f8838b26d32f030cee6aa20cb9366a5370e61"
+  },
+  {
+    "path": "bots/reputations/infernal-army.ts",
+    "kind": "bots",
+    "name": "Infernal Army rep",
+    "desc": "Farms Infernal Army reputation to rank 10 via quest 5707 in dreadfire/r10 (Living Brimstone). Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "16d0bee3be64a8dfa99e8ba84e1096fb6a3d000cf2b592033f3b02a00e5d363f"
   },
   {
     "path": "bots/reputations/loremaster.ts",
@@ -176,6 +392,22 @@
     "sha256": "7fdae99e127621b01245af1bfefdf9ac05d2faefbbb907f3bd5644f4f9637603"
   },
   {
+    "path": "bots/reputations/monster-hunter.ts",
+    "kind": "bots",
+    "name": "Monster Hunter rep",
+    "desc": "Farms Monster Hunter reputation to rank 10 in pilgrimage/r5 via registered 5849 + 5850. Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "e2535af5be9e5bd7e53670f4356524d1a0dbcc7a2ebb39cae4a04e4d374cc82a"
+  },
+  {
+    "path": "bots/reputations/mysterious-dungeon.ts",
+    "kind": "bots",
+    "name": "Mysterious Dungeon rep",
+    "desc": "Farms Mysterious Dungeon reputation to rank 10 via quest 5429 in cursedshop (Antique Chair), after one-time unlock 5428. Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "0f34a63084757e83bde652c314bae2583acd370d33c8542d37e82e1701e2c450"
+  },
+  {
     "path": "bots/reputations/mythsong.ts",
     "kind": "bots",
     "name": "Mythsong rep",
@@ -184,12 +416,132 @@
     "sha256": "ff355197cde4c9181f77158d9e4a968b63c5034aae4de5ffd09e94b1bfe18562"
   },
   {
+    "path": "bots/reputations/necro-crypt.ts",
+    "kind": "bots",
+    "name": "Necro Crypt rep",
+    "desc": "Farms Necro Crypt reputation to rank 10 via quest 3048 in castleundead (Old Bone off Skeletal Viking). Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "09114b5aa53b648869d608f7a95180f0ac752acd49567c1d710072d705791b1f"
+  },
+  {
+    "path": "bots/reputations/northpointe.ts",
+    "kind": "bots",
+    "name": "Northpointe rep",
+    "desc": "Farms Northpointe reputation to rank 10 via quest 4027 Sage Advice (Bunch of Sage off Grim Stalker). Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "a1c8173d43aab44dfdb4d27725426fd39b60c3684604318b8f99ac234fc26c7f"
+  },
+  {
+    "path": "bots/reputations/pet-tamer.ts",
+    "kind": "bots",
+    "name": "Pet Tamer rep",
+    "desc": "Farms Pet Tamer reputation to rank 10 via quest 5261 Mogzard in greenguardwest (West7/Down). Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "994240941be85ddb9e21c8d67edbbef49de579291ed99f7b2f3b35cd5b38eec2"
+  },
+  {
+    "path": "bots/reputations/ravenloss.ts",
+    "kind": "bots",
+    "name": "Ravenloss rep",
+    "desc": "Farms Ravenloss reputation to rank 10 via quest 3445 Slay the Spiderkin in twilightedge. Needs the Ravenloss saga done to unlock 3445. Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "f4088ef682026bef974b298a82e303c7fa4ff30836ba3ae53796795e9b19d7cc"
+  },
+  {
+    "path": "bots/reputations/sandsea.ts",
+    "kind": "bots",
+    "name": "Sandsea rep",
+    "desc": "Farms Sandsea reputation to rank 10: registers quests 916/917/919/921/922, loops \"*\" in sandsea (Enter/Spawn). Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "d4204fcbbac1db7aad2e40962cdec77567fa064f0583ba3b2f2dfc397c90e83e"
+  },
+  {
+    "path": "bots/reputations/skye.ts",
+    "kind": "bots",
+    "name": "Skye rep",
+    "desc": "Farms Skye reputation to rank 10: needs quest 9125 Your Hero done (09SeaVoice), then registers 9709/9710/9711/9717 looping \"*\" in balemorale (r10/Bottom). Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "c97cea9eddf69c263125b977f62569feecca9a7a49cd89a46964b327c6e3ad1b"
+  },
+  {
+    "path": "bots/reputations/skyguard.ts",
+    "kind": "bots",
+    "name": "Skyguard rep",
+    "desc": "Member-only: farms Swag Token C in collectorlab (r2/Left), exchanges C->B->A at shop 325, turns in quest 1326 to rank 10. Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "97a1f84504a0d52af4ce18c07ea3fdd8cac92ca64567c4cec57ceb70ada5d99a"
+  },
+  {
+    "path": "bots/reputations/somnia.ts",
+    "kind": "bots",
+    "name": "Somnia rep",
+    "desc": "Farms Somnia reputation to rank 10 via quests 7665/7666/7669 in somnia (Nightspore, Orpheum Elemental, Dream Larva). Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "c6637f6525071acb82f31fd72c209861c4953e931c6a1768dba73a2ac29488b2"
+  },
+  {
+    "path": "bots/reputations/spellcrafting.ts",
+    "kind": "bots",
+    "name": "SpellCrafting rep",
+    "desc": "Farms SpellCrafting reputation to rank 10: unlock 2260 once, then 2299 (Ember Ink) to rank 4, then 2322 (Hallow Ink) to 10. Sells leftover ink. Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "79867a03b465fd09a360dea2665e9a2d05ec163d38778bd6fe5474116c54f471"
+  },
+  {
+    "path": "bots/reputations/swordhaven.ts",
+    "kind": "bots",
+    "name": "Swordhaven rep",
+    "desc": "Farms Swordhaven reputation to rank 10 via quests 3065/3066/3067/3070/3085/3086/3087 in castle (Spider, Wraith, Gargoyle, Fiend). Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "d482bdacbc23026fc1baae2845594febdebd79c9329fb26dcf2906d7f56a27d0"
+  },
+  {
+    "path": "bots/reputations/thunderforge.ts",
+    "kind": "bots",
+    "name": "ThunderForge rep",
+    "desc": "Farms ThunderForge reputation to rank 10 in deathpits: free accounts run 2733+2734 on Wrathful Vestis, members run 2734-2737 on Rotting Darkblood. Needs the saga done to unlock 2733. Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "b25654a37bc0528134bb8ec5e78f610a1012990b55beac03b85f631a297d73a5"
+  },
+  {
+    "path": "bots/reputations/treasure-hunter.ts",
+    "kind": "bots",
+    "name": "TreasureHunter rep",
+    "desc": "Farms TreasureHunter reputation to rank 10 via quest 6593 Qualifying Quest in stalagbite (Balboa, Super Specific Rock). Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "eaadd8b13115b7914a3ac218b06e933516844aeb055b1392643951183e77bc17"
+  },
+  {
+    "path": "bots/reputations/troll.ts",
+    "kind": "bots",
+    "name": "Troll rep",
+    "desc": "Farms Troll reputation to rank 10 via quest 1263 in bloodtuskwar (Lemurphant eye, Horcboar tentacle, Chinchilizard tusk). Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "dd779676626d6d2f1f074bdcb1491e6ffd5a7c8581646735dbe246f8ca264003"
+  },
+  {
     "path": "bots/reputations/vampire.ts",
     "kind": "bots",
     "name": "Vampire rep",
     "desc": "Farms Vampire reputation to rank 10 via quest 522 Twisted Paw in /safiria. Requires the Wolfwing storyline done and quest 522 unlocked.",
     "autoload": null,
     "sha256": "bedb92698292e7074d1b6ec646cb0027464e9258b4ec1ead365fc7c435293fd1"
+  },
+  {
+    "path": "bots/reputations/yew-mountains.ts",
+    "kind": "bots",
+    "name": "Yew Mountains rep",
+    "desc": "Farms Yew Mountains reputation to rank 10. Runs daily 10342 once when never done; members farm 10345 (Gemrald, dwarfhold), free accounts register 10341+10346 in thelimacity. Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "903a0cd85692f603a22cf6134d9df0c1ffe12f7df22892cc997832debe790412"
+  },
+  {
+    "path": "bots/reputations/yokai.ts",
+    "kind": "bots",
+    "name": "Yokai rep",
+    "desc": "Farms Yokai reputation to rank 10 via quest 383 Pockey Challenge in dragonkoiz (Piece of Pockey x3). Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "8c72aed4fb1c70fa4e36d7ed7702c22c80c18ec70ae6e696a79df29cc14a0ada"
   },
   {
     "path": "bots/smoke-eridani.ts",
