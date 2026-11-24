@@ -144,6 +144,14 @@
     "sha256": "82401a5bea2d19fd5ac2e5b90c5d6e05b45dd733a4ff54005105e2429f85c8ae"
   },
   {
+    "path": "bots/reputations/dwarfhold.ts",
+    "kind": "bots",
+    "name": "Dwarfhold rep",
+    "desc": "Farms Dwarfhold reputation to rank 10: unlocks 319 in tavern, then repeats 320 + 321 in pines/Enter. Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "16a5a3b48943cebeafe83f7252e12f5132a6d35069a35b8f04a3c145cfaa56c2"
+  },
+  {
     "path": "bots/reputations/evil.ts",
     "kind": "bots",
     "name": "Evil rep",
