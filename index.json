@@ -173,7 +173,7 @@
     "name": "Lycan rep",
     "desc": "Farms Lycan reputation to rank 10 via quest 537 Sanguine in /lycan. Requires the Wolfwing storyline done and quest 537 completed at least once.",
     "autoload": null,
-    "sha256": "5e8bf8563f9c271aba71ccf949b3feadebd2a306a8bb67db99590486a743b468"
+    "sha256": "7fdae99e127621b01245af1bfefdf9ac05d2faefbbb907f3bd5644f4f9637603"
   },
   {
     "path": "bots/reputations/vampire.ts",
@@ -181,7 +181,7 @@
     "name": "Vampire rep",
     "desc": "Farms Vampire reputation to rank 10 via quest 522 Twisted Paw in /safiria. Requires the Wolfwing storyline done and quest 522 unlocked.",
     "autoload": null,
-    "sha256": "bf15b9c2c74cd49c5316e50cd0780e5b7bfa622e7f21506ff32d994e17a1d9fc"
+    "sha256": "bedb92698292e7074d1b6ec646cb0027464e9258b4ec1ead365fc7c435293fd1"
   },
   {
     "path": "bots/smoke-eridani.ts",

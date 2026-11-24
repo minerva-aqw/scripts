@@ -31,7 +31,12 @@ if (!fac.found) {
   throw new Error("no Vampire faction after a turn-in (check bot.rep spelling)");
 }
 
+let last = fac.rank;
 while (fac.rank < RANK) {
   bot.quest(522, heads);
   fac = bot.rep("Vampire");
+  if (fac.rank > last) {
+    bot.notify("Vampire rank " + fac.rank + "/" + RANK);
+    last = fac.rank;
+  }
 }
