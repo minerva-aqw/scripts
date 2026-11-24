@@ -6,20 +6,13 @@
 // at call time, so this file loads fine regardless of stdlib order.
 
 // Escherion (escherion/Boss) is invulnerable while its staff stands, and the
-// staff respawns mid-fight. Each cycle pins Boss/Left, drops the staff first
-// (guarded by locate so an empty room skips straight to the boss), then kills
-// one Escherion. `qty` repeats the cycle; quest handlers pass nothing (one
-// boss per fill) and re-run the entry if the staff came back mid-kill.
+// staff respawns mid-fight. The engine handles it natively: "Staff" rides as
+// a priority blocker, so the mission engages the staff whenever it is alive
+// in-cell — even mid-boss-fight — without counting staff deaths. `qty`
+// repeats the cycle; quest handlers pass nothing (one boss per fill).
 const boss = {
   escherion(qty) {
     const want = qty == null ? 1 : qty;
-    bot.travel("escherion", "Boss", "Left");
-    for (let i = 0; i < want; i++) {
-      const staff = bot.locate("Staff");
-      if (staff && staff.found) {
-        bot.kill("Staff", 1);
-      }
-      bot.hunt("Escherion", "escherion", 1, "Boss", "Left");
-    }
+    bot.hunt("Escherion", "escherion", want, "Boss", "Left", ["Staff"]);
   },
 };

@@ -309,8 +309,11 @@ const bot = {
   cell(frame: string, pad?: string): unknown {
     return step({ op: "cell", frame, pad: pad ?? "Spawn" });
   },
-  kill(name: string, count?: number): unknown {
-    return step({ op: "kill", name, count: count ?? 1 });
+  // `kill(name, count?, blockers?)`: one mission to `Done`, counting `name`
+  // deaths only. `blockers` (a name or names, highest first) preempt
+  // engagement while alive without counting — the staff before the boss.
+  kill(name: string, count?: number, blockers?: string | string[]): unknown {
+    return step({ op: "kill", name, count: count ?? 1, blockers: blockers ?? [] });
   },
   // `quest(id)` / `quest(id, handlers, opts?)`.
   // Bare `quest(id)` only captures the id for the parking calls below, so
@@ -342,7 +345,7 @@ const bot = {
   //   if (q.wants().length > 0) { /* hunt the first one */ return; }
   //   if (q.ready()) q.turnIn();
   quest: questCallable as any,
-  // `hunt(name, map, qty?, cell?, pad?)`: teleport to `map` when elsewhere,
+  // `hunt(name, map, qty?, cell?, pad?, blockers?)`: teleport to `map` when elsewhere,
   // census the live room for the cell holding the most `name` matches, go
   // there, then kill. `map` is required; `qty` defaults to 1. `"*"` hunts
   // anything in the richest cell. With a quest in progress the hunt fills
@@ -352,9 +355,12 @@ const bot = {
   // per round with a sweep each until the scope reads held (`qty` is
   // unused on this path). Without a watched quest the count is the
   // contract. A `cell` pins the farm spot and skips the census (Skua's
-  // KillMonster shape).
-  hunt(name: string, map: string, qty?: number, cell?: string, pad?: string): unknown {
-    return step({ op: "hunt", name, map, qty: qty ?? 1, cell, pad });
+  // KillMonster shape). `blockers` (a name or names, highest first) are
+  // priority engagement overrides: while one is alive in-cell the mission
+  // fights it instead of `name`, without counting its deaths — the staff
+  // before the boss. Order is priority; empty reads as none.
+  hunt(name: string, map: string, qty?: number, cell?: string, pad?: string, blockers?: string | string[]): unknown {
+    return step({ op: "hunt", name, map, qty: qty ?? 1, cell, pad, blockers: blockers ?? [] });
   },
   // `locate(name)`: read-only census of the live room — the cell holding
   // the most `name` matches (same substring rule as `kill`/`hunt`). No
