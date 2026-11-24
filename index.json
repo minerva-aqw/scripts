@@ -128,6 +128,14 @@
     "sha256": "d3c84d486736629c6d002877402ba857c952addad722fee9b84a8001d91bd1ef"
   },
   {
+    "path": "bots/reputations/arcangrove.ts",
+    "kind": "bots",
+    "name": "Arcangrove rep",
+    "desc": "Farms Arcangrove reputation to rank 10: registers quests 794-801, loops Gorillaphant (LeftBack) + Seed Spitter (RightBack). Notifies on every rank-up.",
+    "autoload": null,
+    "sha256": "f18b022cd5556dbab90b527112f6bce973e791676acdbd3a9f218e906d90dd86"
+  },
+  {
     "path": "bots/reputations/blade-of-awe.ts",
     "kind": "bots",
     "name": "Blade of Awe rep",
