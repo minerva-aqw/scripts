@@ -108,13 +108,18 @@ if (bot.ensureItem(UNI13, WANT)) {
     // At/below 100k it runs the free Escherion relic hunt (2857 Supplies).
     // A failed buy with gold held (full bag, capped, lag) skips the spin and
     // retries yulgar next round — it never burns a relic round while gold
-    // is up.
+    // is up. No buy when one is already held: the turn-in only eats 1, so
+    // re-buying on top of a stack just burns 100k and looks like 2x -> 3x.
+    const MEMO = 52824;
     let spins = 0;
     while (qty(UNI13) < WANT && spins < 10) {
       const gold = bot.me().gold;
       if (gold > 100000) {
         bot.travel("yulgar");
-        if (bot.buyItem(41, 52824)) {
+        if (qty(MEMO) < 1) {
+          bot.buyItem(41, MEMO);
+        }
+        if (qty(MEMO) >= 1) {
           bot.quest(2859, {}, { choice: UNI13, quiet: 20 });
         }
         noteUni13();
