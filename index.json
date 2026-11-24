@@ -83,9 +83,9 @@
     "path": "bots/reputations/blade-of-awe.ts",
     "kind": "bots",
     "name": "Blade of Awe rep",
-    "desc": "Farms Blade of Awe reputation to rank 10: unlock chain 2933-2937, then 2935 Hilt turn-ins.",
+    "desc": "Farms Blade of Awe reputation to rank 10 via 2935 Hilt turn-ins. Assumes the 2933-2937 unlock chain is done.",
     "autoload": null,
-    "sha256": "82f787eb2728e887caf899b2e2e7189eff572e330e7af75fb1ad3ffbc63f372c"
+    "sha256": "e7e9b51655e1d86cc88591d226917e98f2fc2b16713226902e433e13d9a6923a"
   },
   {
     "path": "bots/reputations/evil.ts",
