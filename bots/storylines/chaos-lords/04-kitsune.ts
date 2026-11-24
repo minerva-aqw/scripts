@@ -74,7 +74,7 @@ bot.quest(473, {
 });
 
 bot.quest(474, {
-  "2696": function () { bot.hunt("Kappa Ninja", "yokairiver", 6, "r4", "Left"); bot.gather(92, "yokairiver"); }, // Kappa Maki Roll
+  "2696": function () { bot.travel("yokairiver"); bot.cell("r4", "Left"); bot.kill("Kappa Ninja", 6); bot.gather(92, "yokairiver"); }, // Kappa Maki Roll
 });
 
 bot.quest(476, {
