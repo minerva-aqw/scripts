@@ -102,22 +102,30 @@ if (bot.ensureItem(UNI13, WANT)) {
       swordRounds += 1;
     }
     // Wheel batch: 10 spins to bank diamonds (+ lucky direct Uni 13).
-    // Memorabilia (100k gold each) from yulgar shop 41 — the buy MUST happen
-    // from yulgar (shop 41 is yulgar/digitalyulgar/battleontown/meateortown):
-    // a cross-map shop load gets the session kicked, so travel first every
-    // round. Broke rounds fall through to the free Escherion relic hunt.
+    // Gold-gated: >100k gold stays on yulgar (2859 The Assistant, Memorabilia
+    // 100k each from shop 41 — the buy MUST happen from yulgar, a cross-map
+    // shop load gets the session kicked, so travel first every round).
+    // At/below 100k it runs the free Escherion relic hunt (2857 Supplies).
+    // A failed buy with gold held (full bag, capped, lag) skips the spin and
+    // retries yulgar next round — it never burns a relic round while gold
+    // is up.
     let spins = 0;
     while (qty(UNI13) < WANT && spins < 10) {
-      bot.travel("yulgar");
-      if (bot.buyItem(41, 52824)) {
-        bot.quest(2859, {}, { choice: UNI13, quiet: 20 });
+      const gold = bot.me().gold;
+      if (gold > 100000) {
+        bot.travel("yulgar");
+        if (bot.buyItem(41, 52824)) {
+          bot.quest(2859, {}, { choice: UNI13, quiet: 20 });
+        }
+        noteUni13();
+        spins += 1;
       } else {
         bot.quest(2857, {
           "67266": function () { bot.hunt("Escherion", "escherion", 1, "Boss", "Left"); }, // Relic of Chaos
         }, { choice: UNI13, quiet: 20 });
+        noteUni13();
+        spins += 1;
       }
-      noteUni13();
-      spins += 1;
     }
     // Progress guard: a full cycle that moved neither Uni 13 nor Diamonds
     // means both legs are dry (gold dry on 2859 AND relic hunt failing on
