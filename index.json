@@ -8,6 +8,38 @@
     "sha256": "38ec7d917204567f4f0e22ba55edac34bd54c9d8f68be1cb1c06ea1d087b3f6a"
   },
   {
+    "path": "bots/class/chaos-slayer/berserker.ts",
+    "kind": "bots",
+    "name": "Chaos Slayer Berserker class",
+    "desc": "Gets the Chaos Slayer Berserker class: 13 Lords of Chaos saga, buy from shop 891 in newfinale.",
+    "autoload": null,
+    "sha256": "3ec45606b11b02fdae89fb5f095edd7181fecfe621227bfd8061caf8ee8756fd"
+  },
+  {
+    "path": "bots/class/chaos-slayer/cleric.ts",
+    "kind": "bots",
+    "name": "Chaos Slayer Cleric class",
+    "desc": "Gets the Chaos Slayer Cleric class: 13 Lords of Chaos saga, buy from shop 891 in newfinale.",
+    "autoload": null,
+    "sha256": "0b86449a94973927358139afb4480627b954ae330141ad970a72013e17acc908"
+  },
+  {
+    "path": "bots/class/chaos-slayer/mystic.ts",
+    "kind": "bots",
+    "name": "Chaos Slayer Mystic class",
+    "desc": "Gets the Chaos Slayer Mystic class: 13 Lords of Chaos saga, buy from shop 891 in newfinale.",
+    "autoload": null,
+    "sha256": "e2440b1b4eb0de41ea965a6797aebfd7fc9bc6b2cbae3ff16eaf38b045b4b3ec"
+  },
+  {
+    "path": "bots/class/chaos-slayer/thief.ts",
+    "kind": "bots",
+    "name": "Chaos Slayer Thief class",
+    "desc": "Gets the Chaos Slayer Thief class: 13 Lords of Chaos saga, buy from shop 891 in newfinale.",
+    "autoload": null,
+    "sha256": "c87ffcfecf168039927005b95fe3daa1682192f251971fa70e3c4f2027a02051"
+  },
+  {
     "path": "bots/class/ninja.ts",
     "kind": "bots",
     "name": "Ninja class",
