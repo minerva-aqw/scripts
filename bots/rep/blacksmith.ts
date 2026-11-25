@@ -1,53 +1,107 @@
 /// name: Blacksmithing reputation
-/// desc: Buy Gold Voucher 500k at the Alchemy Academy and turn in Intrepid Investing to reach Blacksmithing rank 10.
+/// desc: Farm Blacksmithing reputation through quests 2777 and 8736 to rank 10.
 ///
-/// This is the gold route: quest 8737 takes one voucher per turn-in and gives
-/// 1000 reputation, so it needs no Tower of Doom access. The normal route
-/// through quest 8736 needs 15 Monster Trophies from Dread Klunk in the tower.
+/// Ranks 0-4 use Magic Sock it To You (2777): wolves and slimes in Greenguard.
+/// Ranks 4-10 use Monster Machining (8736): Creature Creation in Maul, Hydra
+/// Head 25 in the Hydra Challenge, and Dread Klunk at the top of the Tower of
+/// Doom. The registered quests are accepted and handed in by the tick sweep.
 
 const TARGET = 10;
-const QUEST = 8737;
-const SHOP = 2036;
-const VOUCHER = 61043; // Gold Voucher 500k
-const VOUCHER_GOLD = 500000;
+
+function clearFloor(): void {
+  try {
+    bot.kill({ monster: "*", count: 3 });
+  } catch (error) {
+    // An already-cleared floor has no resident monsters.
+    if (!String(error).includes("no *")) throw error;
+  }
+}
+
+function enterDreadKlunk(): string {
+  bot.travel("towerofdoom");
+  bot.cell("r1");
+  clearFloor();
+  for (let below = 2; below < 10; below++) {
+    bot.cell("r" + below);
+    clearFloor();
+  }
+  bot.cell("r10", "Left");
+  return "r10";
+}
 
 let rank = bot.rep("Blacksmithing").rank;
 bot.notify("Blacksmithing reputation: rank " + rank + " -> " + TARGET);
 
-if (rank < TARGET) {
-  bot.travel("alchemyacademy");
+if (rank < 4) {
+  bot.quest.register([2777]);
+  try {
+    while (rank < 4) {
+      bot.travel("greenguardeast");
+      let cell = findMonsterCell("Wolf", "greenguardeast");
+      bot.farm({
+        item: 18424,
+        qty: 2,
+        monster: "Wolf",
+        map: "greenguardeast",
+        cell,
+        source: "temp",
+      });
 
-  while (rank < TARGET) {
-    let held = bot.itemState(VOUCHER).qty;
+      bot.travel("greenguardwest");
+      cell = findMonsterCell("Slime", "greenguardwest");
+      bot.farm({
+        item: 16490,
+        qty: 5,
+        monster: "Slime",
+        map: "greenguardwest",
+        cell,
+        source: "temp",
+      });
 
-    if (held < 1) {
-      const affordable = Math.floor(bot.me().gold / VOUCHER_GOLD);
-      if (affordable < 1) {
-        throw new Error(
-          "Blacksmithing needs " +
-            VOUCHER_GOLD +
-            " gold for a Gold Voucher 500k and the character cannot afford one"
-        );
-      }
-
-      // The voucher stack is capped at 300. Ask for what the gold covers,
-      // then retry with the client's own limit if the gate is lower.
-      let bought = bot.buyItemState(SHOP, VOUCHER, Math.min(300, affordable));
-      if (!bought.ok && bought.status === "gated" && bought.limit > 0) {
-        bought = bot.buyItemState(SHOP, VOUCHER, bought.limit);
-      }
-      if (!bought.ok) {
-        throw new Error(
-          "Blacksmithing could not buy Gold Voucher 500k (" + bought.status + ")"
-        );
-      }
-      held = bot.itemState(VOUCHER).qty;
+      rank = bot.rep("Blacksmithing").rank;
     }
+  } finally {
+    bot.quest.unregister([2777]);
+  }
+}
 
-    const quest = bot.quest(QUEST);
-    if (!quest.active()) quest.accept();
-    quest.turnIn(-1, held);
-    rank = bot.rep("Blacksmithing").rank;
+if (rank < TARGET) {
+  bot.quest.register([8736]);
+  try {
+    while (rank < TARGET) {
+      bot.travel("maul");
+      let cell = findMonsterCell("Creature Creation", "maul");
+      bot.farm({
+        item: 7990,
+        qty: 1,
+        monster: "Creature Creation",
+        map: "maul",
+        cell,
+      });
+
+      bot.travel("hydrachallenge");
+      cell = findMonsterCell("Hydra Head 25", "hydrachallenge");
+      bot.farm({
+        item: 43797,
+        qty: 75,
+        monster: "Hydra Head 25",
+        map: "hydrachallenge",
+        cell,
+      });
+
+      cell = enterDreadKlunk();
+      bot.farm({
+        item: 23690,
+        qty: 15,
+        monster: "Dread Klunk",
+        map: "towerofdoom",
+        cell,
+      });
+
+      rank = bot.rep("Blacksmithing").rank;
+    }
+  } finally {
+    bot.quest.unregister([8736]);
   }
 }
 

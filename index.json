@@ -11,9 +11,9 @@
     "path": "bots/rep/blacksmith.ts",
     "kind": "bots",
     "name": "Blacksmithing reputation",
-    "desc": "Buy Gold Voucher 500k at the Alchemy Academy and turn in Intrepid Investing to reach Blacksmithing rank 10.",
+    "desc": "Farm Blacksmithing reputation through quests 2777 and 8736 to rank 10.",
     "autoload": null,
-    "sha256": "d9fca5d4051f68cffb6b5aea31137ddd04b67fa68ee1863db4a33e59994cdaa7"
+    "sha256": "0cad06c47f1324d32aa7ae084a3fea1afaa28ea109d294cf04ff418ebfb66719"
   },
   {
     "path": "bots/rep/lycan.ts",
