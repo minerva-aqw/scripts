@@ -394,8 +394,8 @@ const bot = {
   },
   // `notify(message)`: explicit bot notification — posts a high-visibility
   // Android notification (default sound) and logs the line. No game touch,
-  // no waiting: resumes bare `true` once queued. Use for "got class ..."
-  // moments inside a farm loop.
+  // no waiting: resumes bare `true` once queued. Reserve it for milestones
+  // and failures the player must act on, not routine quest completion.
   notify(message: string): unknown {
     return step({ op: "notify", message });
   },

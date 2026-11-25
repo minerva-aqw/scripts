@@ -5,7 +5,7 @@
     "name": "Arcangrove reputation",
     "desc": "Farm the Arcangrove repeatable quests until the faction reaches rank 10.",
     "autoload": null,
-    "sha256": "645178d2882f4542b19e9fd15f4c4d52d4b07f7a6556e959a10b9f68557de108"
+    "sha256": "e9ad0460c55ca80a4c7468755caaa14fad53a53d5df730fa85ad33c6d79c7e79"
   },
   {
     "path": "bots/rep/blacksmith.ts",
@@ -13,7 +13,7 @@
     "name": "Blacksmithing reputation",
     "desc": "Farm Blacksmithing reputation through quests 2777 and 8736 to rank 10.",
     "autoload": null,
-    "sha256": "0cad06c47f1324d32aa7ae084a3fea1afaa28ea109d294cf04ff418ebfb66719"
+    "sha256": "b074398d23749343c08349f51646689c60574ef256f85f77dbfc133fa520bbb2"
   },
   {
     "path": "bots/rep/lycan.ts",
@@ -21,7 +21,7 @@
     "name": "Lycan reputation",
     "desc": "Farm the repeatable Sanguine quest until Lycan reputation reaches rank 10.",
     "autoload": null,
-    "sha256": "5a7113ea268844a70f4a19a5682fbe14d284e2f0a63a06384129eaeb5362e0c4"
+    "sha256": "dae37af371ecf829dc500f5a7021b79255e22453a2a25115641e7f7106f7eac4"
   },
   {
     "path": "bots/story/battleunder.ts",
@@ -29,7 +29,7 @@
     "name": "Battle Under",
     "desc": "Complete the Battle Under storyline across battleundera through battleundere.",
     "autoload": null,
-    "sha256": "dd56dfb6e2c8c1fc1104e0cbd6c500e4e4dac601c9a7c600f5c901f39762f5bb"
+    "sha256": "04c8cbc1cbfe34c04f8fa9b4af6c77a567b1c831d82f7b31c239cf01c0b1775e"
   },
   {
     "path": "bots/story/throne-of-darkness/castle-of-bones.ts",
@@ -37,7 +37,7 @@
     "name": "Castle of Bones",
     "desc": "Complete the Castle of Bones chapter of the Throne of Darkness saga.",
     "autoload": null,
-    "sha256": "6f458aa73cc81706cacb5629a8e01e51a7bf0bab31c20bcb4f26a3978c11cbf3"
+    "sha256": "edbe1967b6396deb24f7cebd79df4d55492a4dd2ffaeee211e618ae1697384e6"
   },
   {
     "path": "bots/test.ts",
@@ -53,7 +53,7 @@
     "name": "Tower of Doom",
     "desc": "Complete the ten Tower of Doom floor quests.",
     "autoload": null,
-    "sha256": "f39363fd8af1c8d72072cd947ce43fd44fce398ea3be431e3987807b3c9a35be"
+    "sha256": "b1cb63c6d16df7db0a6805fde66cb6551eba979d9fca620a3dca4e7d4a008d1e"
   },
   {
     "path": "classes/archpaladin/archpaladin.ts",
@@ -189,7 +189,7 @@
     "name": null,
     "desc": null,
     "autoload": null,
-    "sha256": "256bf382e68945a6516f29556e9df36f45d4e4c42b74c5b6badb95b5248f91fb"
+    "sha256": "17a7f55f3d6f87c713053aa5eb40a79b792354aa51e1c2fbade331f861a5b574"
   },
   {
     "path": "lib/monsters.ts",

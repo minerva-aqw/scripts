@@ -16,7 +16,6 @@ if (rank < TARGET && !bot.quest(QUEST).done()) {
     "Lycan reputation needs the Wolfwing storyline through quest 537 (Sanguine)"
   );
 }
-bot.notify("Lycan reputation: rank " + rank + " -> " + TARGET);
 
 // Farm only fights in the current cell. Join the map, then move to the cell
 // holding Sanguine; `cell()` resolves the pad.

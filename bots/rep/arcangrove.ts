@@ -11,7 +11,6 @@ const QUESTS = [794, 795, 796, 797, 798, 799, 800, 801];
 const TARGET = 10;
 
 let rank = bot.rep("Arcangrove").rank;
-bot.notify("Arcangrove reputation: rank " + rank + " -> " + TARGET);
 
 if (rank < TARGET) {
   bot.travel(MAP);

@@ -39,11 +39,7 @@ const FLOORS: Array<{ floor: number; monster: string }> = [
   { floor: 10, monster: "Slugbutter" },
 ];
 
-if (bot.quest(BASE + LAST_FLOOR).done()) {
-  bot.notify("Tower of Doom is already complete");
-} else {
-  bot.notify("Tower of Doom: starting");
-
+if (!bot.quest(BASE + LAST_FLOOR).done()) {
   for (const floor of FLOORS) {
     const quest = bot.quest(BASE + floor.floor);
     // The slot is only a hint: a stopped run can leave it behind. The quest
@@ -53,7 +49,6 @@ if (bot.quest(BASE + LAST_FLOOR).done()) {
     if (progress >= floor.floor) continue;
 
     const map = floor.floor === 1 ? "towerofdoom" : "towerofdoom" + floor.floor;
-    bot.notify("Tower of Doom: floor " + floor.floor + " (progress " + progress + ")");
 
     if (!quest.active()) quest.accept();
 
@@ -79,8 +74,6 @@ if (bot.quest(BASE + LAST_FLOOR).done()) {
     } finally {
       bot.setQuestValue(PROGRESS_SLOT, cleared ? floor.floor : floor.floor - 1);
     }
-
-    bot.notify("Tower of Doom: floor " + floor.floor + " done");
   }
 
   bot.notify("Tower of Doom complete");

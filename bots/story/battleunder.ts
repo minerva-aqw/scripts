@@ -67,14 +67,9 @@ function complete(id: number, map: string, fill: () => void): void {
   if (!quest.active()) quest.accept();
   fill();
   quest.turnIn();
-  bot.notify("Battle Under: quest " + id + " done");
 }
 
-if (bot.quest(5928).done()) {
-  bot.notify("Battle Under is already complete");
-} else {
-  bot.notify("Battle Under: starting");
-
+if (!bot.quest(5928).done()) {
   // battleundera
   complete(374, "battleundera", () => {
     drop("battleundera", 1966, "Skeletal Warrior", 1);

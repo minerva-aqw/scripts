@@ -30,7 +30,6 @@ function enterDreadKlunk(): string {
 }
 
 let rank = bot.rep("Blacksmithing").rank;
-bot.notify("Blacksmithing reputation: rank " + rank + " -> " + TARGET);
 
 if (rank < 4) {
   bot.quest.register([2777]);

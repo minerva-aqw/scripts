@@ -58,14 +58,10 @@ function complete(id: number, fill: () => void): void {
   if (!quest.active()) quest.accept();
   fill();
   quest.turnIn();
-  bot.notify("Castle of Bones: quest " + id + " done");
 }
 
-if (bot.quest(4992).done()) {
-  bot.notify("Castle of Bones is already complete");
-} else {
+if (!bot.quest(4992).done()) {
   bot.travel(MAP);
-  bot.notify("Castle of Bones: starting");
 
   complete(4968, () => drop(34585, "Undead Guard", 1));
   complete(4969, () => drop(34586, "Undead Guard", 2));
