@@ -72,6 +72,25 @@ type PlanStep =
 type QuestPlanOpts = { choice?: number; qty?: number; turnIn?: boolean };
 type QuestPlanHandlers = Record<string, PlanStep[]>;
 
+// Phase 5 missions. `monster` is a name (case-insensitive substring, `*` for
+// any), `id` pins one MonMapID, `blockers` are priority names that engage but
+// never count, and `splash` chooses whether bystander deaths count.
+type MissionOpts = {
+  monster?: string;
+  id?: number;
+  count?: number;
+  blockers?: string | string[];
+  splash?: boolean;
+  map?: string;
+  cell?: string;
+  pad?: string;
+};
+type FarmOpts = MissionOpts & {
+  item?: number;
+  itemName?: string;
+  qty?: number;
+};
+
 // Registered quests (`bot.quest.register`): Skua's `RegisterQuests` idea, in
 // the shape this engine can afford. A registration makes the *tick* the one
 // that turns quests in and takes them again, so a farm or a hunt chain does not
@@ -418,8 +437,28 @@ const bot = {
   // engagement while alive without counting — the staff before the boss.
   // Wanted drop IDs (`bot.wantDrops`, plus this quest handler's
   // requirements) auto-claim off the floor when the mission ends.
-  kill(name: string, count?: number, blockers?: string | string[]): unknown {
-    return step({ op: "kill", name, count: count ?? 1, blockers: blockers ?? [], want: missionWant() });
+  // `kill({ monster, count?, blockers?, splash? })`: exact-count in the
+  // current cell, typed result. Positional `kill(name, count?, blockers?)`
+  // is the legacy compatibility form and still goes through the old op.
+  kill(monster: string | MissionOpts, count?: number, blockers?: string | string[]): unknown {
+    if (monster != null && typeof monster === "object") {
+      return step({ op: "mission", spec: Object.assign({ kind: "kill" }, monster) });
+    }
+    return step({ op: "kill", name: monster, count: count ?? 1, blockers: blockers ?? [], want: missionWant() });
+  },
+  // `clear({ monster?, blockers? })`: kill every matching monster in the
+  // current cell. No count and no roaming.
+  clear(opts?: MissionOpts): unknown {
+    return step({ op: "mission", spec: Object.assign({ kind: "clear" }, opts ?? {}) });
+  },
+  // `attack({ monster?, id?, blockers? })`: kill one instance, not a count.
+  attack(opts: MissionOpts): unknown {
+    return step({ op: "mission", spec: Object.assign({ kind: "attack" }, opts) });
+  },
+  // `farm({ item | itemName, qty?, monster, map?, cell?, blockers? })`:
+  // repeat the explicit kill source until the held-item floor is met.
+  farm(opts: FarmOpts): unknown {
+    return step({ op: "mission", spec: Object.assign({ kind: "farm" }, opts) });
   },
   // `quest(id)` / `quest(id, handlers, opts?)`.
   // Bare `quest(id)` only captures the id for the parking calls below, so
