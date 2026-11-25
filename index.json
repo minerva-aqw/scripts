@@ -1,5 +1,13 @@
 [
   {
+    "path": "bots/rep/arcangrove.ts",
+    "kind": "bots",
+    "name": "Arcangrove reputation",
+    "desc": "Farm the Arcangrove repeatable quests until the faction reaches rank 10.",
+    "autoload": null,
+    "sha256": "645178d2882f4542b19e9fd15f4c4d52d4b07f7a6556e959a10b9f68557de108"
+  },
+  {
     "path": "bots/rep/lycan.ts",
     "kind": "bots",
     "name": "Lycan reputation",
