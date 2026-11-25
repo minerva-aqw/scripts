@@ -10,8 +10,9 @@
 // combat mission via `kill_mission`, `quest(id).accept()` ->
 // `Game.world.acceptQuest`, `quest(id).turnIn()` ->
 // `Game.world.tryQuestComplete`, `quest(id).completed()` -> bare boolean
-// re-run guard, `quest(id).info()/active()/ready()/done()/wants()` -> the
-// step reads (one `questinfo` each), `quest.register(ids, opts?)` -> the tick
+// re-run guard, `quest(id).info()/active()/ready()/done()/dailyComplete()/
+// wants()` -> the step reads (one `questinfo` each),
+// `quest.register(ids, opts?)` -> the tick
 // sweeps them (accept, hand in when the client offers: one `quest_sweep`),
 // `locate(name)` -> read-only census of the live room (no bridge traffic),
 // `gatherState(id, map, qty?)` -> typed gather result, `itemState(idOrName)` /
@@ -30,6 +31,7 @@ type QuestInfo = {
   ready?: boolean;
   done?: boolean;
   once?: boolean;
+  dailyComplete?: boolean;
   rewards?: number;
   turnin?: QuestReq[];
 };
@@ -169,8 +171,8 @@ function questStep(id: number): unknown {
     },
     // The whole projection record for one quest. `active` = in the tracker,
     // `ready` = the client's own `canTurnInQuest`, `done` = the chain slot
-    // reached its value, and `turnin` carries each requirement's
-    // `{id,name,need,have}`.
+    // reached its value, `dailyComplete` = today's achievement is already
+    // claimed, and `turnin` carries each requirement's `{id,name,need,have}`.
     info(): QuestInfo {
       return step({ op: "quest_info", id }) as QuestInfo;
     },
@@ -182,6 +184,12 @@ function questStep(id: number): unknown {
     },
     done(): boolean {
       return step({ op: "quest_info", id })["done"] === true;
+    },
+    // True when this daily quest's achievement is already claimed today.
+    // Always false for a quest without a daily field, and resets with the
+    // game's daily rollover — not at local midnight.
+    dailyComplete(): boolean {
+      return step({ op: "quest_info", id })["dailyComplete"] === true;
     },
     // Requirements still short, as `{id,name,need,have}`. Empty when the
     // gate can take the quest.
