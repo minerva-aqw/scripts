@@ -8,6 +8,14 @@
     "sha256": "645178d2882f4542b19e9fd15f4c4d52d4b07f7a6556e959a10b9f68557de108"
   },
   {
+    "path": "bots/rep/blacksmith.ts",
+    "kind": "bots",
+    "name": "Blacksmithing reputation",
+    "desc": "Buy Gold Voucher 500k at the Alchemy Academy and turn in Intrepid Investing to reach Blacksmithing rank 10.",
+    "autoload": null,
+    "sha256": "d9fca5d4051f68cffb6b5aea31137ddd04b67fa68ee1863db4a33e59994cdaa7"
+  },
+  {
     "path": "bots/rep/lycan.ts",
     "kind": "bots",
     "name": "Lycan reputation",
