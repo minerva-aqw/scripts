@@ -13,22 +13,13 @@
 // re-run guard, `quest(id).info()/active()/ready()/done()/wants()` -> the
 // step reads (one `questinfo` each), `quest.register(ids, opts?)` -> the tick
 // sweeps them (accept, hand in when the client offers: one `quest_sweep`),
-// `hunt(name, map, qty?)` -> teleport +
-// census + `moveToCell` + kill, `locate(name)` -> read-only census of the
-// live room (no bridge traffic), `gather(id, map, qty?)` -> teleport (no
-// cell move; the `getMapItem` packet carries no cell) + `getMapItem` polled
-// against temp inventory, `inventory(idOrName)` -> detail object,
-// `ensureItem(idOrName, qty?)` -> bare boolean, unbanking first,
-// `buyItem(shopId, idOrName, qty?)` -> bare boolean, loading the shop first,
-// `sellItem(idOrName, qty?)` -> bare boolean, clamped to held,
-// `me()` -> player snapshot object,
-// `rep(idOrName)` -> faction detail object,
-// `questValue(slot)` -> bare slot number,
-// `setQuestValue(slot, value)` -> bare boolean on the server echo,
-// `drops()` -> pending drop array,
-// `pickup(idOrName | "*")` -> bare boolean, `"*"` clears the floor,
-// `pickupNow(idOrName | "*")` -> `{ok, requested, claimed, remaining, reason}`.
-// `notify(message)` -> bare boolean once queued (explicit notification).
+// `locate(name)` -> read-only census of the live room (no bridge traffic),
+// `gatherState(id, map, qty?)` -> typed gather result, `itemState(idOrName)` /
+// `ensureItemState(idOrName, qty?)` -> typed item and turn-in precondition,
+// `shopState`/`buyItemState`/`sellItemState` -> typed stock and trades,
+// `pickupNow(idOrName | "*")` -> `{ok, requested, claimed, remaining, reason}`,
+// `me()`/`rep`/`questValue`/`setQuestValue` -> player, faction and progression
+// reads, `notify(message)` -> bare boolean once queued.
 declare function park(v: unknown): unknown;
 
 type QuestReq = { id: number; name: string; need: number; have: number };
@@ -76,6 +67,8 @@ type FarmOpts = MissionOpts & {
   item?: number;
   itemName?: string;
   qty?: number;
+  // Count temp inventory instead of the backpack (Skua's `tempItem`).
+  temp?: boolean;
 };
 
 // Registered quests (`bot.quest.register`): Skua's `RegisterQuests` idea, in
@@ -262,8 +255,10 @@ const bot = {
   attack(opts: MissionOpts): unknown {
     return step({ op: "mission", spec: Object.assign({ kind: "attack" }, opts) });
   },
-  // `farm({ item | itemName, qty?, monster, map?, cell?, blockers? })`:
-  // repeat the explicit kill source until the held-item floor is met.
+  // `farm({ item | itemName, qty?, monster, map?, cell?, blockers?, temp? })`:
+  // repeat the explicit kill source until the held-item floor is met. `temp`
+  // counts temp inventory instead of the backpack, for map/quest drops that
+  // never enter the backpack.
   farm(opts: FarmOpts): unknown {
     return step({ op: "mission", spec: Object.assign({ kind: "farm" }, opts) });
   },
