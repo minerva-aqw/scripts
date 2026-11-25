@@ -69,6 +69,9 @@ type PlanStep =
   | { gather: { id: number; map: string; qty?: number } }
   | { attack: { name: string; count?: number; blockers?: string | string[] } };
 
+type QuestPlanOpts = { choice?: number; qty?: number; turnIn?: boolean };
+type QuestPlanHandlers = Record<string, PlanStep[]>;
+
 // Registered quests (`bot.quest.register`): Skua's `RegisterQuests` idea, in
 // the shape this engine can afford. A registration makes the *tick* the one
 // that turns quests in and takes them again, so a farm or a hunt chain does not
@@ -386,6 +389,21 @@ const bot = {
   // resumes where it was. Legacy calls still use their old blocking ops.
   plan(steps: PlanStep[]): unknown {
     return step({ op: "plan", steps });
+  },
+  // Explicit quest plan: accept, run each requirement's handler from the
+  // projection, then turn in. Handler keys are requirement item ids. The plan
+  // validates every requirement before it travels, and a handler that finishes
+  // without filling its requirement fails with a typed reason instead of
+  // spinning. The blocking `bot.quest(id, handlers)` remains the legacy path.
+  questPlan(id: number, handlers: QuestPlanHandlers, opts?: QuestPlanOpts): unknown {
+    return step({
+      op: "quest_plan",
+      id,
+      handlers,
+      choice: opts?.choice ?? -1,
+      qty: opts?.qty ?? 1,
+      turn_in: opts?.turnIn === false ? false : true,
+    });
   },
   // Already in `map` reads as done with no rejoin; a non-default `cell`
   // goes through the verified cell move instead of the join's blind args.
