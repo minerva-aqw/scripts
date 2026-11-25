@@ -29,7 +29,7 @@
     "name": "Tower of Doom",
     "desc": "Complete the ten Tower of Doom floor quests.",
     "autoload": null,
-    "sha256": "3db6a69d46bd51dd2eae24178f1e98cb02345db00dd8f5b675e607de0815dd8f"
+    "sha256": "69f75fa1645de2834909143bdd6686c7faf239a5000ce82054bfbc5befc51446"
   },
   {
     "path": "classes/archpaladin/archpaladin.ts",

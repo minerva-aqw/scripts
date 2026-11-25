@@ -51,7 +51,9 @@ if (bot.quest(BASE + LAST_FLOOR).done()) {
       bot.travel(map);
       for (let below = 1; below < LAST_FLOOR; below++) {
         bot.cell("r" + below);
-        bot.clear();
+        // Each floor clears after its three resident monsters die. They
+        // respawn immediately, so `clear` would never see an empty cell.
+        bot.kill({ monster: "*", count: 3 });
       }
       bot.cell("r" + LAST_FLOOR, "Left");
       bot.kill({ monster: floor.monster, count: 1 });
