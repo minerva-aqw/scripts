@@ -7,15 +7,21 @@ Shared AQW automation scripts. Anyone can PR; minerva reviews before merge.
 Kind comes from the folder, never from metadata:
 
 ```
-bots/      durable workflows (travel, cell, kill sequencing)
+bots/      durable workflows (missions, plans, quest plans) — being rewritten
 classes/   combat rotations (one file per class/build)
 lib/       stdlib, evaluated before every entry — never run directly
+old/       previous corpus, reference only — not indexed or shipped
 ```
 
-`bots/` scripts run in the bots runtime (durable, parks on every call).
-`classes/` scripts run in the combat runtime (tick loop). Every file under
-`lib/` evaluates into the shared global scope before the entry, in sorted
-order — entries use those globals directly.
+`bots/` is intentionally empty while the bots are rewritten from zero against
+the overhauled contract. See `bots/README.md` for the rules the first bots
+must follow. The previous corpus lives in `old/bots/`; it is not loaded,
+checked, indexed, or synced to the app, and it will be deleted once the
+replacements exist.
+
+`classes/` scripts run in the combat runtime (tick loop). Every file directly
+under `lib/` evaluates into the shared global scope before the entry, in sorted
+order — entries use those globals directly. Nested `lib/` files are not loaded.
 
 Entries are classic scripts, not modules: no `import`, no `export`, no
 top-level `await`. The engine only suspends from a plain synchronous call
@@ -26,63 +32,47 @@ stack, so durable calls stay sync and invisible.
 Every file under `bots/` and `classes/` starts with `///` metadata lines:
 
 ```ts
-/// name: Eridani smoke test
+/// name: Eridani mission
 /// desc: Travel to eridani, enter r3, kill 3 of anything.
 ```
 
 `name` is required. `desc` is optional. No `version`, no `kind` — the content
 hash in `index.json` is the version, the folder is the kind.
 
-## Quests
+## Missions
 
-Default is the declarative form — accept, then the first unmet
-requirement's handler until every requirement reads held, then turn in:
+New bots use object missions, one action per tick:
 
 ```ts
-bot.quest(8248, {
-  "63016": () => bot.hunt("*", "astraviacastle", 6, "r3", "Left"),
-  "63015": () => bot.gather(8891, "astraviacastle", 6),
+bot.kill({ monster: "*", count: 3, map: "eridani", cell: "r3" });
+bot.clear({ monster: "Slime" });
+bot.farm({ item: 2238, qty: 1, monster: "Kitsune", map: "kitsune", cell: "Boss" });
+```
+
+`kill` is exact-count in one cell, `clear` wipes the matching room, `farm`
+repeats its source until the held-item floor is met. Blockers are priority
+names that engage but never count. Plain drops go on the mission's own
+`pickup` list; a farm scopes its own item id automatically.
+
+## Quest plans
+
+`bot.questPlan` is the declarative quest path:
+
+```ts
+bot.questPlan(8248, {
+  "63016": [{ attack: { name: "*", count: 6 } }],
+  "63015": [{ gather: { id: 8891, map: "astraviacastle", qty: 6 } }],
 });
 ```
 
-Handler keys are requirement `ItemID`s (stable) or turn-in `sName`s
-(case-insensitive). `bot.quest(id, handlers, { choice, qty })` passes the
-turn-in options through; `{ turnIn: false }` fills without turning in.
-Completed quests return `true` without touching anything, so re-runs are
-safe. Missing or stalled requirements error with have/want counts.
+Handler keys are live requirement `ItemID`s or turn-in names. The plan
+validates that every unsatisfied requirement has a handler before it accepts
+or travels. `{ choice, qty, turnIn: false }` passes through to the turn-in.
 
-Manual sequence for blocks that need full control — ordering past
-turn-in order, interleaved bank/class/cutscene steps, per-turn-in
-repeatable logic:
+For a multi-step flow that is not a quest, use `bot.plan([...])`.
 
-```ts
-if (!bot.quest(8249).completed()) {
-  bot.quest(8249).accept();
-  bot.gather(8892, "astraviacastle", 6);
-  bot.hunt("Creature 20", "astraviacastle", 4);
-  bot.quest(8249).turnIn();
-}
-```
-
-### Registered quests
-
-When a quest should be handed in the moment its bags fill — not when the
-script happens to look — register it. The engine sweeps the registered set
-before every parked call (at most once per `interval`, default 2000 ms):
-accept what is not in the tracker, turn in what the client offers, and never
-wait or throw. A refused turn-in costs a sweep, not the run.
-
-```ts
-bot.quest.register([8300, 8301], { choice: 0, qty: 1, interval: 2000 });
-bot.hunt("Slime", "yulgar", 20);   // the hand-ins happen from the tick
-bot.quest.unregister();            // or unregister([8300])
-```
-
-`bot.quest.sweep()` runs one pass immediately and resumes `{ swept: [{ id,
-did }] }`, with `did` one of `accept`, `turnin`, `filling`, `refused`
-(the server's own words in `why`), `choice` (a reward must be named),
-`wait` (cold definition), `done` or `error`. `bot.quest.registered()` lists
-what is registered.
+The legacy `bot.hunt`/`bot.gather`/`bot.quest(id, handlers)` composites remain
+in the engine during the rewrite, but no new bot may use them.
 
 ## index.json
 
@@ -105,4 +95,4 @@ bun tools/check.ts
 
 Enforces the headers, the classic-script shape (no `import`/`export`/
 `await`/`async`), `bot.*` method names and arity against `lib/bot.ts`,
-a `rotation(me, target)` in every `classes/` file, and a fresh `index.json`.
+a `policy(s)` in every `classes/` file, and a fresh `index.json`.
