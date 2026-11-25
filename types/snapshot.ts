@@ -211,6 +211,25 @@ export interface EnsureItemResult {
   withdrawn: boolean;
 }
 
+export interface GatherResult {
+  ok: boolean;
+  item: number;
+  map: string;
+  requested: number;
+  held: number;
+  gathered: boolean;
+  grant: number | null;
+  source: DropSource;
+}
+
+export interface PickupResult {
+  ok: boolean;
+  requested: number[];
+  claimed: number[];
+  remaining: number[];
+  reason: string;
+}
+
 export interface Snapshot {
   online: boolean;
   now_ms: number;

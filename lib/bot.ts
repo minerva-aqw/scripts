@@ -26,11 +26,9 @@
 // `questValue(slot)` -> bare slot number,
 // `setQuestValue(slot, value)` -> bare boolean on the server echo,
 // `drops()` -> pending drop array,
-// `pickup(idOrName | "*")` -> bare boolean, `"*"` clears the floor).
+// `pickup(idOrName | "*")` -> bare boolean, `"*"` clears the floor,
+// `pickupNow(idOrName | "*")` -> `{ok, requested, claimed, remaining, reason}`.
 // `notify(message)` -> bare boolean once queued (explicit notification).
-// `wantDrops(ids)` / `unwantDrops(ids?)` / `wantedDrops()` -> the wanted
-// drop-ID list (Skua's `AddDrop` whitelist, auto-claimed after every kill;
-// quest requirements never need it).
 declare function park(v: unknown): unknown;
 
 type QuestHandlers = Record<string, () => unknown>;
@@ -110,26 +108,16 @@ let registeredEvery = 2000;
 let registeredChoice = -1;
 let registeredQty = 1;
 
-// Wanted drop IDs (Skua's `AddDrop` idea, per-op rather than session-global):
-// plain monster drops that are not quest requirements still auto-claim off
-// the floor when a kill mission ends. The set rides every `kill`/`hunt`
-// park as `want`. Session-scoped like the registry: entries persist until
-// removed.
-let dropWant: number[] = [];
-// Quest requirements are not session-global. The composite scopes the current
-// quest's requirement ids to one handler round, and a mission inside that
-// handler sees them through `dropWant`; the previous value is restored when
-// the handler returns. A later hunt must not claim an old quest's drops.
+// Quest requirements are scoped to one handler round. A mission inside that
+// handler sees them through `missionWant`; the previous value is restored
+// when the handler returns. There is no session-global drop-want list: plain
+// drops declare their ids on the mission's own `pickup`.
 let questWant: number[] = [];
 
-/// Wanted ids for this mission: the script's persistent list plus the current
-/// quest handler's requirements, never the other way around.
+/// Wanted ids for this mission: only the current quest handler's
+/// requirements.
 function missionWant(): number[] {
-  const all = dropWant.slice();
-  for (const id of questWant) {
-    if (id > 0 && all.indexOf(id) < 0) all.push(id);
-  }
-  return all;
+  return questWant.slice();
 }
 
 function registerList(ids: number | number[]): number[] {
@@ -188,40 +176,6 @@ function sweepQuests(): unknown {
     choice: registeredChoice,
     qty: registeredQty,
   });
-}
-
-/// `bot.wantDrops(ids)`: auto-claim these drop IDs off the floor after
-/// every kill mission — Skua's `AddDrop` whitelist, per-op instead of
-/// session-global. Quest requirements never need this (the quest path
-/// already sweeps its own turn-ins); it is for plain monster drops farmed
-/// with no live quest, like crafting reagents. Entries persist until
-/// `unwantDrops`, so declare once at the top. Resumes the wanted list.
-function wantDrops(ids: number | number[]): number[] {
-  const list: number[] = typeof ids === "number" ? [ids] : ids || [];
-  for (const id of list) {
-    if (id > 0 && dropWant.indexOf(id) < 0) dropWant.push(id);
-  }
-  return dropWant.slice();
-}
-
-/// `bot.unwantDrops(ids?)`: stop auto-claiming these (all when omitted).
-/// Resumes the wanted list.
-function unwantDrops(ids?: number | number[]): number[] {
-  if (ids === undefined) {
-    dropWant = [];
-    return [];
-  }
-  const list: number[] = typeof ids === "number" ? [ids] : ids || [];
-  for (const id of list) {
-    const at = dropWant.indexOf(id);
-    if (at >= 0) dropWant.splice(at, 1);
-  }
-  return dropWant.slice();
-}
-
-/// `bot.wantedDrops()`: what is being auto-claimed.
-function wantedDropsList(): number[] {
-  return dropWant.slice();
 }
 
 /// The tick hook: a registered set is swept before the next parked call, no
@@ -439,8 +393,8 @@ const bot = {
   // `kill(name, count?, blockers?)`: one mission to `Done`, counting `name`
   // deaths only. `blockers` (a name or names, highest first) preempt
   // engagement while alive without counting — the staff before the boss.
-  // Wanted drop IDs (`bot.wantDrops`, plus this quest handler's
-  // requirements) auto-claim off the floor when the mission ends.
+  // This quest handler's requirement ids auto-claim off the floor when the
+  // mission ends; plain drops declare their own `pickup` ids instead.
   // `kill({ monster, count?, blockers?, splash? })`: exact-count in the
   // current cell, typed result. Positional `kill(name, count?, blockers?)`
   // is the legacy compatibility form and still goes through the old op.
@@ -527,6 +481,13 @@ const bot = {
   // to 1.
   gather(id: number, map: string, qty?: number): unknown {
     return step({ op: "gather", id, map, qty: qty ?? 1 });
+  },
+  // `gatherState(id, map, qty?)`: typed gather result. `held` is the temp
+  // inventory count, `grant` names the id the server actually granted (it
+  // need not equal the map item id), `source` classifies where it landed,
+  // and `gathered` is true only when the held count or a grant proves it.
+  gatherState(id: number, map: string, qty?: number): unknown {
+    return step({ op: "gather_state", id, map, qty: qty ?? 1 });
   },
   // `inventory(idOrName)`: read-only query — where the item is and how many.
   // Resumes `{"found":true,"id","name","qty"}` (or `found:false`). Name
@@ -662,33 +623,24 @@ const bot = {
   drops(): unknown {
     return step({ op: "drops" });
   },
-  // `pickup(idOrName)` / `pickup("*")`: claim one pending drop by id or by
-  // pending-list name (matched case-insensitively), or clear the whole
-  // floor. Id claims work in every UI mode; names and `"*"` read the
-  // ensured list. One `getDrop` per item plus a grant poll each. Resumes
-  // bare `true`/`false`: a miss, a rejected claim, and a stalled pass all
-  // read `false` (claimed items stay claimed — call again for the
-  // remainder); an empty floor reads `true`. Quests and wanted drops
-  // (`bot.wantDrops`) already auto-claim, so scripts rarely call this.
+  // `pickup(idOrName)` / `pickup("*")`: legacy boolean wrapper over
+  // `pickupNow`. Id claims work in every UI mode; names and `"*"` read the
+  // ensured list.
   pickup(idOrName: number | string): unknown {
     return typeof idOrName === "number"
       ? step({ op: "pickup", id: idOrName })
       : step({ op: "pickup", name: idOrName });
   },
-  // `wantDrops(ids)` / `unwantDrops(ids?)` / `wantedDrops()`: Skua's
-  // `AddDrop` whitelist — drop IDs the engine auto-claims off the floor
-  // after every kill mission. Quest requirements never need this (the quest
-  // path sweeps its own turn-ins); it is for plain monster drops farmed
-  // with no live quest. Entries persist until removed. Each resumes the
-  // wanted list.
-  wantDrops(ids: number | number[]): unknown {
-    return wantDrops(ids);
-  },
-  unwantDrops(ids?: number | number[]): unknown {
-    return unwantDrops(ids);
-  },
-  wantedDrops(): unknown {
-    return wantedDropsList();
+  // `pickupNow(idOrName)` / `pickupNow("*")`: typed one-shot pickup.
+  // `{ok, requested, claimed, remaining, reason}` where `reason` is
+  // `claimed`, `partial`, `timeout`, `absent`, `empty`, or `unreadable`.
+  // Each id gets its own claim deadline, so one slow drop cannot consume
+  // the whole budget. Mission-scoped drops use `pickup` on the mission
+  // instead; this is the explicit one-shot.
+  pickupNow(idOrName: number | string): unknown {
+    return typeof idOrName === "number"
+      ? step({ op: "pickup_state", id: idOrName })
+      : step({ op: "pickup_state", name: idOrName });
   },
   // `notify(message)`: explicit bot notification — posts a high-visibility
   // Android notification (default sound) and logs the line. No game touch,
