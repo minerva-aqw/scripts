@@ -5,13 +5,11 @@
 // are sync and durable: each one parks until the host answers. (No `await`,
 // no `import`: the engine only suspends from a classic script stack.)
 //
-// Flow: travel first (locate only censuses the live room), ask the census
-// where the boss stands, go there, then loop kill -> pickup until the
-// blade is in the backpack. The loader builds the session drops list on
-// the first entered frame, so every kill's drops land where name-pickup
-// reads them. `ensureItem` is the loop condition: it
-// unbanks first when banked and reads a bare boolean, so it fits `while`
-// directly. The round cap keeps a dry streak from running forever.
+// Flow: locate first (read-only census), pin the cell the census named, then
+// let one item-driven farm own the loop. `farm` travels, repeats the kill,
+// sweeps its own item id after each fight, and stops on the held-item floor.
+// The result is typed: `held` is the backpack count, `claimed` names what the
+// floor gave up, and a dry streak fails with the real progress.
 bot.travel("kitsune");
 const spot = bot.locate("Kitsune");
 if (!spot.found) {
@@ -19,13 +17,10 @@ if (!spot.found) {
 }
 bot.cell(spot.cell);
 
-const WANT = "Hanzamune Dragon Koi Blade";
-let rounds = 0;
-while (!bot.ensureItem(WANT)) {
-  if (rounds >= 50) {
-    throw new Error("no " + WANT + " after 50 kills");
-  }
-  bot.kill("Kitsune");
-  bot.pickup(WANT);
-  rounds += 1;
-}
+bot.farm({
+  item: 2238, // Hanzamune Dragon Koi Blade
+  qty: 1,
+  monster: "Kitsune",
+  map: "kitsune",
+  cell: spot.cell,
+});
