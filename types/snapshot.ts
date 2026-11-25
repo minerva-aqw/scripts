@@ -23,6 +23,14 @@ export type Presence =
   | "absent"
   | "present";
 
+export type TradeStatus =
+  | "ok"
+  | "absent"
+  | "not_stocked"
+  | "gated"
+  | "timeout"
+  | "unknown";
+
 export interface MapView {
   map: string;
   area: string;
@@ -145,6 +153,31 @@ export interface ShopItemView {
   item_id: number;
   name: string;
   qty: number;
+}
+
+export interface BuyResult {
+  ok: boolean;
+  status: TradeStatus;
+  shop_id: number;
+  item_id: number;
+  name: string;
+  requested: number;
+  before: number;
+  after: number;
+  moved: number;
+  limit: number | null;
+}
+
+export interface SellResult {
+  ok: boolean;
+  status: TradeStatus;
+  item_id: number;
+  name: string;
+  requested: number;
+  before: number;
+  after: number;
+  moved: number;
+  limit: number | null;
 }
 
 export interface ShopState {

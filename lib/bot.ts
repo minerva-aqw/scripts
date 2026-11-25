@@ -585,6 +585,16 @@ const bot = {
       ? step({ op: "buy_item", shop_id: shopId, id: idOrName, qty: want })
       : step({ op: "buy_item", shop_id: shopId, name: idOrName, qty: want });
   },
+  // `buyItemState(shopId, idOrName, qty?)`: typed buy. `status` is
+  // `"ok" | "not_stocked" | "gated" | "timeout" | "absent"`; `before`,
+  // `after`, `moved`, and `limit` report the real inventory movement and the
+  // client's maximum-buys gate.
+  buyItemState(shopId: number, idOrName: number | string, qty?: number): unknown {
+    const want = qty ?? 1;
+    return typeof idOrName === "number"
+      ? step({ op: "buy_item_state", shop_id: shopId, id: idOrName, qty: want })
+      : step({ op: "buy_item_state", shop_id: shopId, name: idOrName, qty: want });
+  },
   // `sellItem(idOrName, qty?)`: sell up to `qty` of the item (clamps to what
   // is held — selling the whole stack reads `true`). No shop needed; the
   // record's `CharItemID` rides along. Resumes bare `true`/`false`; `qty`
@@ -594,6 +604,14 @@ const bot = {
     return typeof idOrName === "number"
       ? step({ op: "sell_item", id: idOrName, qty: want })
       : step({ op: "sell_item", name: idOrName, qty: want });
+  },
+  // `sellItemState(idOrName, qty?)`: typed sell. `moved` is the clamped
+  // amount that actually left the backpack; `limit` is `maximumShopSells`.
+  sellItemState(idOrName: number | string, qty?: number): unknown {
+    const want = qty ?? 1;
+    return typeof idOrName === "number"
+      ? step({ op: "sell_item_state", id: idOrName, qty: want })
+      : step({ op: "sell_item_state", name: idOrName, qty: want });
   },
   // `me()`: read-only player snapshot — identity, wallet, vitals, location,
   // capacity. No travel, no polling, no packets. Resumes the detail object;
