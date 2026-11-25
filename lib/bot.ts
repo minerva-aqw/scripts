@@ -60,6 +60,15 @@ type QuestStatus = {
   requirements: QuestReq[];
 };
 
+// First task API (`bot.plan`): a short declarative sequence. Each step names
+// exactly one action; travel/waitFor/gather/attack map onto the task runtime,
+// one action per tick, with death/cutscene pauses and map-change cancellation.
+type PlanStep =
+  | { travel: { map: string; cell?: string; pad?: string } }
+  | { waitFor: { map: string; cell?: string } }
+  | { gather: { id: number; map: string; qty?: number } }
+  | { attack: { name: string; count?: number; blockers?: string | string[] } };
+
 // Registered quests (`bot.quest.register`): Skua's `RegisterQuests` idea, in
 // the shape this engine can afford. A registration makes the *tick* the one
 // that turns quests in and takes them again, so a farm or a hunt chain does not
@@ -371,6 +380,13 @@ const questCallable = Object.assign(questStep, {
 });
 
 const bot = {
+  // `plan([...])`: run a declarative task sequence. Unlike the blocking
+  // composites, the scheduler applies at most one action per tick, pauses on
+  // death/cutscene, cancels location-sensitive steps when the map changes, and
+  // resumes where it was. Legacy calls still use their old blocking ops.
+  plan(steps: PlanStep[]): unknown {
+    return step({ op: "plan", steps });
+  },
   // Already in `map` reads as done with no rejoin; a non-default `cell`
   // goes through the verified cell move instead of the join's blind args.
   travel(map: string, cell?: string, pad?: string): unknown {
