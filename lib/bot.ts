@@ -285,9 +285,10 @@ const bot = {
     return step({ op: "locate", name });
   },
   // `gatherState(id, map, qty?, quest?)`: typed gather result. `held` is the
-  // temp inventory count, `grant` names the id the server actually granted
-  // (it need not equal the map item id), `source` classifies where it landed,
-  // and `gathered` is true only when the held count or a grant proves it.
+  // temp count or the watched quest-requirement count, `grant` names the id
+  // the server actually granted (it need not equal the map item id), `source`
+  // classifies where it landed, and `gathered` is true only when one of those
+  // proves it.
   // Passing the active `quest` watches its requirements even when the tracker
   // has not listed the just-accepted quest yet.
   gatherState(id: number, map: string, qty?: number, quest?: number): unknown {
