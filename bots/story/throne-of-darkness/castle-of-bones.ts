@@ -26,15 +26,30 @@ function cellFor(monster: string, cell?: string): string {
   return spot.cell;
 }
 
-function gather(item: number, qty: number): void {
-  const result = bot.gatherState(item, MAP, qty) as {
-    gathered: boolean;
-    held: number;
-    grant?: number | null;
-  };
-  if (!result.gathered) {
-    throw new Error("gather " + item + " failed at " + result.held + "/" + qty);
+function gatherAt(item: number, qty: number, cellsToTry: string[]): void {
+  let last: unknown = null;
+  for (const cell of cellsToTry) {
+    try {
+      bot.cell(cell);
+    } catch (error) {
+      last = error;
+      continue;
+    }
+    try {
+      const result = bot.gatherState(item, MAP, qty) as {
+        gathered: boolean;
+        held: number;
+        grant?: number | null;
+      };
+      if (result.gathered) return;
+      last = new Error(
+        "gather " + item + " failed at " + result.held + "/" + qty + " in " + cell
+      );
+    } catch (error) {
+      last = error;
+    }
   }
+  throw last ?? new Error("gather " + item + " failed");
 }
 
 function drop(
@@ -76,16 +91,16 @@ if (bot.quest(4992).done()) {
   complete(4971, () => drop(34588, "Fallen Deathknight", 8, "r4", "Left"));
 
   complete(4972, () => {
-    gather(4342, 3);
+    gatherAt(4342, 3, ["r4", "r5"]);
     drop(34589, "Fallen Deathknight", 3);
   });
 
   complete(4973, () => drop(34591, "Undead Waiter", 6));
 
   complete(4974, () => {
-    gather(4343, 2);
-    gather(4344, 2);
-    gather(4345, 3);
+    gatherAt(4343, 2, ["r6"]);
+    gatherAt(4344, 2, ["r6"]);
+    gatherAt(4345, 3, ["r6"]);
     drop(34631, "Undead Knight", 1);
   });
 
@@ -94,22 +109,22 @@ if (bot.quest(4992).done()) {
   complete(4977, () => drop(34597, "Skeletal Warrior", 10));
 
   complete(4978, () => {
-    gather(4346, 1);
-    gather(4347, 1);
-    gather(4348, 1);
+    gatherAt(4346, 1, ["r11"]);
+    gatherAt(4347, 1, ["r11"]);
+    gatherAt(4348, 1, ["r11"]);
     drop(34632, "Skeletal Warrior", 1);
   });
 
   complete(4979, () => {
-    gather(4349, 1);
-    gather(4350, 1);
-    gather(4351, 1);
+    gatherAt(4349, 1, ["r12"]);
+    gatherAt(4350, 1, ["r12"]);
+    gatherAt(4351, 1, ["r12"]);
     drop(34633, "Skeletal Warrior", 1);
   });
 
   complete(4980, () => {
-    gather(4354, 1);
-    gather(4355, 1);
+    gatherAt(4354, 1, ["r13", "r12"]);
+    gatherAt(4355, 1, ["r12", "r13"]);
     drop(34605, "Grateful Undead", 5);
     drop(34606, "That 70's Zombie", 2);
   });
@@ -122,8 +137,8 @@ if (bot.quest(4992).done()) {
     drop(34611, "Skeletal Warrior", 1, "r8", "Left");
   });
 
-  complete(4983, () => gather(4352, 1));
-  complete(4984, () => gather(4353, 4));
+  complete(4983, () => gatherAt(4352, 1, ["r16"]));
+  complete(4984, () => gatherAt(4353, 4, ["r17"]));
   complete(4985, () => drop(34614, "Turtle", 6));
 
   complete(4986, () => {
