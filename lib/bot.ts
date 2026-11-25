@@ -37,13 +37,18 @@ type QuestInfo = {
 };
 
 // First task API (`bot.plan`): a short declarative sequence. Each step names
-// exactly one action; travel/waitFor/gather/attack map onto the task runtime,
-// one action per tick, with death/cutscene pauses and map-change cancellation.
+// exactly one action; travel/waitFor/gather/attack/kill/clear/farm map onto the
+// task runtime, one action per tick, with death/cutscene pauses and map-change
+// cancellation. Inside `questPlan`, a farm with no `qty` targets the
+// requirement's own need.
 type PlanStep =
   | { travel: { map: string; cell?: string; pad?: string } }
   | { waitFor: { map: string; cell?: string } }
   | { gather: { id: number; map: string; qty?: number } }
-  | { attack: { name: string; count?: number; blockers?: string | string[]; pickup?: number | number[] } };
+  | { attack: { name: string; count?: number; blockers?: string | string[]; pickup?: number | number[] } }
+  | { kill: MissionOpts }
+  | { clear: MissionOpts }
+  | { farm: FarmOpts };
 
 type QuestPlanOpts = { choice?: number; qty?: number; turnIn?: boolean };
 type QuestPlanHandlers = Record<string, PlanStep[]>;
