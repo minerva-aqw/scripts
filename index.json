@@ -24,6 +24,14 @@
     "sha256": "5a7113ea268844a70f4a19a5682fbe14d284e2f0a63a06384129eaeb5362e0c4"
   },
   {
+    "path": "bots/story/battleunder.ts",
+    "kind": "bots",
+    "name": "Battle Under",
+    "desc": "Complete the Battle Under storyline across battleundera through battleundere.",
+    "autoload": null,
+    "sha256": "dd56dfb6e2c8c1fc1104e0cbd6c500e4e4dac601c9a7c600f5c901f39762f5bb"
+  },
+  {
     "path": "bots/story/throne-of-darkness/castle-of-bones.ts",
     "kind": "bots",
     "name": "Castle of Bones",
