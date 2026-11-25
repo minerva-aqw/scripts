@@ -13,8 +13,8 @@
 // - Binky, Desterrat, Karok, Painadin, Ultra Alteon, Primarch, Unending
 //   Avatar, Vordred: Skua uses public rooms; this hunts normal rooms.
 // - 5469 needs the Xan's Lair cave chapter (2151-2156) for the guardian's
-//   cell to open; this runs it inline. Members need Paladin or Silver
-//   Paladin held for the aptitude path.
+//   cell to open; run bots/storylines/xanlair.ts first. Members need
+//   Paladin or Silver Paladin held for the aptitude path.
 
 function drain(item) {
   let guard = 0;
@@ -209,21 +209,13 @@ if (!bot.ensureItem(36920)) {
     bot.quest(2347, {});
     drain("Scroll of Ethereal Slumber");
   }
-  // Xan's Lair cave chapter (Skua's Xan.DoAll): the door to the guardian's
-  // cell stays shut until 'Crossing Over' (2155) is done, and the server
-  // refuses that move however often it is sent — the run idles at xancave
-  // otherwise. Chain slot 53 reaches 34 after 2156.
+  // Xan's Lair cave chapter: the door to the guardian's cell stays shut
+  // until 'Crossing Over' (2155) is done — the server refuses that move
+  // however often it is sent — and those cave quests only unlock after the
+  // volcano + xantown halves of chain slot 53. A missing chapter reads as a
+  // thrown gate here rather than a hunt that can never arrive.
   if (bot.questValue(53) < 34) {
-    bot.quest(2151, { "12568": function () { bot.gather(1220, "xancave"); } }); // Library Door Located!
-    bot.quest(2152, { "12569": function () { bot.hunt("Lava Goblin", "xancave"); } }); // Shurpu Fire Gems
-    bot.quest(2153, { "12570": function () { bot.gather(1221, "xancave"); } }); // Library Door Unlocked
-    bot.quest(2154, { "12571": function () { bot.hunt("Lava Goblin", "xancave", 15); } }); // Monsters Cleared
-    bot.quest(2155, {
-      "12572": function () { bot.hunt("Lava Goblin", "xancave"); }, // Fire Salts
-      "12573": function () { bot.hunt("Lava Goblin", "xancave"); }, // Fire Wire
-      "12574": function () { bot.gather(1223, "xancave", 8); }, // Boards
-    });
-    bot.quest(2156, { "12575": function () { bot.hunt("Shurpu Ring Guardian", "xancave"); } }); // Ring of Shurpu
+    throw new Error("needs the Xan's Lair story first (run bots/storylines/xanlair.ts)");
   }
   bot.quest(5469, {
     "12583": function () { take("Shurpu Ring Guardian", "xancave", "Fists of Fire"); },

@@ -13,7 +13,7 @@
     "name": "ArchPaladin class",
     "desc": "Gets the ArchPaladin class (item 36920): Good rep gate, 5463-5470 chain (free 5463-5466 or member aptitude), BLoD mine unlock inline, shop buy in darkthronehub.",
     "autoload": null,
-    "sha256": "f248e1ad4c65d85ae4137fba7cedda8fa97735bd6cf09018e734a59f4f0dcccc"
+    "sha256": "7fa950fb520e21c794924f38477481d75e06e071f6a66e6c61d8076fe2f9815e"
   },
   {
     "path": "bots/class/chaos-slayer/berserker.ts",
@@ -790,6 +790,14 @@
     "desc": "Hollowborn storyline, quests 8289-9986. Completed quests return true without touching anything, so re-runs resume where they left off.",
     "autoload": null,
     "sha256": "9d0a1b6168d278c00c4126ac74030ceca17b835acec2b4bfa1146e61110c6406"
+  },
+  {
+    "path": "bots/storylines/xanlair.ts",
+    "kind": "bots",
+    "name": "Xan's Lair Story",
+    "desc": "Xan saga finale: volcano 1242-1261, xantown 1733-1740, xancave 2151-2157. Finished quests return true without touching anything, so re-runs resume where they stopped.",
+    "autoload": null,
+    "sha256": "0ed5cbf8b500c4e8614fd40b7628a47246302494eabe38ca51dba9b0020644c8"
   },
   {
     "path": "classes/archpaladin/archpaladin.ts",
