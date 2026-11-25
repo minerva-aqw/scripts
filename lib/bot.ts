@@ -284,12 +284,14 @@ const bot = {
   locate(name: string): unknown {
     return step({ op: "locate", name });
   },
-  // `gatherState(id, map, qty?)`: typed gather result. `held` is the temp
-  // inventory count, `grant` names the id the server actually granted (it
-  // need not equal the map item id), `source` classifies where it landed,
+  // `gatherState(id, map, qty?, quest?)`: typed gather result. `held` is the
+  // temp inventory count, `grant` names the id the server actually granted
+  // (it need not equal the map item id), `source` classifies where it landed,
   // and `gathered` is true only when the held count or a grant proves it.
-  gatherState(id: number, map: string, qty?: number): unknown {
-    return step({ op: "gather_state", id, map, qty: qty ?? 1 });
+  // Passing the active `quest` watches its requirements even when the tracker
+  // has not listed the just-accepted quest yet.
+  gatherState(id: number, map: string, qty?: number, quest?: number): unknown {
+    return step({ op: "gather_state", id, map, qty: qty ?? 1, quest: quest ?? null });
   },
   // `itemState(idOrName)`: typed read-only item query with explicit
   // presence. `presence`/`banked` are `"unknown" | "absent" | "present"`;

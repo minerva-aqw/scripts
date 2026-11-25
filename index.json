@@ -13,7 +13,7 @@
     "name": "Castle of Bones",
     "desc": "Complete the Castle of Bones chapter of the Throne of Darkness saga.",
     "autoload": null,
-    "sha256": "c4d613d6a3f126cb2b655b19551f2b3192b026ddcdc0f68c09b45af89a6343a4"
+    "sha256": "1f3d92b6d450dba1eeea6ed1aa2e791ee77a2e5db0247dde5bedaa18bdd18086"
   },
   {
     "path": "bots/test.ts",
@@ -157,6 +157,6 @@
     "name": null,
     "desc": null,
     "autoload": null,
-    "sha256": "6fdd3bcdc3cf35d494b91fca0e329203bf3f67d4895ef258eeb5f519cfca1be9"
+    "sha256": "35bae366ca2c86b6dd5bb456300f01ab4462e569b163daa774e5fef8f526337b"
   }
 ]

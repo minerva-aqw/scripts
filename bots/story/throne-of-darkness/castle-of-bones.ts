@@ -6,6 +6,7 @@
 
 const MAP = "bonecastle";
 const cells: Record<string, string> = {};
+let activeQuest = 0;
 
 function cellFor(monster: string, cell?: string): string {
   if (cell) {
@@ -36,7 +37,7 @@ function gatherAt(item: number, qty: number, cellsToTry: string[]): void {
       continue;
     }
     try {
-      const result = bot.gatherState(item, MAP, qty) as {
+      const result = bot.gatherState(item, MAP, qty, activeQuest) as {
         gathered: boolean;
         held: number;
         grant?: number | null;
@@ -71,6 +72,7 @@ function drop(
 }
 
 function complete(id: number, fill: () => void): void {
+  activeQuest = id;
   const quest = bot.quest(id);
   if (quest.done()) return;
   if (!quest.active()) quest.accept();
