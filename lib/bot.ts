@@ -67,8 +67,9 @@ type FarmOpts = MissionOpts & {
   item?: number;
   itemName?: string;
   qty?: number;
-  // Count temp inventory instead of the backpack (Skua's `tempItem`).
-  temp?: boolean;
+  // Where the floor is counted: the permanent backpack (default) or the
+  // separate temp inventory (Skua's `tempItem`).
+  source?: "inventory" | "temp";
 };
 
 // Registered quests (`bot.quest.register`): Skua's `RegisterQuests` idea, in
@@ -255,10 +256,10 @@ const bot = {
   attack(opts: MissionOpts): unknown {
     return step({ op: "mission", spec: Object.assign({ kind: "attack" }, opts) });
   },
-  // `farm({ item | itemName, qty?, monster, map?, cell?, blockers?, temp? })`:
-  // repeat the explicit kill source until the held-item floor is met. `temp`
-  // counts temp inventory instead of the backpack, for map/quest drops that
-  // never enter the backpack.
+  // `farm({ item | itemName, qty?, monster, map?, cell?, blockers?, source? })`:
+  // repeat the explicit kill source until the held-item floor is met. `source`
+  // is `"inventory"` (default) or `"temp"`, for drops that never enter the
+  // backpack.
   farm(opts: FarmOpts): unknown {
     return step({ op: "mission", spec: Object.assign({ kind: "farm" }, opts) });
   },
