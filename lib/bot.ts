@@ -561,6 +561,15 @@ const bot = {
       ? step({ op: "ensure_item", id: idOrName, qty: want })
       : step({ op: "ensure_item", name: idOrName, qty: want });
   },
+  // `shopState(shopId, idOrName)`: typed stock query. `loaded` and `stock`
+  // are `"unknown" | "absent" | "present"`; `paged`/`pages` report a stock
+  // tree that had to be read in slices. A cold shop returns
+  // `loaded: "absent"`, never an error.
+  shopState(shopId: number, idOrName: number | string): unknown {
+    return typeof idOrName === "number"
+      ? step({ op: "shop_state", shop_id: shopId, id: idOrName })
+      : step({ op: "shop_state", shop_id: shopId, name: idOrName });
+  },
   // `buyItem(shopId, idOrName, qty?)`: buy `qty` more of the item from the
   // shop — same call for merge shops (their records just carry `turnin`).
   // Travel to the shop's map first: the server kicks the session when a

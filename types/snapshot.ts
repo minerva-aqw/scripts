@@ -141,6 +141,21 @@ export interface ItemState {
   banked: Presence;
 }
 
+export interface ShopItemView {
+  item_id: number;
+  name: string;
+  qty: number;
+}
+
+export interface ShopState {
+  shop_id: number;
+  loaded: Presence;
+  stock: Presence;
+  item: ShopItemView | null;
+  paged: boolean;
+  pages: number;
+}
+
 export interface EnsureItemResult {
   ok: boolean;
   item: ItemState;
