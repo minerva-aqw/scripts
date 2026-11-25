@@ -138,10 +138,49 @@ if (!bot.ensureItem(36920)) {
     "37057": function () { take("Dove", "skytower", "Innocence", 10); },
   });
   // Righteous Seal (needs Xan's Lair done for Shurpu access).
+  // Scroll of Ethereal Slumber comes from the 2347 chain, which consumes
+  // Archmage Ink (Skua Good/ArchPaladin.cs): SpellCrafting rank 8 unlocks
+  // the shops, Mystic Shards x2 pays at shop 549, otherwise the voucher
+  // path (100k gold -> Gold Voucher 100k -> Arcane Quill 17391 at shop 693
+  // -> shop 622), with an underworld shard farm -> dragonrune shop 549 as
+  // the last resort. IDs, not names: the shop match is case-exact and the
+  // Skua/wiki casings disagree ("ArchMage" vs "Archmage").
+  // Archmage Ink = 13289, Arcane Quill = 17391.
+  function tryBuy(shop, map, item, qty) {
+    bot.travel(map);
+    return bot.buyItem(shop, item, qty || 1) || bot.ensureItem(item, qty || 1);
+  }
   if (!bot.ensureItem("Scroll of Ethereal Slumber")) {
-    if (!bot.ensureItem("ArchMage Ink")) {
-      take("Skull Warrior", "underworld", "Mystic Shards", 2);
-      buy(549, "spellcraft", "ArchMage Ink");
+    if (bot.rep("SpellCrafting").rank < 8) {
+      throw new Error("needs SpellCrafting rank 8 first (run bots/reputations/spellcrafting.ts)");
+    }
+    if (!bot.ensureItem(13289)) {
+      if (bot.ensureItem("Mystic Shards", 2)) {
+        tryBuy(549, "spellcraft", 13289);
+      } else if (!bot.ensureItem(17391)) {
+        // Skua's voucher path: needs ~100k gold, not farmable here.
+        tryBuy(693, "spellcraft", "Gold Voucher 100k");
+        tryBuy(693, "spellcraft", 17391);
+      }
+      if (bot.ensureItem(17391)) {
+        tryBuy(622, "spellcraft", 13289);
+      } else {
+        // Voucher path failed: farm shards until HELD (not a fixed kill
+        // count — the drop is not guaranteed) and pay at dragonrune.
+        let guard = 0;
+        while (!bot.ensureItem("Mystic Shards", 2)) {
+          bot.hunt("Skull Warrior", "underworld", 1);
+          drain("Mystic Shards");
+          guard += 1;
+          if (guard >= 60) {
+            throw new Error("Mystic Shards stalled (underworld Skull Warrior dropping?)");
+          }
+        }
+        tryBuy(549, "dragonrune", 13289);
+      }
+    }
+    if (!bot.ensureItem(13289)) {
+      throw new Error("Archmage Ink missing (shops 549/622/693 + underworld shards all short?)");
     }
     bot.quest(2347, {});
     drain("Scroll of Ethereal Slumber");
