@@ -2,8 +2,9 @@
 /// desc: Farm the repeatable Sanguine quest until Lycan reputation reaches rank 10.
 ///
 /// Requires the Wolfwing storyline through quest 537. The rep loop is deliberately
-/// explicit: accept, collect one Sanguine Mask, hand in, and read the rank again.
-/// A refused accept or turn-in fails the run instead of spinning on a sweep.
+/// explicit: accept, locate the live Sanguine cell, collect one mask, hand in, and
+/// read the rank again. A refused accept or turn-in fails the run instead of
+/// spinning on a sweep.
 
 const QUEST = 537; // Sanguine
 const MASK = 3750; // Sanguine Mask, a temp quest item
@@ -17,6 +18,24 @@ if (rank < TARGET && !bot.quest(QUEST).done()) {
 }
 bot.notify("Lycan reputation: rank " + rank + " -> " + TARGET);
 
+// Farm only fights in the current cell. Join the map, census the live room,
+// then move to the cell holding Sanguine; `cell()` resolves the pad.
+let cell = "";
+if (rank < TARGET) {
+  bot.travel("lycan");
+  const spot = bot.locate("Sanguine") as {
+    found: boolean;
+    cell?: string;
+    cells?: string[];
+  };
+  if (!spot.found || !spot.cell) {
+    const seen = spot.cells?.length ? " (cells: " + spot.cells.join(", ") + ")" : "";
+    throw new Error("Sanguine not found in lycan" + seen);
+  }
+  cell = spot.cell;
+  bot.cell(cell);
+}
+
 while (rank < TARGET) {
   const quest = bot.quest(QUEST);
   if (!quest.active()) quest.accept();
@@ -25,6 +44,7 @@ while (rank < TARGET) {
     item: MASK,
     monster: "Sanguine",
     map: "lycan",
+    cell,
     source: "temp",
   });
 

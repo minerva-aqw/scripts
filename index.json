@@ -5,7 +5,7 @@
     "name": "Lycan reputation",
     "desc": "Farm the repeatable Sanguine quest until Lycan reputation reaches rank 10.",
     "autoload": null,
-    "sha256": "c37443c456080f33717bae0819e8ef664ed7ba890744e4a5ccc48fec5c3a0b30"
+    "sha256": "bf8f5d18356f64832c8009f363c6b7013e1afe0cde9e99dcbb40181422304e6f"
   },
   {
     "path": "classes/archpaladin/archpaladin.ts",
