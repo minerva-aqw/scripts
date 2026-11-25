@@ -49,7 +49,12 @@ if (bot.quest(BASE + LAST_FLOOR).done()) {
     bot.setQuestValue(PROGRESS_SLOT, FLOOR_UNLOCK);
     try {
       bot.travel(map);
-      for (let below = 1; below < LAST_FLOOR; below++) {
+      // The first map enters into a lobby and starts at r1. Maps 2-10 enter
+      // directly on their first floor, which is the Enter cell; they have no
+      // r1 at all.
+      if (floor.floor === 1) bot.cell("r1");
+      bot.kill({ monster: "*", count: 3 });
+      for (let below = 2; below < LAST_FLOOR; below++) {
         bot.cell("r" + below);
         // Each floor clears after its three resident monsters die. They
         // respawn immediately, so `clear` would never see an empty cell.
