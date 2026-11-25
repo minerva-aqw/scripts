@@ -5,8 +5,6 @@ Shared, flat prelude files evaluated into every script before its entry.
 - `bot.ts` — the engine facade. This is the contract the new bots use: missions,
   plans, quest plans, typed inventory/shop/gather/pickup results, and the
   explicit quest handle.
-- `../old/lib/` — the previous stdlib plus the old boss helper. Reference only;
-  not loaded, checked, or shipped.
 
 ## Adding a helper
 

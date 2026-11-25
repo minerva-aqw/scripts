@@ -10,14 +10,11 @@ Kind comes from the folder, never from metadata:
 bots/      durable workflows (missions, plans, quest plans) — being rewritten
 classes/   combat rotations (one file per class/build)
 lib/       stdlib, evaluated before every entry — never run directly
-old/       previous corpus, reference only — not indexed or shipped
 ```
 
 `bots/` is intentionally empty while the bots are rewritten from zero against
 the overhauled contract. See `bots/README.md` for the rules the first bots
-must follow. The previous corpus lives in `old/bots/`; it is not loaded,
-checked, indexed, or synced to the app, and it will be deleted once the
-replacements exist.
+must follow. The previous corpus was deleted after a short archive window.
 
 `classes/` scripts run in the combat runtime (tick loop). Every file directly
 under `lib/` evaluates into the shared global scope before the entry, in sorted
