@@ -165,7 +165,7 @@
     "name": null,
     "desc": null,
     "autoload": null,
-    "sha256": "17a7f55f3d6f87c713053aa5eb40a79b792354aa51e1c2fbade331f861a5b574"
+    "sha256": "9df15fba9c4689d56cac6d698cadc7e3a1fbb7b34e52976f8756a811356c7952"
   },
   {
     "path": "lib/monsters.ts",

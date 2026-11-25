@@ -53,6 +53,26 @@ type PlanStep =
 type QuestPlanOpts = { choice?: number; qty?: number; turnIn?: boolean };
 type QuestPlanHandlers = Record<string, PlanStep[]>;
 
+// One survival rule for a combat mission. Rules are checked before the class
+// rotation, in order; the first matching and ready rule fires. `selfHpBelow`
+// is a ratio of max HP (0–1). `targetHpBelow` is absolute HP. Aura names match
+// exactly and case-insensitively. `missingAura` means our own aura is absent.
+// V1 has one action: cast the equipped potion slot (`i1`).
+type CombatRule = {
+  when: {
+    selfHpBelow?: number;
+    targetHpBelow?: number;
+    selfAura?: string;
+    targetAura?: string;
+    missingAura?: string;
+  };
+  use: "potion";
+  // Default 5000ms. The engine also waits for the potion's own readiness.
+  cooldownMs?: number;
+  // Fire at most once per fight (each farm wave is a fight).
+  oncePerFight?: boolean;
+};
+
 // Phase 5 missions. `monster` is a name (case-insensitive substring, `*` for
 // any), `id` pins one MonMapID, `blockers` are priority names that engage but
 // never count, and `splash` chooses whether bystander deaths count.
@@ -69,6 +89,9 @@ type MissionOpts = {
   // each as `floor`, `temp`, `inventory`, or `absent`; temp/direct grants
   // are reported without needing a floor claim.
   pickup?: number | number[];
+  // Mission-scoped survival rules; `questPlan` kill/farm handlers inherit
+  // them because the whole step body is the mission spec.
+  rules?: CombatRule[];
 };
 type FarmOpts = MissionOpts & {
   item?: number;
