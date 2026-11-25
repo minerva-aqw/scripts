@@ -8,6 +8,14 @@
     "sha256": "bf8f5d18356f64832c8009f363c6b7013e1afe0cde9e99dcbb40181422304e6f"
   },
   {
+    "path": "bots/story/throne-of-darkness/castle-of-bones.ts",
+    "kind": "bots",
+    "name": "Castle of Bones",
+    "desc": "Complete the Castle of Bones chapter of the Throne of Darkness saga.",
+    "autoload": null,
+    "sha256": "565e1ecc67213297a6a2ae71a5276b0429591caae92e4f6e1391557cc1c519fa"
+  },
+  {
     "path": "bots/test.ts",
     "kind": "bots",
     "name": "Soak test",

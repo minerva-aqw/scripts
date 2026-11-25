@@ -1,0 +1,161 @@
+/// name: Castle of Bones
+/// desc: Complete the Castle of Bones chapter of the Throne of Darkness saga.
+///
+/// Every drop is a temp quest item, so farms count temp inventory. Monster
+/// cells are located once and reused; cells named by the chapter are explicit.
+
+const MAP = "bonecastle";
+const cells: Record<string, string> = {};
+
+function cellFor(monster: string, cell?: string): string {
+  if (cell) {
+    cells[monster] = cell;
+    return cell;
+  }
+  if (cells[monster]) return cells[monster];
+  const spot = bot.locate(monster) as {
+    found: boolean;
+    cell?: string;
+    cells?: string[];
+  };
+  if (!spot.found || !spot.cell) {
+    const seen = spot.cells?.length ? " (cells: " + spot.cells.join(", ") + ")" : "";
+    throw new Error(monster + " not found in " + MAP + seen);
+  }
+  cells[monster] = spot.cell;
+  return spot.cell;
+}
+
+function gather(item: number, qty: number): void {
+  const result = bot.gatherState(item, MAP, qty) as {
+    gathered: boolean;
+    held: number;
+    grant?: number | null;
+  };
+  if (!result.gathered) {
+    throw new Error("gather " + item + " failed at " + result.held + "/" + qty);
+  }
+}
+
+function drop(
+  item: number,
+  monster: string,
+  qty: number,
+  cell?: string,
+  pad?: string
+): void {
+  bot.farm({
+    item,
+    monster,
+    map: MAP,
+    cell: cellFor(monster, cell),
+    pad,
+    qty,
+    source: "temp",
+  });
+}
+
+function complete(id: number, fill: () => void): void {
+  const quest = bot.quest(id);
+  if (quest.done()) return;
+  if (!quest.active()) quest.accept();
+  fill();
+  quest.turnIn();
+  bot.notify("Castle of Bones: quest " + id + " done");
+}
+
+if (bot.quest(4992).done()) {
+  bot.notify("Castle of Bones is already complete");
+} else {
+  bot.travel(MAP);
+  bot.notify("Castle of Bones: starting");
+
+  complete(4968, () => drop(34585, "Undead Guard", 1));
+  complete(4969, () => drop(34586, "Undead Guard", 2));
+  complete(4970, () => drop(34587, "Undead Knight", 3));
+  complete(4971, () => drop(34588, "Fallen Deathknight", 8, "r4", "Left"));
+
+  complete(4972, () => {
+    gather(4342, 3);
+    drop(34589, "Fallen Deathknight", 3);
+  });
+
+  complete(4973, () => drop(34591, "Undead Waiter", 6));
+
+  complete(4974, () => {
+    gather(4343, 2);
+    gather(4344, 2);
+    gather(4345, 3);
+    drop(34631, "Undead Knight", 1);
+  });
+
+  complete(4975, () => drop(34595, "Ghoul", 6));
+  complete(4976, () => drop(34596, "The Butcher", 1));
+  complete(4977, () => drop(34597, "Skeletal Warrior", 10));
+
+  complete(4978, () => {
+    gather(4346, 1);
+    gather(4347, 1);
+    gather(4348, 1);
+    drop(34632, "Skeletal Warrior", 1);
+  });
+
+  complete(4979, () => {
+    gather(4349, 1);
+    gather(4350, 1);
+    gather(4351, 1);
+    drop(34633, "Skeletal Warrior", 1);
+  });
+
+  complete(4980, () => {
+    gather(4354, 1);
+    gather(4355, 1);
+    drop(34605, "Grateful Undead", 5);
+    drop(34606, "That 70's Zombie", 2);
+  });
+
+  complete(4981, () => drop(34608, "Skeletal Warrior", 5, "r8", "Left"));
+
+  complete(4982, () => {
+    drop(34610, "Undead Guard", 1, "Enter", "Spawn");
+    drop(34609, "Undead Knight", 1, "r3", "Bottom");
+    drop(34611, "Skeletal Warrior", 1, "r8", "Left");
+  });
+
+  complete(4983, () => gather(4352, 1));
+  complete(4984, () => gather(4353, 4));
+  complete(4985, () => drop(34614, "Turtle", 6));
+
+  complete(4986, () => {
+    drop(34616, "Turtle", 1);
+    drop(34617, "Turtle", 2);
+    drop(34618, "Turtle", 1);
+    drop(34615, "Turtle", 2);
+  });
+
+  complete(4987, () => drop(34619, "Snuggles, Torturer", 1));
+
+  complete(4988, () => {
+    drop(34620, "Jon Bones", 1);
+    drop(34621, "Oberon Marrowtell", 1);
+    drop(34622, "Baskerville", 1);
+    drop(34623, "Knight of Lichens", 1);
+  });
+
+  complete(4989, () => drop(34624, "Rot Tin Tin", 1));
+
+  complete(4990, () => {
+    drop(34625, "Undead Golden Knight", 50);
+    drop(34626, "Undead Golden Knight", 10);
+    drop(34627, "Undead Golden Knight", 1);
+  });
+
+  complete(4991, () => {
+    drop(34628, "Undead Knight", 5);
+    drop(34629, "Skeletal Warrior", 5);
+  });
+
+  complete(4992, () => drop(34630, "Vaden", 1));
+
+  bot.notify("Castle of Bones complete");
+}
