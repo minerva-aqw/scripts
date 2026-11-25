@@ -533,6 +533,23 @@ const bot = {
       ? step({ op: "inventory", id: idOrName })
       : step({ op: "inventory", name: idOrName });
   },
+  // `itemState(idOrName)`: typed read-only item query with explicit
+  // presence. `presence`/`banked` are `"unknown" | "absent" | "present"`;
+  // an unloaded bank reports `unknown`, never a false absence.
+  itemState(idOrName: number | string): unknown {
+    return typeof idOrName === "number"
+      ? step({ op: "item_state", id: idOrName })
+      : step({ op: "item_state", name: idOrName });
+  },
+  // `ensureItemState(idOrName, qty?)`: typed turn-in precondition. Same
+  // unbanking as `ensureItem`, but resumes `{ ok, item: { presence, qty,
+  // banked }, requested, withdrawn }` so an unloaded bank is `unknown`.
+  ensureItemState(idOrName: number | string, qty?: number): unknown {
+    const want = qty ?? 1;
+    return typeof idOrName === "number"
+      ? step({ op: "ensure_item_state", id: idOrName, qty: want })
+      : step({ op: "ensure_item_state", name: idOrName, qty: want });
+  },
   // `ensureItem(idOrName, qty?)`: turn-in precondition — `qty` of the item
   // in the backpack, withdrawing from the bank first when banked (turn-ins
   // read the backpack, never the bank). Resumes bare `true`/`false`, so it

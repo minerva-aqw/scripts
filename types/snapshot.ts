@@ -18,6 +18,11 @@ export type QuestStatus =
   | "ready"
   | "completed";
 
+export type Presence =
+  | "unknown"
+  | "absent"
+  | "present";
+
 export interface MapView {
   map: string;
   area: string;
@@ -126,6 +131,21 @@ export interface BotStatus {
   last_error: string;
   retries: number;
   elapsed_ms: number;
+}
+
+export interface ItemState {
+  id: number;
+  name: string;
+  presence: Presence;
+  qty: number;
+  banked: Presence;
+}
+
+export interface EnsureItemResult {
+  ok: boolean;
+  item: ItemState;
+  requested: number;
+  withdrawn: boolean;
 }
 
 export interface Snapshot {
