@@ -84,6 +84,9 @@ type MissionOpts = {
   map?: string;
   cell?: string;
   pad?: string;
+  // Drop ids to settle after a fight. The result's `pickups` classifies
+  // each as `floor`, `temp`, `inventory`, or `absent`; temp/direct grants
+  // are reported without needing a floor claim.
   pickup?: number | number[];
 };
 type FarmOpts = MissionOpts & {

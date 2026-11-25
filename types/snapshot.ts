@@ -31,6 +31,14 @@ export type TradeStatus =
   | "timeout"
   | "unknown";
 
+export type DropSource =
+  | "unknown"
+  | "floor"
+  | "temp"
+  | "inventory"
+  | "reward"
+  | "absent";
+
 export interface MapView {
   map: string;
   area: string;
@@ -153,6 +161,13 @@ export interface ShopItemView {
   item_id: number;
   name: string;
   qty: number;
+}
+
+export interface PickupView {
+  item_id: number;
+  source: DropSource;
+  qty: number;
+  claimed: boolean;
 }
 
 export interface BuyResult {
