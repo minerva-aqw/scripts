@@ -36,20 +36,22 @@ if (bot.quest(BASE + LAST_FLOOR).done()) {
 
     const map = floor.floor === 1 ? "towerofdoom" : "towerofdoom" + floor.floor;
     bot.notify("Tower of Doom: floor " + floor.floor + " (progress " + progress + ")");
-    bot.setQuestValue(PROGRESS_SLOT, FLOOR_UNLOCK);
-    try {
-      bot.travel(map, "r10", "Left");
-    } finally {
-      // Leave the slot at the previous floor so the current quest is not
-      // already complete. Do not drop it back to zero: that can relock the
-      // screen and pull the avatar out of r10.
-      bot.setQuestValue(PROGRESS_SLOT, floor.floor - 1);
-    }
 
     const quest = bot.quest(BASE + floor.floor);
     if (!quest.active()) quest.accept();
-    bot.kill({ monster: floor.monster, count: 1 });
-    quest.turnIn();
+
+    // Keep the slot at the unlock value for the whole visit. Lowering it
+    // before the kill makes the map's floor frame send the avatar to Prison.
+    let cleared = false;
+    bot.setQuestValue(PROGRESS_SLOT, FLOOR_UNLOCK);
+    try {
+      bot.travel(map, "r10", "Left");
+      bot.kill({ monster: floor.monster, count: 1 });
+      quest.turnIn();
+      cleared = true;
+    } finally {
+      bot.setQuestValue(PROGRESS_SLOT, cleared ? floor.floor : floor.floor - 1);
+    }
 
     bot.notify("Tower of Doom: floor " + floor.floor + " done");
   }
