@@ -1,12 +1,12 @@
 # bots
 
-Fresh bot tree for the overhauled scripting contract.
+Bot tree for the overhauled scripting contract. Bots are grouped by domain:
+`rep/` for reputation loops and `story/` for story chapters.
 
-There are no bots here yet. The previous corpus was moved to `../old/bots/`
-as an outdated reference and is not indexed, checked, or shipped. It will be
-deleted once the replacement bots exist.
+The previous corpus is gone. New bots are written against the current `bot.*`
+surface, indexed, and checked.
 
-## Rules for the first bots
+## Rules for new bots
 
 - Classic scripts only: no `import`, `export`, `await`, or `async`.
 - Call `bot.*` with the overhaul shapes:

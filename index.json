@@ -1,5 +1,13 @@
 [
   {
+    "path": "bots/rep/lycan.ts",
+    "kind": "bots",
+    "name": "Lycan reputation",
+    "desc": "Farm the repeatable Sanguine quest until Lycan reputation reaches rank 10.",
+    "autoload": null,
+    "sha256": "c37443c456080f33717bae0819e8ef664ed7ba890744e4a5ccc48fec5c3a0b30"
+  },
+  {
     "path": "classes/archpaladin/archpaladin.ts",
     "kind": "classes",
     "name": "ArchPaladin solo support",
