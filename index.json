@@ -933,7 +933,7 @@
     "name": null,
     "desc": null,
     "autoload": null,
-    "sha256": "d11836752d2158a2e6a1936760bc995b37129f19292d6a5a001434bfc690ac19"
+    "sha256": "8009ea3410c826b9f781d5ed91e450e5c8b7ed36ee7783c01f605387451a280d"
   },
   {
     "path": "lib/zboss.ts",

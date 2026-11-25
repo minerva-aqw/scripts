@@ -67,7 +67,7 @@ type PlanStep =
   | { travel: { map: string; cell?: string; pad?: string } }
   | { waitFor: { map: string; cell?: string } }
   | { gather: { id: number; map: string; qty?: number } }
-  | { attack: { name: string; count?: number; blockers?: string | string[] } };
+  | { attack: { name: string; count?: number; blockers?: string | string[]; pickup?: number | number[] } };
 
 type QuestPlanOpts = { choice?: number; qty?: number; turnIn?: boolean };
 type QuestPlanHandlers = Record<string, PlanStep[]>;
@@ -84,6 +84,7 @@ type MissionOpts = {
   map?: string;
   cell?: string;
   pad?: string;
+  pickup?: number | number[];
 };
 type FarmOpts = MissionOpts & {
   item?: number;
