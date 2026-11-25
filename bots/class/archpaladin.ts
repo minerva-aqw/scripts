@@ -156,11 +156,14 @@ if (!bot.ensureItem(36920)) {
       throw new Error("needs SpellCrafting rank 8 first (run bots/reputations/spellcrafting.ts)");
     }
     if (!bot.ensureItem(13289)) {
+      // Every path below reports instead of throwing: the run ends naming
+      // each refusal with what was held, so one run diagnoses all shops.
+      let notes = [];
       // Path 1: shards on hand pay at spellcraft 549.
       if (bot.ensureItem("Mystic Shards", 2)) {
         bot.travel("spellcraft");
         if (!bot.buyItem(549, 13289) && !bot.ensureItem(13289)) {
-          throw new Error("shop 549 spellcraft refused ArchMage Ink (Mystic Shards held " + qtyOf("Mystic Shards") + "/2)");
+          notes.push("549 spellcraft refused (Mystic Shards held " + qtyOf("Mystic Shards") + "/2)");
         }
       }
       // Path 2: voucher -> quill -> shop 622. Gold is not farmable here,
@@ -170,17 +173,19 @@ if (!bot.ensureItem(36920)) {
         bot.buyItem(693, "Gold Voucher 100k");
         bot.buyItem(693, 17391);
         if (!bot.ensureItem(17391)) {
-          throw new Error("shop 693 spellcraft refused the voucher path (gold " + bot.me().gold + ", voucher held " + qtyOf("Gold Voucher 100k") + "/1)");
+          notes.push("693 spellcraft refused the voucher path (gold " + bot.me().gold + ", voucher held " + qtyOf("Gold Voucher 100k") + "/1)");
         }
       }
       if (!bot.ensureItem(13289) && bot.ensureItem(17391)) {
         bot.travel("spellcraft");
         if (!bot.buyItem(622, 13289) && !bot.ensureItem(13289)) {
-          throw new Error("shop 622 spellcraft refused ArchMage Ink (Arcane Quill held " + qtyOf(17391) + "/1)");
+          notes.push("622 spellcraft refused (Arcane Quill held " + qtyOf(17391) + "/1)");
         }
       }
       // Path 3: farm shards until HELD (not a fixed kill count — the drop
-      // is not guaranteed) and pay at dragonrune 549.
+      // is not guaranteed) and pay at dragonrune 549. Runs whenever ink
+      // is still missing, even with a quill on hand: a second currency is
+      // a second chance, not a conflict.
       if (!bot.ensureItem(13289)) {
         let guard = 0;
         while (!bot.ensureItem("Mystic Shards", 2)) {
@@ -193,12 +198,12 @@ if (!bot.ensureItem(36920)) {
         }
         bot.travel("dragonrune");
         if (!bot.buyItem(549, 13289) && !bot.ensureItem(13289)) {
-          throw new Error("shop 549 dragonrune refused ArchMage Ink (Mystic Shards held " + qtyOf("Mystic Shards") + "/2)");
+          notes.push("549 dragonrune refused (Mystic Shards held " + qtyOf("Mystic Shards") + "/2)");
         }
       }
-    }
-    if (!bot.ensureItem(13289)) {
-      throw new Error("ArchMage Ink missing after 549/622/693 + shard farm");
+      if (!bot.ensureItem(13289)) {
+        throw new Error("ArchMage Ink missing: " + notes.join("; "));
+      }
     }
     bot.quest(2347, {});
     drain("Scroll of Ethereal Slumber");
