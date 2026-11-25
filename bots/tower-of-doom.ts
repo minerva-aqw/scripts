@@ -15,6 +15,17 @@ const LAST_FLOOR = 10;
 // done yet. Restore it after entering: `done()` also reads the slot.
 const PROGRESS_SLOT = 159;
 const FLOOR_UNLOCK = 10;
+// Each floor clears after its three resident monsters die. They respawn
+// immediately, so `clear` would never see an empty cell. A floor that is
+// already cleared has no monsters, and that is not a failure.
+function clearFloor(): void {
+  try {
+    bot.kill({ monster: "*", count: 3 });
+  } catch (error) {
+    if (!String(error).includes("no *")) throw error;
+  }
+}
+
 const FLOORS: Array<{ floor: number; monster: string }> = [
   { floor: 1, monster: "Dread Klunk" },
   { floor: 2, monster: "Dread Arradia" },
@@ -34,13 +45,16 @@ if (bot.quest(BASE + LAST_FLOOR).done()) {
   bot.notify("Tower of Doom: starting");
 
   for (const floor of FLOORS) {
+    const quest = bot.quest(BASE + floor.floor);
+    // The slot is only a hint: a stopped run can leave it behind. The quest
+    // record is the truth for resuming a partly finished tower.
+    if (quest.done()) continue;
     const progress = Math.max(0, bot.questValue(PROGRESS_SLOT) as number);
     if (progress >= floor.floor) continue;
 
     const map = floor.floor === 1 ? "towerofdoom" : "towerofdoom" + floor.floor;
     bot.notify("Tower of Doom: floor " + floor.floor + " (progress " + progress + ")");
 
-    const quest = bot.quest(BASE + floor.floor);
     if (!quest.active()) quest.accept();
 
     // Keep the slot at the unlock value for the whole visit. Lowering it
@@ -53,12 +67,10 @@ if (bot.quest(BASE + LAST_FLOOR).done()) {
       // directly on their first floor, which is the Enter cell; they have no
       // r1 at all.
       if (floor.floor === 1) bot.cell("r1");
-      bot.kill({ monster: "*", count: 3 });
+      clearFloor();
       for (let below = 2; below < LAST_FLOOR; below++) {
         bot.cell("r" + below);
-        // Each floor clears after its three resident monsters die. They
-        // respawn immediately, so `clear` would never see an empty cell.
-        bot.kill({ monster: "*", count: 3 });
+        clearFloor();
       }
       bot.cell("r" + LAST_FLOOR, "Left");
       bot.kill({ monster: floor.monster, count: 1 });
