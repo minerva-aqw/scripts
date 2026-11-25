@@ -8,14 +8,6 @@
     "sha256": "e9ad0460c55ca80a4c7468755caaa14fad53a53d5df730fa85ad33c6d79c7e79"
   },
   {
-    "path": "bots/rep/blacksmith.ts",
-    "kind": "bots",
-    "name": "Blacksmithing reputation",
-    "desc": "Farm Blacksmithing reputation through quests 2777 and 8736 to rank 10.",
-    "autoload": null,
-    "sha256": "b074398d23749343c08349f51646689c60574ef256f85f77dbfc133fa520bbb2"
-  },
-  {
     "path": "bots/rep/lycan.ts",
     "kind": "bots",
     "name": "Lycan reputation",
