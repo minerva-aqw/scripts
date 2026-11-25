@@ -78,10 +78,24 @@ let registeredQty = 1;
 // Wanted drop IDs (Skua's `AddDrop` idea, per-op rather than session-global):
 // plain monster drops that are not quest requirements still auto-claim off
 // the floor when a kill mission ends. The set rides every `kill`/`hunt`
-// park as `want`, and the quest composite feeds each requirement id in, so
-// a `bot.kill` inside a handler benefits too. Session-scoped like the
-// registry: entries persist until removed.
+// park as `want`. Session-scoped like the registry: entries persist until
+// removed.
 let dropWant: number[] = [];
+// Quest requirements are not session-global. The composite scopes the current
+// quest's requirement ids to one handler round, and a mission inside that
+// handler sees them through `dropWant`; the previous value is restored when
+// the handler returns. A later hunt must not claim an old quest's drops.
+let questWant: number[] = [];
+
+/// Wanted ids for this mission: the script's persistent list plus the current
+/// quest handler's requirements, never the other way around.
+function missionWant(): number[] {
+  const all = dropWant.slice();
+  for (const id of questWant) {
+    if (id > 0 && all.indexOf(id) < 0) all.push(id);
+  }
+  return all;
+}
 
 function registerList(ids: number | number[]): number[] {
   const list: number[] = typeof ids === "number" ? [ids] : ids || [];
@@ -249,11 +263,6 @@ function questStep(id: number, handlers?: QuestHandlers, opts?: QuestOpts): unkn
       const st = step({ op: "quest_status", id }) as QuestStatus;
       if (st.completed === true) return true;
       const reqs = st.requirements || [];
-      // Feed every requirement id into the wanted set: a `bot.kill` inside
-      // a handler then auto-claims it too, not just `bot.hunt`.
-      for (const r of reqs) {
-        if (r.id > 0 && dropWant.indexOf(r.id) < 0) dropWant.push(r.id);
-      }
       let next: QuestReq | undefined = undefined;
       for (const r of reqs) {
         if ((r.have === undefined ? -1 : r.have) < r.need) {
@@ -288,7 +297,18 @@ function questStep(id: number, handlers?: QuestHandlers, opts?: QuestOpts): unkn
       }
       const held: Record<number, number> = {};
       for (const r of reqs) held[r.id] = r.have === undefined ? -1 : r.have;
-      handlers[key]();
+      // Scope this quest's requirement ids to the handler round. A `bot.kill`
+      // or `bot.hunt` inside it auto-claims them; a later mission does not.
+      const previousQuestWant = questWant;
+      questWant = [];
+      for (const r of reqs) {
+        if (r.id > 0 && questWant.indexOf(r.id) < 0) questWant.push(r.id);
+      }
+      try {
+        handlers[key]();
+      } finally {
+        questWant = previousQuestWant;
+      }
       const after = step({ op: "quest_status", id }) as QuestStatus;
       // Any forward movement counts: one hunt can feed several
       // requirements while the targeted one waits its turn.
@@ -362,10 +382,10 @@ const bot = {
   // `kill(name, count?, blockers?)`: one mission to `Done`, counting `name`
   // deaths only. `blockers` (a name or names, highest first) preempt
   // engagement while alive without counting — the staff before the boss.
-  // Wanted drop IDs (`bot.wantDrops`, plus quest requirements while a
-  // composite runs) auto-claim off the floor when the mission ends.
+  // Wanted drop IDs (`bot.wantDrops`, plus this quest handler's
+  // requirements) auto-claim off the floor when the mission ends.
   kill(name: string, count?: number, blockers?: string | string[]): unknown {
-    return step({ op: "kill", name, count: count ?? 1, blockers: blockers ?? [], want: dropWant.slice() });
+    return step({ op: "kill", name, count: count ?? 1, blockers: blockers ?? [], want: missionWant() });
   },
   // `quest(id)` / `quest(id, handlers, opts?)`.
   // Bare `quest(id)` only captures the id for the parking calls below, so
@@ -412,7 +432,7 @@ const bot = {
   // fights it instead of `name`, without counting its deaths — the staff
   // before the boss. Order is priority; empty reads as none.
   hunt(name: string, map: string, qty?: number, cell?: string, pad?: string, blockers?: string | string[]): unknown {
-    return step({ op: "hunt", name, map, qty: qty ?? 1, cell, pad, blockers: blockers ?? [], want: dropWant.slice() });
+    return step({ op: "hunt", name, map, qty: qty ?? 1, cell, pad, blockers: blockers ?? [], want: missionWant() });
   },
   // `locate(name)`: read-only census of the live room — the cell holding
   // the most `name` matches (same substring rule as `kill`/`hunt`). No
