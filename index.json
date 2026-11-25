@@ -840,6 +840,14 @@
     "sha256": "8530df7682c48c1640c9f839eab0a4fbea64d8b5098dc410edbf29011cbf7aa3"
   },
   {
+    "path": "classes/lightcaster/lightcaster.ts",
+    "kind": "classes",
+    "name": "LightCaster solo",
+    "desc": "Spotlight stack upkeep with guaranteed-hit shred, Illuminate buff upkeep and heals, Burned by Light nuke.",
+    "autoload": "LightCaster",
+    "sha256": "81908808505adb31bd496231f4e6e9ac4db63309b0f1ea02490543395da74576"
+  },
+  {
     "path": "classes/mage/mage.ts",
     "kind": "classes",
     "name": "Mage starter",
