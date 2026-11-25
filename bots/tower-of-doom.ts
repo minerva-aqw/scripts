@@ -4,6 +4,9 @@
 /// Each floor is one quest (3475-3484) with one boss in r10. The quests share
 /// one progression slot, so a completed higher floor means the lower floors
 /// are done too; the loop still checks each floor and skips what is finished.
+///
+/// The map refuses a direct jump to r10 until the nine floors below it are
+/// cleared, so the bot walks up floor by floor and empties each one first.
 
 const BASE = 3474;
 const LAST_FLOOR = 10;
@@ -41,11 +44,16 @@ if (bot.quest(BASE + LAST_FLOOR).done()) {
     if (!quest.active()) quest.accept();
 
     // Keep the slot at the unlock value for the whole visit. Lowering it
-    // before the kill makes the map's floor frame send the avatar to Prison.
+    // before the climb makes the map's floor frame send the avatar to Prison.
     let cleared = false;
     bot.setQuestValue(PROGRESS_SLOT, FLOOR_UNLOCK);
     try {
-      bot.travel(map, "r10", "Left");
+      bot.travel(map);
+      for (let below = 1; below < LAST_FLOOR; below++) {
+        bot.cell("r" + below);
+        bot.clear();
+      }
+      bot.cell("r" + LAST_FLOOR, "Left");
       bot.kill({ monster: floor.monster, count: 1 });
       quest.turnIn();
       cleared = true;
