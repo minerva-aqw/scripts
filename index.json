@@ -10,10 +10,10 @@
   {
     "path": "bots/test.ts",
     "kind": "bots",
-    "name": "Escherion test",
-    "desc": "Travel to Escherion and kill him while prioritizing the Staff of Inversion.",
+    "name": "Soak test",
+    "desc": "Run the boss-blocker and multi-requirement quest legs of the live soak.",
     "autoload": null,
-    "sha256": "b028ba9460017fc33a077dd666a3d6111051b3082c8dd3cec489cf761be4aa05"
+    "sha256": "e564c4f08ad4b37cc2b09eeca9fc7f27ad4598e446d88b35f698009629fab40a"
   },
   {
     "path": "classes/archpaladin/archpaladin.ts",
