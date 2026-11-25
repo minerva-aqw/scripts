@@ -7,6 +7,11 @@
 
 const BASE = 3474;
 const LAST_FLOOR = 10;
+// Every tower floor shares this progression slot. The floor doors read it, so
+// it must be high enough to reach r10 even when the server-side quest is not
+// done yet. Restore it after entering: `done()` also reads the slot.
+const PROGRESS_SLOT = 159;
+const FLOOR_UNLOCK = 10;
 const FLOORS: Array<{ floor: number; monster: string }> = [
   { floor: 1, monster: "Dread Klunk" },
   { floor: 2, monster: "Dread Arradia" },
@@ -31,7 +36,13 @@ if (bot.quest(BASE + LAST_FLOOR).done()) {
     if (!quest.active()) quest.accept();
 
     const map = floor.floor === 1 ? "towerofdoom" : "towerofdoom" + floor.floor;
-    bot.travel(map, "r10", "Left");
+    const progress = Math.max(0, bot.questValue(PROGRESS_SLOT) as number);
+    bot.setQuestValue(PROGRESS_SLOT, FLOOR_UNLOCK);
+    try {
+      bot.travel(map, "r10", "Left");
+    } finally {
+      bot.setQuestValue(PROGRESS_SLOT, progress);
+    }
     bot.kill({ monster: floor.monster, count: 1 });
     quest.turnIn();
 
