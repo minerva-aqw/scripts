@@ -24,6 +24,14 @@
     "sha256": "1e1a2f06fdd114d93bcc4d174842de0c5f70354917c4d82285698b435286fd50"
   },
   {
+    "path": "bots/tower-of-doom.ts",
+    "kind": "bots",
+    "name": "Tower of Doom",
+    "desc": "Complete the ten Tower of Doom floor quests.",
+    "autoload": null,
+    "sha256": "0c2dc7b3e6617613ea1145faadf32c3f63df5b6ac6215b795234110101d4d7cb"
+  },
+  {
     "path": "classes/archpaladin/archpaladin.ts",
     "kind": "classes",
     "name": "ArchPaladin solo support",
