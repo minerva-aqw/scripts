@@ -31,18 +31,23 @@ if (bot.quest(BASE + LAST_FLOOR).done()) {
   bot.notify("Tower of Doom: starting");
 
   for (const floor of FLOORS) {
-    const quest = bot.quest(BASE + floor.floor);
-    if (quest.done()) continue;
-    if (!quest.active()) quest.accept();
+    const progress = Math.max(0, bot.questValue(PROGRESS_SLOT) as number);
+    if (progress >= floor.floor) continue;
 
     const map = floor.floor === 1 ? "towerofdoom" : "towerofdoom" + floor.floor;
-    const progress = Math.max(0, bot.questValue(PROGRESS_SLOT) as number);
+    bot.notify("Tower of Doom: floor " + floor.floor + " (progress " + progress + ")");
     bot.setQuestValue(PROGRESS_SLOT, FLOOR_UNLOCK);
     try {
       bot.travel(map, "r10", "Left");
     } finally {
-      bot.setQuestValue(PROGRESS_SLOT, progress);
+      // Leave the slot at the previous floor so the current quest is not
+      // already complete. Do not drop it back to zero: that can relock the
+      // screen and pull the avatar out of r10.
+      bot.setQuestValue(PROGRESS_SLOT, floor.floor - 1);
     }
+
+    const quest = bot.quest(BASE + floor.floor);
+    if (!quest.active()) quest.accept();
     bot.kill({ monster: floor.monster, count: 1 });
     quest.turnIn();
 
