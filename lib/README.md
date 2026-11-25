@@ -5,6 +5,9 @@ Shared, flat prelude files evaluated into every script before its entry.
 - `bot.ts` — the engine facade. This is the contract the new bots use: missions,
   plans, quest plans, typed inventory/shop/gather/pickup results, and the
   explicit quest handle.
+- `monsters.ts` — `findMonsterCell(name, map, cell?)`: the cell holding a named
+  monster in the room the caller already joined, cached per map. It throws with
+  the cells seen when the monster is absent.
 
 ## Adding a helper
 

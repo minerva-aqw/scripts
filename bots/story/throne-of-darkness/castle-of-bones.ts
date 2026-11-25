@@ -5,27 +5,7 @@
 /// cells are located once and reused; cells named by the chapter are explicit.
 
 const MAP = "bonecastle";
-const cells: Record<string, string> = {};
 let activeQuest = 0;
-
-function cellFor(monster: string, cell?: string): string {
-  if (cell) {
-    cells[monster] = cell;
-    return cell;
-  }
-  if (cells[monster]) return cells[monster];
-  const spot = bot.locate(monster) as {
-    found: boolean;
-    cell?: string;
-    cells?: string[];
-  };
-  if (!spot.found || !spot.cell) {
-    const seen = spot.cells?.length ? " (cells: " + spot.cells.join(", ") + ")" : "";
-    throw new Error(monster + " not found in " + MAP + seen);
-  }
-  cells[monster] = spot.cell;
-  return spot.cell;
-}
 
 function gatherAt(item: number, qty: number, cellsToTry: string[]): void {
   let last: unknown = null;
@@ -64,7 +44,7 @@ function drop(
     item,
     monster,
     map: MAP,
-    cell: cellFor(monster, cell),
+    cell: findMonsterCell(monster, MAP, cell),
     pad,
     qty,
     source: "temp",

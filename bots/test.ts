@@ -4,19 +4,6 @@
 /// Escherion covers a boss whose blocker must be engaged first. Hit Job (92)
 /// covers a quest with two temp drops, each farmed from its own monster.
 
-function cellOf(name: string): string {
-  const spot = bot.locate(name) as {
-    found: boolean;
-    cell?: string;
-    cells?: string[];
-  };
-  if (!spot.found || !spot.cell) {
-    const seen = spot.cells?.length ? " (cells: " + spot.cells.join(", ") + ")" : "";
-    throw new Error(name + " not found in the current map" + seen);
-  }
-  return spot.cell;
-}
-
 // 1. Boss with a blocker.
 bot.notify("soak: travelling to escherion");
 bot.travel("escherion", "Boss", "Left");
@@ -34,7 +21,7 @@ if (!hitJob.done()) {
   if (!hitJob.active()) hitJob.accept();
 
   bot.travel("greenguardwest");
-  let cell = cellOf("Breken the Vile");
+  let cell = findMonsterCell("Breken the Vile", "greenguardwest");
   bot.farm({
     item: 42649,
     monster: "Breken the Vile",
@@ -43,7 +30,7 @@ if (!hitJob.done()) {
     source: "temp",
   });
 
-  cell = cellOf("Ogug Stoneaxe");
+  cell = findMonsterCell("Ogug Stoneaxe", "greenguardwest");
   bot.farm({
     item: 42650,
     monster: "Ogug Stoneaxe",

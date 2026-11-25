@@ -5,7 +5,7 @@
     "name": "Lycan reputation",
     "desc": "Farm the repeatable Sanguine quest until Lycan reputation reaches rank 10.",
     "autoload": null,
-    "sha256": "bf8f5d18356f64832c8009f363c6b7013e1afe0cde9e99dcbb40181422304e6f"
+    "sha256": "5a7113ea268844a70f4a19a5682fbe14d284e2f0a63a06384129eaeb5362e0c4"
   },
   {
     "path": "bots/story/throne-of-darkness/castle-of-bones.ts",
@@ -13,7 +13,7 @@
     "name": "Castle of Bones",
     "desc": "Complete the Castle of Bones chapter of the Throne of Darkness saga.",
     "autoload": null,
-    "sha256": "1f3d92b6d450dba1eeea6ed1aa2e791ee77a2e5db0247dde5bedaa18bdd18086"
+    "sha256": "6f458aa73cc81706cacb5629a8e01e51a7bf0bab31c20bcb4f26a3978c11cbf3"
   },
   {
     "path": "bots/test.ts",
@@ -21,7 +21,7 @@
     "name": "Soak test",
     "desc": "Run the boss-blocker and multi-requirement quest legs of the live soak.",
     "autoload": null,
-    "sha256": "e564c4f08ad4b37cc2b09eeca9fc7f27ad4598e446d88b35f698009629fab40a"
+    "sha256": "1e1a2f06fdd114d93bcc4d174842de0c5f70354917c4d82285698b435286fd50"
   },
   {
     "path": "classes/archpaladin/archpaladin.ts",
@@ -158,5 +158,13 @@
     "desc": null,
     "autoload": null,
     "sha256": "9d3f6b69a6bce71704cd9ad9b43a64ed6e0d23462bc1f81f63b76ec17dd64edc"
+  },
+  {
+    "path": "lib/monsters.ts",
+    "kind": "lib",
+    "name": null,
+    "desc": null,
+    "autoload": null,
+    "sha256": "f8ef991d6d4105971456c4d05a49a47eeff555596218ea86b47f2fff9f8cb98e"
   }
 ]

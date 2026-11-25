@@ -18,21 +18,12 @@ if (rank < TARGET && !bot.quest(QUEST).done()) {
 }
 bot.notify("Lycan reputation: rank " + rank + " -> " + TARGET);
 
-// Farm only fights in the current cell. Join the map, census the live room,
-// then move to the cell holding Sanguine; `cell()` resolves the pad.
+// Farm only fights in the current cell. Join the map, then move to the cell
+// holding Sanguine; `cell()` resolves the pad.
 let cell = "";
 if (rank < TARGET) {
   bot.travel("lycan");
-  const spot = bot.locate("Sanguine") as {
-    found: boolean;
-    cell?: string;
-    cells?: string[];
-  };
-  if (!spot.found || !spot.cell) {
-    const seen = spot.cells?.length ? " (cells: " + spot.cells.join(", ") + ")" : "";
-    throw new Error("Sanguine not found in lycan" + seen);
-  }
-  cell = spot.cell;
+  cell = findMonsterCell("Sanguine", "lycan");
   bot.cell(cell);
 }
 
