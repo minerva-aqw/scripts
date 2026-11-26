@@ -72,6 +72,14 @@
     "sha256": "edbe1967b6396deb24f7cebd79df4d55492a4dd2ffaeee211e618ae1697384e6"
   },
   {
+    "path": "bots/story/tower-of-doom.ts",
+    "kind": "bots",
+    "name": "Tower of Doom",
+    "desc": "Climb the ten floors of the Tower of Doom story, one boss per floor.",
+    "autoload": null,
+    "sha256": "05949d651aceb9dd4b1a4de972354c7f07422a00eed2182f5f81212438db3d1b"
+  },
+  {
     "path": "bots/test.ts",
     "kind": "bots",
     "name": "Soak test",
