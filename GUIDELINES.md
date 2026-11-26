@@ -121,7 +121,9 @@ when the bot reads it back.
   with "complete all previous floors". Walk such a chain from the top.
 - Some rooms read a quest value slot and refuse to be crossed while it is low
   (the Tower of Doom floors drop you in `Prison`). The check runs on the frame
-  the arrival move plays, so open the slot before the travel, not after it.
+  the arrival move plays, so open the slot before the travel, not after it, and
+  open it to the chain's top value: frames past the entry frame jail on any
+  value below the map's own unlock.
 
 ## Drops
 
