@@ -1,5 +1,13 @@
 [
   {
+    "path": "bots/class/kings-echo.ts",
+    "kind": "bots",
+    "name": "King's Echo",
+    "desc": "Unlock the King's Echo class.",
+    "autoload": null,
+    "sha256": "b3a26c530481fe1cf0ee6f8998cdab75af4751e7a272ad08e7f0c9a3c57c2c12"
+  },
+  {
     "path": "bots/rep/arcangrove.ts",
     "kind": "bots",
     "name": "Arcangrove reputation",
@@ -429,7 +437,7 @@
     "name": null,
     "desc": null,
     "autoload": null,
-    "sha256": "045c7464f338fc8fb443aecf04f17e42663b3506d968c69056ada10ac6c60ae7"
+    "sha256": "56664073290f82724d2be7b1782b3f54ad51a45c8680d0aad2c227761c74021e"
   },
   {
     "path": "lib/monsters.ts",

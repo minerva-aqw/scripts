@@ -53,6 +53,9 @@ type PlanStep =
 
 type QuestPlanOpts = { choice?: number; qty?: number; turnIn?: boolean };
 type QuestPlanHandlers = Record<string, PlanStep[]>;
+// `bot.quest.register(ids, opts?)`: reward choice taken at each sweep, turn-in
+// quantity, and the minimum spacing between sweeps in ms (0 = every call).
+type QuestRegisterOpts = { choice?: number; qty?: number; interval?: number };
 
 // One survival rule for a combat mission. Rules are checked before the class
 // rotation, in order; the first matching and ready rule fires. `selfHpBelow`
