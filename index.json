@@ -72,6 +72,14 @@
     "sha256": "e26252e376c43e260ee254e28a3bab1cb9433161eee0b307573fe9d0b3e4c273"
   },
   {
+    "path": "bots/story/shadowfalls-rise.ts",
+    "kind": "bots",
+    "name": "Shadowfall's Rise",
+    "desc": "Complete the Shadowfall's Rise chapter, from Noxus Tower to Luma Fortress.",
+    "autoload": null,
+    "sha256": "cafdd78fd55ee3e903c293f71841f8af0d85153ec505d49e8081a43adca3c2e2"
+  },
+  {
     "path": "bots/story/throne-of-darkness/castle-of-bones.ts",
     "kind": "bots",
     "name": "Castle of Bones",

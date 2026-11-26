@@ -119,6 +119,9 @@ when the bot reads it back.
 - A repeatable chain cannot be resumed from the slot alone. Its slot can read
   ahead of the server's own count, and the server then refuses the next accept
   with "complete all previous floors". Walk such a chain from the top.
+- Two quests can share one slot value: they are alternates, and completing
+  either advances the chain. `bot.quest(id).done()` reads that slot, so the
+  sibling reads done once the first turns in. That skip is correct.
 - Some rooms read a quest value slot and refuse to be crossed while it is low
   (the Tower of Doom floors drop you in `Prison`). The check runs on the frame
   the arrival move plays, so open the slot before the travel, not after it, and
