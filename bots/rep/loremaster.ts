@@ -3,7 +3,8 @@
 ///
 /// Members reach rank 3 with Studying the Rogue, finish the four druid quests,
 /// then repeat Quite the Problem. Free accounts repeat Studying the Rogue all
-/// the way. Both routes use temp quest items.
+/// the way. Every requirement is filled by a declarative quest plan with temp
+/// inventory counting.
 
 const TARGET = 10;
 const WARDWARF = "wardwarf";
@@ -14,12 +15,10 @@ const DAGGER = 54577;
 const SCROLL = 54578;
 
 const QUITE = 3032;
-const CRIES = [
-  // id, item, monster, cell, qty
-  [3029, 18525, "Void Bear", "r2", 6],
-  [3030, 18526, "Void Larva", "r6", 4],
-  [3031, 18527, "Void Ghast", "r6", 4],
-  [3032, 18528, "Young Void Giant", "r5", 1],
+const DRUID_QUESTS = [
+  [3029, 18525, "Void Bear", "r2"],
+  [3030, 18526, "Void Larva", "r6"],
+  [3031, 18527, "Void Ghast", "r6"],
 ];
 
 function rankNow(): number {
@@ -27,56 +26,42 @@ function rankNow(): number {
 }
 
 function studyRogue(daggerCell: string, jonsenCell: string): void {
-  const quest = bot.quest(STUDYING);
-  if (!quest.active()) quest.accept();
-
-  bot.cell(daggerCell);
-  bot.farm({
-    item: DAGGER,
-    qty: 4,
-    monster: "Drow Assassin",
-    map: WARDWARF,
-    cell: daggerCell,
-    source: "temp",
-  });
-
-  bot.cell(jonsenCell);
-  bot.farm({
-    item: SCROLL,
-    qty: 1,
-    monster: "D'wain Jonsen",
-    map: WARDWARF,
-    cell: jonsenCell,
-    source: "temp",
-  });
-
-  quest.turnIn(0);
+  bot.questPlan(
+    STUDYING,
+    {
+      "54577": [{
+        farm: {
+          item: DAGGER,
+          monster: "Drow Assassin",
+          map: WARDWARF,
+          cell: daggerCell,
+          source: "temp",
+        },
+      }],
+      "54578": [{
+        farm: {
+          item: SCROLL,
+          monster: "D'wain Jonsen",
+          map: WARDWARF,
+          cell: jonsenCell,
+          source: "temp",
+        },
+      }],
+    },
+    { choice: 0 }
+  );
 }
 
-function completeDruidQuest(
-  id: number,
-  item: number,
-  monster: string,
-  cell: string,
-  qty: number
-): void {
-  const quest = bot.quest(id);
-  if (quest.done()) return;
-  if (!quest.active()) quest.accept();
-  bot.cell(cell);
-  bot.farm({
-    item,
-    qty,
-    monster,
-    map: DRUIDS,
-    cell,
-    source: "temp",
-  });
-  quest.turnIn(0);
+function fillOne(id: number, item: number, monster: string, cell: string): void {
+  const handlers: Record<string, unknown> = {};
+  handlers[String(item)] = [{
+    farm: { item, monster, map: DRUIDS, cell, source: "temp" },
+  }];
+  bot.questPlan(id, handlers, { choice: 0 });
 }
 
 let rank = rankNow();
-let member = bot.me().upgraded === true;
+const member = bot.me().upgraded === true;
 
 let daggerCell = "";
 let jonsenCell = "";
@@ -93,23 +78,13 @@ if (member) {
   }
 
   bot.travel(DRUIDS);
-  for (const [id, item, monster, cell, qty] of CRIES) {
-    completeDruidQuest(id, item, monster, cell, qty);
+  for (const [id, item, monster, cell] of DRUID_QUESTS) {
+    if (!bot.quest(id).done()) fillOne(id, item, monster, cell);
   }
+  if (!bot.quest(QUITE).done()) fillOne(QUITE, 18528, "Young Void Giant", "r5");
 
   while (rank < TARGET) {
-    const quest = bot.quest(QUITE);
-    if (!quest.active()) quest.accept();
-    bot.cell("r5");
-    bot.farm({
-      item: 18528,
-      qty: 1,
-      monster: "Young Void Giant",
-      map: DRUIDS,
-      cell: "r5",
-      source: "temp",
-    });
-    quest.turnIn(0);
+    fillOne(QUITE, 18528, "Young Void Giant", "r5");
     rank = rankNow();
   }
 } else {

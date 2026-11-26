@@ -13,7 +13,7 @@
     "name": "Loremaster reputation",
     "desc": "Farm Loremaster reputation to rank 10, using the member route when available.",
     "autoload": null,
-    "sha256": "d90fc85f21cec385d003393bc2fef1bcf4bfbb8436d503eee218684522da30d1"
+    "sha256": "f8a4f2f69a4bcb69ec1913fe48994f11fc7f24dd797367de42b31c056fb2b574"
   },
   {
     "path": "bots/rep/lycan.ts",
@@ -29,7 +29,7 @@
     "name": "Mythsong reputation",
     "desc": "Farm the repeatable Sugar, Sugar quest until Mythsong reputation reaches rank 10.",
     "autoload": null,
-    "sha256": "ac926f9362455f18ac8c4eea38613411f0c8447afc8ffee8855b56c306cff330"
+    "sha256": "c670a2ff97ab51e47fe1d5ddac6bb041a3530917f1e82dd27eda523a2d0dd664"
   },
   {
     "path": "bots/story/throne-of-darkness/castle-of-bones.ts",
