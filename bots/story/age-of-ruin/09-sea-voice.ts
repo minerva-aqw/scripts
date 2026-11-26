@@ -13,8 +13,10 @@ const LAST = 9351;
 if (!bot.quest(LAST).done()) {
   // 9348 Dead Sea
   if (!bot.quest(9348).done()) {
-    const held = bot.itemState("Vigil") as { presence: string };
-    if (held.presence !== "present") {
+    const ready = bot.ensureItemState("Vigil", 1) as { ok: boolean };
+    if (!ready.ok) {
+      // Shop 2320 is served in Sea Voice only.
+      bot.travel(SEA);
       const bought = bot.buyItemState(2320, "Vigil", 10) as {
         ok: boolean;
         status: string;
@@ -22,10 +24,6 @@ if (!bot.quest(LAST).done()) {
       if (!bought.ok) {
         throw new Error("buy Vigil from shop 2320: " + bought.status);
       }
-    }
-    const ready = bot.ensureItemState("Vigil", 1) as { ok: boolean };
-    if (!ready.ok) {
-      throw new Error("Vigil is not in the bag");
     }
     const equipped = bot.equip("Vigil") as { ok: boolean; status: string };
     if (!equipped.ok) {

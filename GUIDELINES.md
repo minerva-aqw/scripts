@@ -73,6 +73,12 @@ Resolve ids, names, cells, requirements, and shops from data, not from memory:
   `mapItem` object only names the map item. Do not infer the pairs from the
   requirement order — `Shared History` (9247), `Childhood Memories` (9821) and
   `Glacial Seal` (9774) all run the other way round.
+- A shop is only served in its own map. `bot.travel(map)` before
+  `bot.buyItemState`/`bot.shopState`/`bot.sellItemState`, and take the map from
+  Skua's own `BuyItem(map, shop, …)` call rather than from the map the quest
+  sits in — shop 2320 is in `seavoice` while `Dead Sea` turns in at
+  `terminatemple`, and shop 2467 is in `coldthunder`. Buying from anywhere
+  else leaves the load unanswered and can drop the connection.
 
 Use the exact `ItemID` / `sName` spelling the data gives. A guessed name or id
 is a bug even when it happens to match. Confirm a name with `bot.itemState`

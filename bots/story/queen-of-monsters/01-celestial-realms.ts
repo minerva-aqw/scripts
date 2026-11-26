@@ -17,9 +17,11 @@ const FISHING_SHOP = 356;
 
 const LAST = 5387;
 
-function buy(shop: number, name: string, qty: number): void {
+function buy(map: string, shop: number, name: string, qty: number): void {
   const held = bot.itemState(name) as { qty: number };
   if (held.qty >= qty) return;
+  // A shop is only served in its own map, so stand there first.
+  bot.travel(map);
   const bought = bot.buyItemState(shop, name, qty - held.qty) as {
     ok: boolean;
     status: string;
@@ -64,7 +66,7 @@ if (!bot.quest(LAST).done()) {
   });
 
   // 4496 Power Up!
-  buy(EMBERSEA_SHOP, "Basic Guard Potion", 10);
+  buy("embersea", EMBERSEA_SHOP, "Basic Guard Potion", 10);
   bot.questPlan(4496, {
     "30993": [
       {
@@ -144,7 +146,7 @@ if (!bot.quest(LAST).done()) {
   });
 
   // 4503 Recover the Cage Key!
-  buy(FISHING_SHOP, "Holy Oil", 1);
+  buy("fishing", FISHING_SHOP, "Holy Oil", 1);
   bot.questPlan(
     4503,
     {
@@ -165,7 +167,7 @@ if (!bot.quest(LAST).done()) {
   );
 
   // 4504 Protect Them
-  buy(EMBERSEA_SHOP, "Potent Guard Potion", 10);
+  buy("embersea", EMBERSEA_SHOP, "Potent Guard Potion", 10);
   bot.questPlan(4504, {
     "31006": [
       { farm: { item: 31006, monster: "Fallen Knight", map: RUINS, source: "temp" } },

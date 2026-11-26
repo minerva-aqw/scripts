@@ -109,7 +109,7 @@
     "name": "Sea Voice",
     "desc": "Complete the Sea Voice chapter of the Age of Ruin saga.",
     "autoload": null,
-    "sha256": "e1812ba2c832176440e4bab7c54dc0ba4bfb080302235da70cb3fda92dfcca16"
+    "sha256": "6c543fd4e7af84358b42f01757783731b92fab5b6cec12eefbeb5cb1c3b81c4c"
   },
   {
     "path": "bots/story/age-of-ruin/10-balemorale.ts",
@@ -165,7 +165,7 @@
     "name": "Cold Thunder",
     "desc": "Complete Cold Thunder and Tell-Tale Heart, the tail of the Age of Ruin saga.",
     "autoload": null,
-    "sha256": "31639fcd9d9b68f57c4e1044d601bff5ad2d83da6be1fa187304be47dac920ce"
+    "sha256": "2b4083a414e5db075b1cd00565b42261617f6df02f41bb73c90a03fd1d47e417"
   },
   {
     "path": "bots/story/dragon-of-yokai/01-yokai-pirate.ts",
@@ -229,7 +229,7 @@
     "name": "Celestial Realm",
     "desc": "Complete A Theft of Light, the opening chapter of the Queen of Monsters saga.",
     "autoload": null,
-    "sha256": "7aee6379aaea7eee34ed937fccf20dbff8d7504ff1d4a422eb4186fbf38b59a2"
+    "sha256": "51a53d28fea7b72bbfb9a4f320b44b3fc396d527797e96c3d9a6b11f0238936f"
   },
   {
     "path": "bots/story/shadowfalls-rise.ts",

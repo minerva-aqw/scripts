@@ -19,8 +19,10 @@ if (!bot.quest(LAST).done()) {
 
   // 9833 The Storm Queen
   if (!bot.quest(9833).done()) {
-    const held = bot.itemState("Bananach's Last Will") as { presence: string };
-    if (held.presence !== "present") {
+    const ready = bot.ensureItemState("Bananach's Last Will", 1) as { ok: boolean };
+    if (!ready.ok) {
+      // Shop 2467 is served in Cold Thunder only.
+      bot.travel(MAP);
       const bought = bot.buyItemState(2467, "Bananach's Last Will", 10) as {
         ok: boolean;
         status: string;
@@ -28,10 +30,6 @@ if (!bot.quest(LAST).done()) {
       if (!bought.ok) {
         throw new Error("buy Bananach's Last Will from shop 2467: " + bought.status);
       }
-    }
-    const ready = bot.ensureItemState("Bananach's Last Will", 1) as { ok: boolean };
-    if (!ready.ok) {
-      throw new Error("Bananach's Last Will is not in the bag");
     }
     const equipped = bot.equip("Bananach's Last Will") as {
       ok: boolean;
