@@ -134,6 +134,11 @@ when the bot reads it back.
   the mission settles them after the fight.
 - Quest drops belong to the handler that fills the requirement. Do not build a
   global want list or a second drop scope.
+- A map object can spawn a floor drop instead of granting a temp item (Crash
+  Site 106 grants the Dwakel Decoder as item 4733). A `gather` handler only
+  sees temp inventory and quest requirements, so it cannot complete for such
+  an object: accept the quest, click it with `gatherState`, claim the drop with
+  `pickupNow`, then let the plan turn in.
 - Do not hand-roll a drain or pickup loop around a hunt or a plan.
 
 ## Re-runs and failure

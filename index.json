@@ -96,6 +96,14 @@
     "sha256": "33952fde9a977ea69c4b451b398f36448b7ab7bc27b6a55581efdf07a492adb5"
   },
   {
+    "path": "bots/story/queen-of-monsters/01-celestial-realms.ts",
+    "kind": "bots",
+    "name": "Celestial Realm",
+    "desc": "Complete A Theft of Light, the opening chapter of the Queen of Monsters saga.",
+    "autoload": null,
+    "sha256": "7aee6379aaea7eee34ed937fccf20dbff8d7504ff1d4a422eb4186fbf38b59a2"
+  },
+  {
     "path": "bots/story/shadowfalls-rise.ts",
     "kind": "bots",
     "name": "Shadowfall's Rise",
