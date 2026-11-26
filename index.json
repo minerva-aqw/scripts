@@ -13,7 +13,7 @@
     "name": "Loremaster reputation",
     "desc": "Farm Loremaster reputation to rank 10, using the member route when available.",
     "autoload": null,
-    "sha256": "faf31f9837e958cb1596fa22395776203f42270b909edac9a2ae764f5a6584f2"
+    "sha256": "d9f583c14de0865fa9c006c75f85ee58e1dec6f4d76e1016b426f22ace8de28c"
   },
   {
     "path": "bots/rep/lycan.ts",

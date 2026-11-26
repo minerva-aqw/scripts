@@ -8,7 +8,6 @@
 const TARGET = 10;
 const WARDWARF = "wardwarf";
 const DRUIDS = "druids";
-const SCREENS = ["r1", "r2", "r3", "r4", "r5"];
 
 const STUDYING = 7505;
 const DAGGER = 54577;
@@ -27,19 +26,14 @@ function rankNow(): number {
   return bot.rep("Loremaster").rank;
 }
 
-// Random spawns move between the wardwarf screens, so locate each monster in
-// the room the avatar is actually standing in before pinning its cell.
-function roam(name: string, map: string, cells: string[]): string {
-  for (const cell of cells) {
-    try {
-      bot.cell(cell);
-    } catch (error) {
-      continue;
-    }
-    const spot = bot.locate(name) as { found: boolean; cell?: string; cells?: string[] };
-    if (spot.found && spot.cell) return spot.cell;
+// Dwarf War puts the war boss and the drow spawns on the same screen. Join
+// straight there and let the live room report the actual cells.
+function wardwarfCell(name: string): string {
+  const spot = bot.locate(name) as { found: boolean; cell?: string; cells?: string[] };
+  if (!spot.found || !spot.cell) {
+    throw new Error(name + " not found in " + WARDWARF);
   }
-  throw new Error(name + " not found in " + map + " cells " + cells.join(", "));
+  return spot.cell;
 }
 
 function studyRogue(daggerCell: string, jonsenCell: string): void {
@@ -97,10 +91,9 @@ let member = bot.me().upgraded === true;
 let daggerCell = "";
 let jonsenCell = "";
 if (rank < TARGET) {
-  bot.travel(WARDWARF);
-  daggerCell = roam("Drow Assassin", WARDWARF, SCREENS);
-  bot.cell("r4");
-  jonsenCell = roam("D'wain Jonsen", WARDWARF, ["r4"]);
+  bot.travel(WARDWARF, "r4", "Left");
+  daggerCell = wardwarfCell("Drow Assassin");
+  jonsenCell = wardwarfCell("D'wain Jonsen");
 }
 
 if (member) {
