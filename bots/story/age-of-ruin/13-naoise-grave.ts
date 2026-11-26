@@ -24,10 +24,11 @@ if (!bot.quest(LAST).done()) {
     "86474": [{ gather: { id: 13297, map: MAP } }],
   });
 
-  // 9774 Glacial Seal
+  // 9774 Glacial Seal — Brentan's object grants 13299 and Celestia's 13298.
+  // The requirement order runs the other way round.
   bot.questPlan(9774, {
-    "86476": [{ gather: { id: 13298, map: MAP } }],
-    "86475": [{ gather: { id: 13299, map: MAP } }],
+    "86476": [{ gather: { id: 13299, map: MAP } }],
+    "86475": [{ gather: { id: 13298, map: MAP } }],
   });
 
   // 9770 The Cold Wind Guides

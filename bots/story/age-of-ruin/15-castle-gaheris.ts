@@ -22,11 +22,12 @@ if (!bot.quest(LAST).done()) {
     ],
   });
 
-  // 9821 Childhood Memories
+  // 9821 Childhood Memories — Muusa grants 13379, Indradeep 13380, and the
+  // remaining barrier object 13381 is the touch.
   bot.questPlan(9821, {
-    "87160": [{ gather: { id: 13379, map: MAP } }],
-    "87158": [{ gather: { id: 13380, map: MAP } }],
-    "87159": [{ gather: { id: 13381, map: MAP } }],
+    "87160": [{ gather: { id: 13381, map: MAP } }],
+    "87158": [{ gather: { id: 13379, map: MAP } }],
+    "87159": [{ gather: { id: 13380, map: MAP } }],
   });
 
   // 9822 Strangled Sobs

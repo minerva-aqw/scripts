@@ -48,11 +48,13 @@ if (!bot.quest(LAST).done()) {
     ],
   });
 
-  // 9247 Shared History
+  // 9247 Shared History — the map's own pads pair 11708 with the left path,
+  // 11709 with the right path, and 11710 with the torn page. The quest's
+  // requirement order is different; the map wins.
   bot.questPlan(9247, {
-    "77976": [{ gather: { id: 11708, map: MAP } }],
-    "77977": [{ gather: { id: 11709, map: MAP } }],
-    "77975": [{ gather: { id: 11710, map: MAP } }],
+    "77976": [{ gather: { id: 11709, map: MAP } }],
+    "77977": [{ gather: { id: 11710, map: MAP } }],
+    "77975": [{ gather: { id: 11708, map: MAP } }],
   });
 
   // 9248 Flat Scares

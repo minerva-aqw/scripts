@@ -67,6 +67,12 @@ Resolve ids, names, cells, requirements, and shops from data, not from memory:
 - Map-object ids are not in `quest-data.json`. The id a `gather` step needs is
   the one the map's own script passes to `getMapItem`; read it from the map SWF
   or the saga's Skua script. The requirement `ItemID` is a different number.
+- A multi-id `MapItemQuest` array is in the map's order, not the quest's. The
+  map SWF states the real pair in its `__setProp` blocks (`intItem` beside
+  `intMapItem`, or `mapItem` beside `strName`/`strCollectMsg`); a plain
+  `mapItem` object only names the map item. Do not infer the pairs from the
+  requirement order — `Shared History` (9247), `Childhood Memories` (9821) and
+  `Glacial Seal` (9774) all run the other way round.
 
 Use the exact `ItemID` / `sName` spelling the data gives. A guessed name or id
 is a bug even when it happens to match. Confirm a name with `bot.itemState`

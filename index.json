@@ -61,7 +61,7 @@
     "name": "Sunlight Zone",
     "desc": "Complete the Sunlight Zone chapter of the Age of Ruin saga.",
     "autoload": null,
-    "sha256": "97e4bc29bdf031ebb1af417447d76b20fa0dad61fe7cb28dc70c47e002111f17"
+    "sha256": "81d5dd9969173f110d4184691ea047921c5ecdd7b849aa93ce8c9bc678963ab8"
   },
   {
     "path": "bots/story/age-of-ruin/04-twilight-zone.ts",
@@ -141,7 +141,7 @@
     "name": "Naoise Grave",
     "desc": "Complete the Naoise Grave chapter of the Age of Ruin saga.",
     "autoload": null,
-    "sha256": "ce4759fff3f5490d007c43ee88b2e2a84ef766be6e862d72db269268eb77be89"
+    "sha256": "007d137083632c1a1e137f3a416fa432d9aeab9f992d99652848081d2202e5f1"
   },
   {
     "path": "bots/story/age-of-ruin/14-lia-tara-hill.ts",
@@ -157,7 +157,7 @@
     "name": "Castle Gaheris",
     "desc": "Complete the Castle Gaheris chapter of the Age of Ruin saga.",
     "autoload": null,
-    "sha256": "efab518983b52fd3df85f5ae7f517322ecd82631afa4826d69ec09b23a204056"
+    "sha256": "dfa46110b7dbe2625c1bf3c2ae51904f4d943c8af075aabc1d058e64c54e48d9"
   },
   {
     "path": "bots/story/age-of-ruin/16-cold-thunder.ts",
