@@ -78,7 +78,10 @@ when the bot reads it back.
   requirement the bot must fill. The parser rejects anything that is not an
   item id, so a turn-in name will not work.
 - Omit `qty` inside a handler; the plan targets the requirement's own need.
-  Keep `qty` only for a step with no live requirement behind it.
+  Keep `qty` only for a step with no live requirement behind it. A `farm` still
+  names `item` and a source (`monster`, plus `id` when the spawn must be pinned):
+  the step parser validates the handler before the plan binds the requirement,
+  so it cannot fill those in.
 - Use `source: "temp"` when the item lands in the temp inventory (Skua's
   `tempItem`); the default counts the backpack.
 - Pass `{ choice: n }` for any quest with rewards — first reward is index 0.
