@@ -48,7 +48,15 @@
     "sha256": "82344e276f875272748089f7a05cf24f3c2133fb406c117bdd37f7aeddcbe86a"
   },
   {
-    "path": "bots/story/dragon-of-yokai/03-haku-war.ts",
+    "path": "bots/story/dragon-of-yokai/03-haku-village.ts",
+    "kind": "bots",
+    "name": "Haku Village",
+    "desc": "Complete the Haku Village chapter of the Dragons of Yokai saga.",
+    "autoload": null,
+    "sha256": "ad5329425c76c18306ccbe5855bc0fc5d1a79506afc036de5fc66e1eade73658"
+  },
+  {
+    "path": "bots/story/dragon-of-yokai/04-haku-war.ts",
     "kind": "bots",
     "name": "Haku War",
     "desc": "Complete the Haku War chapter of the Dragons of Yokai saga.",
