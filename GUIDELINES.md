@@ -120,8 +120,8 @@ when the bot reads it back.
   ahead of the server's own count, and the server then refuses the next accept
   with "complete all previous floors". Walk such a chain from the top.
 - Some rooms read a quest value slot and refuse to be crossed while it is low
-  (the Tower of Doom floors drop you in `Prison`). Set the slot after the join
-  and before the first move, and give the value the room asks for.
+  (the Tower of Doom floors drop you in `Prison`). The check runs on the frame
+  the arrival move plays, so open the slot before the travel, not after it.
 
 ## Drops
 
