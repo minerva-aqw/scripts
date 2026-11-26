@@ -48,6 +48,14 @@
     "sha256": "82344e276f875272748089f7a05cf24f3c2133fb406c117bdd37f7aeddcbe86a"
   },
   {
+    "path": "bots/story/dragon-of-yokai/03-haku-war.ts",
+    "kind": "bots",
+    "name": "Haku War",
+    "desc": "Complete the Haku War chapter of the Dragons of Yokai saga.",
+    "autoload": null,
+    "sha256": "e26252e376c43e260ee254e28a3bab1cb9433161eee0b307573fe9d0b3e4c273"
+  },
+  {
     "path": "bots/story/throne-of-darkness/castle-of-bones.ts",
     "kind": "bots",
     "name": "Castle of Bones",
