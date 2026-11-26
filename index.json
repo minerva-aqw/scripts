@@ -8,6 +8,14 @@
     "sha256": "e9ad0460c55ca80a4c7468755caaa14fad53a53d5df730fa85ad33c6d79c7e79"
   },
   {
+    "path": "bots/rep/blacksmithing.ts",
+    "kind": "bots",
+    "name": "Blacksmithing reputation",
+    "desc": "Farm Blacksmithing reputation to rank 10 with Monster Machining.",
+    "autoload": null,
+    "sha256": "02f0a023b9c817b29680b9784cad512120ac93b7dc03d0713676d5e121a081ff"
+  },
+  {
     "path": "bots/rep/loremaster.ts",
     "kind": "bots",
     "name": "Loremaster reputation",
