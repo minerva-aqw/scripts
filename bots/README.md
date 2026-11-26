@@ -1,5 +1,7 @@
 # bots
 
+Read `../GUIDELINES.md` before adding or changing anything here.
+
 Bot tree for the overhauled scripting contract. Bots are grouped by domain:
 `rep/` for reputation loops and `story/` for story chapters.
 

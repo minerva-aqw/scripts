@@ -2,6 +2,10 @@
 
 Shared AQW automation scripts. Anyone can PR; minerva reviews before merge.
 
+Read `GUIDELINES.md` before writing or editing any script. It is the authoring
+contract for `bots/`, `classes/`, and `lib/`; the other files describe the tree
+and the API.
+
 ## Layout
 
 Kind comes from the folder, never from metadata:
@@ -62,7 +66,7 @@ bot.questPlan(8248, {
 });
 ```
 
-Handler keys are live requirement `ItemID`s or turn-in names. The plan
+Handler keys are live requirement `ItemID`s (numeric). The plan
 validates that every unsatisfied requirement has a handler before it accepts
 or travels. `{ choice, qty, turnIn: false }` passes through to the turn-in.
 
