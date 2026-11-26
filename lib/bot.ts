@@ -17,6 +17,7 @@
 // `locate(name)` -> read-only census of the live room (no bridge traffic),
 // `gatherState(id, map, qty?)` -> typed gather result, `itemState(idOrName)` /
 // `ensureItemState(idOrName, qty?)` -> typed item and turn-in precondition,
+// `equip(idOrName)` -> item on through the client's own toggle,
 // `shopState`/`buyItemState`/`sellItemState` -> typed stock and trades,
 // `pickupNow(idOrName | "*")` -> `{ok, requested, claimed, remaining, reason}`,
 // `me()`/`rep`/`questValue`/`setQuestValue` -> player, faction and progression
@@ -57,7 +58,10 @@ type QuestPlanHandlers = Record<string, PlanStep[]>;
 // rotation, in order; the first matching and ready rule fires. `selfHpBelow`
 // is a ratio of max HP (0–1). `targetHpBelow` is absolute HP. Aura names match
 // exactly and case-insensitively. `missingAura` means our own aura is absent.
-// V1 has one action: cast the equipped potion slot (`i1`).
+// `anim` matches a recent `ct` animation message by case-insensitive
+// substring; it stays actionable for 3s after it arrives, so a boss
+// telegraph fires the rule once per message. V1 has one action: cast the
+// equipped potion slot (`i1`).
 type CombatRule = {
   when: {
     selfHpBelow?: number;
@@ -65,6 +69,7 @@ type CombatRule = {
     selfAura?: string;
     targetAura?: string;
     missingAura?: string;
+    anim?: string;
   };
   use: "potion";
   // Default 5000ms. The engine also waits for the potion's own readiness.
@@ -339,6 +344,16 @@ const bot = {
     return typeof idOrName === "number"
       ? step({ op: "ensure_item_state", id: idOrName, qty: want })
       : step({ op: "ensure_item_state", name: idOrName, qty: want });
+  },
+  // `equip(idOrName)`: put an owned item on through the client's own toggle
+  // (gear or usable, decided in-movie). `status` is
+  // `"equipped" | "already" | "absent" | "refused" | "timeout"`; the op waits
+  // for the item record's own `bEquip`, so `equipped` means the client says
+  // it is on.
+  equip(idOrName: number | string): unknown {
+    return typeof idOrName === "number"
+      ? step({ op: "equip", id: idOrName })
+      : step({ op: "equip", name: idOrName });
   },
   // `shopState(shopId, idOrName)`: typed stock query. `loaded` and `stock`
   // are `"unknown" | "absent" | "present"`; `paged`/`pages` report a stock

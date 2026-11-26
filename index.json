@@ -109,7 +109,7 @@
     "name": "Sea Voice",
     "desc": "Complete the Sea Voice chapter of the Age of Ruin saga.",
     "autoload": null,
-    "sha256": "1b56f2d9c0809e48fb6f5d7a89269ed539aa078d8b1045c006c005e22872042f"
+    "sha256": "e1812ba2c832176440e4bab7c54dc0ba4bfb080302235da70cb3fda92dfcca16"
   },
   {
     "path": "bots/story/age-of-ruin/10-balemorale.ts",
@@ -165,7 +165,7 @@
     "name": "Cold Thunder",
     "desc": "Complete Cold Thunder and Tell-Tale Heart, the tail of the Age of Ruin saga.",
     "autoload": null,
-    "sha256": "baaeb5e8f969d0a1bf693714efce5dadd0902ec1af575742ae4da24f27e66210"
+    "sha256": "31639fcd9d9b68f57c4e1044d601bff5ad2d83da6be1fa187304be47dac920ce"
   },
   {
     "path": "bots/story/dragon-of-yokai/01-yokai-pirate.ts",
@@ -429,7 +429,7 @@
     "name": null,
     "desc": null,
     "autoload": null,
-    "sha256": "3843077354bda0105862ec12099929c5ac200a6bb0644c089d1ee1e464165329"
+    "sha256": "05317c7d1194ec0d608054c805205cf6489e46bb93217ffb9ebd641e80a09362"
   },
   {
     "path": "lib/monsters.ts",
