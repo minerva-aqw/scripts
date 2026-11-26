@@ -197,9 +197,12 @@ if (!bot.quest(LAST).done()) {
     ],
   });
 
-  // 4509 Celestial Realm at War
+  // 4509 Celestial Realm at War — the imps carry the pieces; naming the
+  // monster keeps the farm out of the cells it will not drop in.
   bot.questPlan(4509, {
-    "31054": [{ farm: { item: 31054, monster: "*", map: WAR, source: "temp" } }],
+    "31054": [
+      { farm: { item: 31054, monster: "Infernal Imp", map: WAR, source: "temp" } },
+    ],
   });
 
   // 4508 Defeat the Diabolical Warlord!

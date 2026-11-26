@@ -41,9 +41,20 @@ if (!bot.quest(LAST).done()) {
     "85860": [{ gather: { id: 13180, map: MAP } }],
   });
 
-  // 9724 Eroding Era — Skua kills the whole richest cell for this one.
+  // 9724 Eroding Era — the shard comes from the Chaos Crystals in r13; Skua
+  // kills that cell outright. The paladins that share the map do not drop it.
   bot.questPlan(9724, {
-    "85861": [{ farm: { item: 85861, monster: "*", map: MAP, source: "temp" } }],
+    "85861": [
+      {
+        farm: {
+          item: 85861,
+          monster: "Chaos Crystal",
+          cell: "r13",
+          map: MAP,
+          source: "temp",
+        },
+      },
+    ],
   });
 
   // 9725 Old Wolf
