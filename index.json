@@ -72,6 +72,30 @@
     "sha256": "e26252e376c43e260ee254e28a3bab1cb9433161eee0b307573fe9d0b3e4c273"
   },
   {
+    "path": "bots/story/lynaria/01-bocklin-grove.ts",
+    "kind": "bots",
+    "name": "Bocklin Grove",
+    "desc": "Complete the Bocklin Grove chapter of the Lynaria saga.",
+    "autoload": null,
+    "sha256": "848955b1c3452c684aa4323a10c5cf947585ade698cfa0b65dc312f523768e00"
+  },
+  {
+    "path": "bots/story/lynaria/02-bocklin-castle.ts",
+    "kind": "bots",
+    "name": "Bocklin Castle",
+    "desc": "Complete the Bocklin Castle chapter of the Lynaria saga.",
+    "autoload": null,
+    "sha256": "c57df93257b522a99fbd225d162ec2862af4d80535412a8201e8c5055f0abce3"
+  },
+  {
+    "path": "bots/story/lynaria/03-bocklin-sanctum.ts",
+    "kind": "bots",
+    "name": "Bocklin Sanctum",
+    "desc": "Complete the Bocklin Sanctum chapter of the Lynaria saga.",
+    "autoload": null,
+    "sha256": "33952fde9a977ea69c4b451b398f36448b7ab7bc27b6a55581efdf07a492adb5"
+  },
+  {
     "path": "bots/story/shadowfalls-rise.ts",
     "kind": "bots",
     "name": "Shadowfall's Rise",
