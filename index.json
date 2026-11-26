@@ -96,6 +96,38 @@
     "sha256": "5869c91ec4d8e30b26b7ea901da87d031a26ebb8a2b77c526f3cecaf603c23bf"
   },
   {
+    "path": "classes/chaos-slayer/berserker.ts",
+    "kind": "classes",
+    "name": "Chaos Slayer Berserker",
+    "desc": "Adaptive Chaos Slayer rotation: Surge under 65%, Chaorruption for lone targets, Enigma on cooldown, Pandemonium unless Courageous is up.",
+    "autoload": "Chaos Slayer Berserker",
+    "sha256": "e44f639190c17035005c036f1ef8fcd2b81aba109a4098e2d761cb507648d9a5"
+  },
+  {
+    "path": "classes/chaos-slayer/cleric.ts",
+    "kind": "classes",
+    "name": "Chaos Slayer Cleric",
+    "desc": "Adaptive Chaos Slayer rotation: Surge under 65%, Chaorruption for lone targets, Enigma on cooldown, Pandemonium unless Courageous is up.",
+    "autoload": "Chaos Slayer Cleric",
+    "sha256": "41d8068cf9b1f2253ec7b8a33dc49a9e576c5438439308ba882186410e18c027"
+  },
+  {
+    "path": "classes/chaos-slayer/mystic.ts",
+    "kind": "classes",
+    "name": "Chaos Slayer Mystic",
+    "desc": "Adaptive Chaos Slayer rotation: Surge under 65%, Chaorruption for lone targets, Enigma on cooldown, Pandemonium unless Courageous is up.",
+    "autoload": "Chaos Slayer Mystic",
+    "sha256": "a7eb4399595a8c10e8754fc6e23b535642166bb9bd229ad8c10f19b1e34a2e2c"
+  },
+  {
+    "path": "classes/chaos-slayer/thief.ts",
+    "kind": "classes",
+    "name": "Chaos Slayer Thief",
+    "desc": "Adaptive Chaos Slayer rotation: Surge under 65%, Chaorruption for lone targets, Enigma on cooldown, Pandemonium unless Courageous is up.",
+    "autoload": "Chaos Slayer Thief",
+    "sha256": "0a511e0762757df6a41f8f92d3e54c7a7c8ba5968afe9b25e8267124498bc43e"
+  },
+  {
     "path": "classes/healer/healer.ts",
     "kind": "classes",
     "name": "Healer starter",
