@@ -8,6 +8,14 @@
     "sha256": "e9ad0460c55ca80a4c7468755caaa14fad53a53d5df730fa85ad33c6d79c7e79"
   },
   {
+    "path": "bots/rep/loremaster.ts",
+    "kind": "bots",
+    "name": "Loremaster reputation",
+    "desc": "Farm Loremaster reputation to rank 10, using the member route when available.",
+    "autoload": null,
+    "sha256": "faf31f9837e958cb1596fa22395776203f42270b909edac9a2ae764f5a6584f2"
+  },
+  {
     "path": "bots/rep/lycan.ts",
     "kind": "bots",
     "name": "Lycan reputation",
