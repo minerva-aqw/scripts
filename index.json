@@ -16,6 +16,14 @@
     "sha256": "dae37af371ecf829dc500f5a7021b79255e22453a2a25115641e7f7106f7eac4"
   },
   {
+    "path": "bots/rep/mythsong.ts",
+    "kind": "bots",
+    "name": "Mythsong reputation",
+    "desc": "Farm the repeatable Sugar, Sugar quest until Mythsong reputation reaches rank 10.",
+    "autoload": null,
+    "sha256": "9ce3da06633a91c955bbd5d32de490327b5ebfd532938b78ebac8f99f33de5e0"
+  },
+  {
     "path": "bots/story/throne-of-darkness/castle-of-bones.ts",
     "kind": "bots",
     "name": "Castle of Bones",
