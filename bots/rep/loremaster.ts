@@ -26,16 +26,6 @@ function rankNow(): number {
   return bot.rep("Loremaster").rank;
 }
 
-// Dwarf War puts the war boss and the drow spawns on the same screen. Join
-// straight there and let the live room report the actual cells.
-function wardwarfCell(name: string): string {
-  const spot = bot.locate(name) as { found: boolean; cell?: string; cells?: string[] };
-  if (!spot.found || !spot.cell) {
-    throw new Error(name + " not found in " + WARDWARF);
-  }
-  return spot.cell;
-}
-
 function studyRogue(daggerCell: string, jonsenCell: string): void {
   const quest = bot.quest(STUDYING);
   if (!quest.active()) quest.accept();
@@ -92,8 +82,8 @@ let daggerCell = "";
 let jonsenCell = "";
 if (rank < TARGET) {
   bot.travel(WARDWARF, "r4", "Left");
-  daggerCell = wardwarfCell("Drow Assassin");
-  jonsenCell = wardwarfCell("D'wain Jonsen");
+  daggerCell = findMonsterCell("Drow Assassin", WARDWARF);
+  jonsenCell = findMonsterCell("D'wain Jonsen", WARDWARF);
 }
 
 if (member) {
