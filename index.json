@@ -40,6 +40,14 @@
     "sha256": "669fb57a724cc3509d8bcec8f60fc3a8f2fee57b6b30920851cc5517ba4ae3a2"
   },
   {
+    "path": "bots/story/dragon-of-yokai/02-yokai-treasure.ts",
+    "kind": "bots",
+    "name": "Yokai Treasure",
+    "desc": "Complete the Yokai Treasure chapter of the Dragons of Yokai saga.",
+    "autoload": null,
+    "sha256": "82344e276f875272748089f7a05cf24f3c2133fb406c117bdd37f7aeddcbe86a"
+  },
+  {
     "path": "bots/story/throne-of-darkness/castle-of-bones.ts",
     "kind": "bots",
     "name": "Castle of Bones",
