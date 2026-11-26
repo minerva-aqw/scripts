@@ -77,7 +77,7 @@
     "name": "Tower of Doom",
     "desc": "Climb the ten floors of the Tower of Doom story, one boss per floor.",
     "autoload": null,
-    "sha256": "05949d651aceb9dd4b1a4de972354c7f07422a00eed2182f5f81212438db3d1b"
+    "sha256": "c8387a49f47823d1f1c48451734f8823ee7ae47b1179dfd908793cd0ba883cef"
   },
   {
     "path": "bots/test.ts",

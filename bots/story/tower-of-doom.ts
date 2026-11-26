@@ -1,10 +1,11 @@
 /// name: Tower of Doom
 /// desc: Climb the ten floors of the Tower of Doom story, one boss per floor.
 ///
-/// Each floor is its own map and its boss stands alone in r10, so no cell is
-/// pinned: a named farm finds the room. The quests are repeatable, so a floor
-/// reads as finished through chain slot 159 rather than through a completion
-/// flag — `quest(n).done()` is exactly `questValue(159) >= n`.
+/// The floors are a server-enforced chain: the server refuses an accept with
+/// "complete all previous floors" when its own count is behind, so the floors
+/// are always walked from the top and never skipped by slot value. The slot
+/// (159) is only raised when it lags, and never rolled back. Each boss stands
+/// alone in r10, so no cell is pinned.
 
 const SLOT = 159;
 
@@ -21,12 +22,16 @@ const FLOORS = [
   { value: 10, map: "towerofdoom10", quest: 3484, item: 23655, boss: "Slugbutter" },
 ];
 
-function reached(): number {
-  return bot.questValue(SLOT) as number;
+// The chain count is the slot; a floor only needs the ones below it counted.
+// Raise it when the server is behind, but never write it down: a finished
+// tower must keep reading as finished.
+function countFloorsThrough(value: number): void {
+  const now = bot.questValue(SLOT) as number;
+  if (now >= 0 && now < value) bot.setQuestValue(SLOT, value);
 }
 
 for (const stage of FLOORS) {
-  if (reached() >= stage.value) continue;
+  countFloorsThrough(stage.value - 1);
   bot.questPlan(stage.quest, {
     [String(stage.item)]: [{
       farm: {

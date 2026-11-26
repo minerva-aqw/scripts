@@ -116,6 +116,10 @@ when the bot reads it back.
   marker guard is what makes a finished chapter a no-op.
 - Run the chapter's quests in order with `questPlan`. Met requirements and
   completed once-only quests are skipped, so an interrupted run resumes.
+- A repeatable chain cannot be resumed from the slot alone. Its slot can read
+  ahead of the server's own count, and the server then refuses the next accept
+  with "complete all previous floors". Walk such a chain from the top and raise
+  the slot only when it lags; never lower it.
 
 ## Drops
 
