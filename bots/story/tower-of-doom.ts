@@ -1,13 +1,15 @@
 /// name: Tower of Doom
 /// desc: Climb the ten floors of the Tower of Doom story, one boss per floor.
 ///
-/// The floors are a server-enforced chain: the server refuses an accept with
-/// "complete all previous floors" when its own count is behind, so the floors
-/// are always walked from the top and never skipped by slot value. The slot
-/// (159) is only raised when it lags, and never rolled back. Each boss stands
-/// alone in r10, so no cell is pinned.
+/// Two gates guard this tower. The server refuses a floor's accept unless every
+/// floor below it is completed, so the floors are walked in order and never
+/// skipped. Each floor's room also refuses to be crossed while quest value slot
+/// 159 reads below `floor - 1`, and drops the avatar in its Prison cell instead.
+/// That value is read from the client, so it is opened after the join and
+/// before the first move.
 
 const SLOT = 159;
+const TOP = 10;
 
 const FLOORS = [
   { value: 1, map: "towerofdoom", quest: 3475, item: 23646, boss: "Dread Klunk" },
@@ -22,16 +24,18 @@ const FLOORS = [
   { value: 10, map: "towerofdoom10", quest: 3484, item: 23655, boss: "Slugbutter" },
 ];
 
-// The chain count is the slot; a floor only needs the ones below it counted.
-// Raise it when the server is behind, but never write it down: a finished
-// tower must keep reading as finished.
-function countFloorsThrough(value: number): void {
+function openRoom(need: number): void {
+  if ((bot.questValue(SLOT) as number) >= need) return;
+  bot.setQuestValue(SLOT, TOP);
   const now = bot.questValue(SLOT) as number;
-  if (now >= 0 && now < value) bot.setQuestValue(SLOT, value);
+  if (now < need) {
+    throw new Error("tower gate: slot " + SLOT + " reads " + now + ", floor needs " + need);
+  }
 }
 
 for (const stage of FLOORS) {
-  countFloorsThrough(stage.value - 1);
+  bot.travel(stage.map);
+  openRoom(stage.value - 1);
   bot.questPlan(stage.quest, {
     [String(stage.item)]: [{
       farm: {
