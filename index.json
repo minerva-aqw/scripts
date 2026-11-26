@@ -32,6 +32,14 @@
     "sha256": "92e6f08a759fefbbaa2c0905c0cc8f2190b30a66696a63db3dd060ab54b3eb5e"
   },
   {
+    "path": "bots/story/dragon-of-yokai/01-yokai-pirate.ts",
+    "kind": "bots",
+    "name": "Yokai Pirate",
+    "desc": "Complete the Yokai Pirate chapter of the Dragons of Yokai saga.",
+    "autoload": null,
+    "sha256": "307e4df1a3b12809a7570d2bea461d9bfba5451e140f27b381f2ffc0f1699dbc"
+  },
+  {
     "path": "bots/story/throne-of-darkness/castle-of-bones.ts",
     "kind": "bots",
     "name": "Castle of Bones",
