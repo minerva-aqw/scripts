@@ -103,6 +103,9 @@ when the bot reads it back.
 - Pass `{ choice: n }` for any quest with rewards — first reward is index 0.
   Without it the turn-in fails with `needs a reward choice`. Check `Rewards`
   in `refs/quest-data.json` for the id.
+- A raid-scale boss outlives the default 180s fight ceiling, and the run then
+  fails as `farm … timed out`. Declare `timeout` (seconds) on that handler —
+  never raise the ceiling for the whole run to accommodate one fight.
 - `bot.quest.register(ids, opts?)` is only for a tick-swept set with no plan
   around it. A plan owns its own quest; do not register the same id.
 - `bot.quest(id, handlers)`, `bot.hunt`, and `bot.gather` are legacy migration

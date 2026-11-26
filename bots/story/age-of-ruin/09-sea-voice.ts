@@ -39,6 +39,8 @@ if (!bot.quest(LAST).done()) {
           monster: "Voice in the Sea",
           map: SEA,
           source: "temp",
+          // 1.2M HP: one kill legitimately outlives the 180s default.
+          timeout: 1800,
           rules: [
             {
               when: { anim: "You will not resist" },

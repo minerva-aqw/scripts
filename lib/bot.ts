@@ -90,6 +90,10 @@ type MissionOpts = {
   map?: string;
   cell?: string;
   pad?: string;
+  // Per-fight ceiling in seconds (1-3600). Defaults to the engine's
+  // `kill_timeout` (180s); a raid-scale boss that cannot die that fast names
+  // its own, so one long fight is not read as a stuck mission.
+  timeout?: number;
   // Drop ids to settle after a fight. The result's `pickups` classifies
   // each as `floor`, `temp`, `inventory`, or `absent`; temp/direct grants
   // are reported without needing a floor claim.

@@ -48,6 +48,8 @@ if (!bot.quest(LAST).done()) {
           monster: "Cold Thunder Avatar",
           map: MAP,
           source: "temp",
+          // 1.3M HP: one kill legitimately outlives the 180s default.
+          timeout: 1800,
           rules: [
             {
               when: { anim: "The skies rumble" },
