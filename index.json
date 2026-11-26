@@ -40,6 +40,134 @@
     "sha256": "92e6f08a759fefbbaa2c0905c0cc8f2190b30a66696a63db3dd060ab54b3eb5e"
   },
   {
+    "path": "bots/story/age-of-ruin/01-termina-temple.ts",
+    "kind": "bots",
+    "name": "Termina Temple",
+    "desc": "Complete the Termina Temple chapter of the Age of Ruin saga.",
+    "autoload": null,
+    "sha256": "dc5751fa4b82120c9f6853199a10d280227d9a043af754db450ef34806c8bba7"
+  },
+  {
+    "path": "bots/story/age-of-ruin/02-ashray-village.ts",
+    "kind": "bots",
+    "name": "Ashray Village",
+    "desc": "Complete the Ashray Village chapter of the Age of Ruin saga.",
+    "autoload": null,
+    "sha256": "c9f3375bd80f4ec9b2f38ddc0319d5cbcd75d554efe9d9cef29da35ed7226e44"
+  },
+  {
+    "path": "bots/story/age-of-ruin/03-sunlight-zone.ts",
+    "kind": "bots",
+    "name": "Sunlight Zone",
+    "desc": "Complete the Sunlight Zone chapter of the Age of Ruin saga.",
+    "autoload": null,
+    "sha256": "97e4bc29bdf031ebb1af417447d76b20fa0dad61fe7cb28dc70c47e002111f17"
+  },
+  {
+    "path": "bots/story/age-of-ruin/04-twilight-zone.ts",
+    "kind": "bots",
+    "name": "Twilight Zone",
+    "desc": "Complete the Twilight Zone chapter of the Age of Ruin saga.",
+    "autoload": null,
+    "sha256": "a6d3a762fb38c382d3098d5c82a4fb52b3523bc2dcfbdb2c8f8cbd4e3b49e74b"
+  },
+  {
+    "path": "bots/story/age-of-ruin/05-yulgar-aria.ts",
+    "kind": "bots",
+    "name": "Yulgar Aria",
+    "desc": "Complete the Yulgar Aria chapter of the Age of Ruin saga.",
+    "autoload": null,
+    "sha256": "595aa04e3b35a4f6eba166c0fe539fa5052361db69cfaa121b46a0d519c9385e"
+  },
+  {
+    "path": "bots/story/age-of-ruin/06-midnight-zone.ts",
+    "kind": "bots",
+    "name": "Midnight Zone",
+    "desc": "Complete the Midnight Zone chapter of the Age of Ruin saga.",
+    "autoload": null,
+    "sha256": "5f3cfafe139f0fbaa7434d09e41a30db91d2b9f0bfe05f747410c7ab27394720"
+  },
+  {
+    "path": "bots/story/age-of-ruin/07-abyssal-zone.ts",
+    "kind": "bots",
+    "name": "Abyssal Zone",
+    "desc": "Complete the Abyssal Zone chapter of the Age of Ruin saga.",
+    "autoload": null,
+    "sha256": "1c6b299951300e978526642d28c16c69df8619a23bb450640e647c6e60ac6425"
+  },
+  {
+    "path": "bots/story/age-of-ruin/08-deep-water.ts",
+    "kind": "bots",
+    "name": "Deep Water",
+    "desc": "Complete the Deep Water chapter of the Age of Ruin saga.",
+    "autoload": null,
+    "sha256": "fba4e3df59f452b7b6ca222964ae125f8bf3ec195ff0575f495188f91d2a38bc"
+  },
+  {
+    "path": "bots/story/age-of-ruin/09-sea-voice.ts",
+    "kind": "bots",
+    "name": "Sea Voice",
+    "desc": "Complete the Sea Voice chapter of the Age of Ruin saga.",
+    "autoload": null,
+    "sha256": "1b56f2d9c0809e48fb6f5d7a89269ed539aa078d8b1045c006c005e22872042f"
+  },
+  {
+    "path": "bots/story/age-of-ruin/10-balemorale.ts",
+    "kind": "bots",
+    "name": "Balemorale",
+    "desc": "Complete the Balemorale chapter of the Age of Ruin saga.",
+    "autoload": null,
+    "sha256": "b606ee62eb7c033058f1c9661efb480dd67fbd47732c07942c7500243c695a05"
+  },
+  {
+    "path": "bots/story/age-of-ruin/11-castle-eblana.ts",
+    "kind": "bots",
+    "name": "Castle Eblana",
+    "desc": "Complete the Castle Eblana chapter of the Age of Ruin saga.",
+    "autoload": null,
+    "sha256": "2c1005794941238c518873c36949d2839fc8a42cc2139cb2ffc892bcf137b26b"
+  },
+  {
+    "path": "bots/story/age-of-ruin/12-loughshine.ts",
+    "kind": "bots",
+    "name": "Loughshine",
+    "desc": "Complete the Loughshine chapter of the Age of Ruin saga.",
+    "autoload": null,
+    "sha256": "707e3750272b8d0500c09efc179ce9cf87b88af1ee3fed20dea8b84cd3a8fabd"
+  },
+  {
+    "path": "bots/story/age-of-ruin/13-naoise-grave.ts",
+    "kind": "bots",
+    "name": "Naoise Grave",
+    "desc": "Complete the Naoise Grave chapter of the Age of Ruin saga.",
+    "autoload": null,
+    "sha256": "ce4759fff3f5490d007c43ee88b2e2a84ef766be6e862d72db269268eb77be89"
+  },
+  {
+    "path": "bots/story/age-of-ruin/14-lia-tara-hill.ts",
+    "kind": "bots",
+    "name": "Lia Tara Hill",
+    "desc": "Complete the Lia Tara Hill chapter of the Age of Ruin saga.",
+    "autoload": null,
+    "sha256": "b454c8e9435adc21a884021fdd986d605b99d159eedcc54656211cee2926ab71"
+  },
+  {
+    "path": "bots/story/age-of-ruin/15-castle-gaheris.ts",
+    "kind": "bots",
+    "name": "Castle Gaheris",
+    "desc": "Complete the Castle Gaheris chapter of the Age of Ruin saga.",
+    "autoload": null,
+    "sha256": "efab518983b52fd3df85f5ae7f517322ecd82631afa4826d69ec09b23a204056"
+  },
+  {
+    "path": "bots/story/age-of-ruin/16-cold-thunder.ts",
+    "kind": "bots",
+    "name": "Cold Thunder",
+    "desc": "Complete Cold Thunder and Tell-Tale Heart, the tail of the Age of Ruin saga.",
+    "autoload": null,
+    "sha256": "baaeb5e8f969d0a1bf693714efce5dadd0902ec1af575742ae4da24f27e66210"
+  },
+  {
     "path": "bots/story/dragon-of-yokai/01-yokai-pirate.ts",
     "kind": "bots",
     "name": "Yokai Pirate",
