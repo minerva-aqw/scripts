@@ -37,7 +37,7 @@
     "name": "Yokai Pirate",
     "desc": "Complete the Yokai Pirate chapter of the Dragons of Yokai saga.",
     "autoload": null,
-    "sha256": "7fc4d132f8d5331ea17fbbac93f93fb23e2717e9cd4ca200514162850aef0c0b"
+    "sha256": "fc656d7ece90a5260f17afe5d9114a5c8d918646798b852a804b9881acd4c1fe"
   },
   {
     "path": "bots/story/throne-of-darkness/castle-of-bones.ts",

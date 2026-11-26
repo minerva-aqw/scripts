@@ -58,11 +58,11 @@ if (!bot.quest(9387).done()) {
 
   // 9386 Highly Buoyant Metal Armor
   bot.questPlan(9386, {
-    "79858": [{ farm: { item: 79858, id: 1, monster: "Neverglades Knight", map: MAP, source: "temp" } }],
+    "79858": [{ farm: { item: 79858, id: 1, monster: "Neverglades Knight", map: MAP, cell: "Enter", source: "temp" } }],
   });
 
   // 9387 Salty Roots
   bot.questPlan(9387, {
-    "79859": [{ farm: { item: 79859, id: 11, monster: "Lord Brentan", map: MAP, source: "temp" } }],
+    "79859": [{ farm: { item: 79859, id: 11, monster: "Lord Brentan", map: MAP, cell: "r6", source: "temp" } }],
   });
 }
