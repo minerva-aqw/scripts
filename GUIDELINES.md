@@ -64,6 +64,9 @@ Resolve ids, names, cells, requirements, and shops from data, not from memory:
 
 - `refs/quest-data.json` for quest ids, requirements, rewards, and gates.
 - `auspex` for items, maps, shop stock, and live dumps when the cache misses.
+- Map-object ids are not in `quest-data.json`. The id a `gather` step needs is
+  the one the map's own script passes to `getMapItem`; read it from the map SWF
+  or the saga's Skua script. The requirement `ItemID` is a different number.
 
 Use the exact `ItemID` / `sName` spelling the data gives. A guessed name or id
 is a bug even when it happens to match. Confirm a name with `bot.itemState`
@@ -78,10 +81,11 @@ when the bot reads it back.
   requirement the bot must fill. The parser rejects anything that is not an
   item id, so a turn-in name will not work.
 - Omit `qty` inside a handler; the plan targets the requirement's own need.
-  Keep `qty` only for a step with no live requirement behind it. A `farm` still
-  names `item` and a source (`monster`, plus `id` when the spawn must be pinned):
-  the step parser validates the handler before the plan binds the requirement,
-  so it cannot fill those in.
+  Keep `qty` only for a step with no live requirement behind it. A `farm`
+  handler still names `item` and `monster`: the step parser validates the
+  handler before the plan binds the requirement, so it cannot fill those in.
+- `gather.id` is the map object id from the data above, not the requirement
+  `ItemID` the handler is keyed by.
 - Use `source: "temp"` when the item lands in the temp inventory (Skua's
   `tempItem`); the default counts the backpack.
 - Pass `{ choice: n }` for any quest with rewards — first reward is index 0.
@@ -91,6 +95,27 @@ when the bot reads it back.
   around it. A plan owns its own quest; do not register the same id.
 - `bot.quest(id, handlers)`, `bot.hunt`, and `bot.gather` are legacy migration
   shapes. No new bot uses them.
+
+## Missions and farms
+
+- Farm a type by name when several spawns exist. `id` pins one MonMapID: when
+  that instance dies the farm waits for it to respawn, even if a sibling of the
+  same monster is alive. Reserve `id` for a unique boss or a single fixed spawn,
+  and still give the parser a non-empty `monster` name.
+- A farm with no `cell` picks its own source cell, including for an `id` farm.
+  Pin `cell` only for a fixed spawn in a fixed room.
+
+## Story chapters
+
+- One file per chapter under `bots/story/<saga>/`, numbered in the saga's chain
+  order. Take the order from the reference saga script or the quest `Slot` /
+  `Value` data, not from memory or the filename.
+- Guard the file on the chapter's final quest: `if (!bot.quest(LAST).done())`.
+  `questPlan` skips an already completed quest only when it is once-only, so a
+  repeatable quest in the middle would run again if the file is re-entered. The
+  marker guard is what makes a finished chapter a no-op.
+- Run the chapter's quests in order with `questPlan`. Met requirements and
+  completed once-only quests are skipped, so an interrupted run resumes.
 
 ## Drops
 
