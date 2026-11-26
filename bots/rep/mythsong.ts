@@ -13,14 +13,6 @@ const TARGET = 10;
 
 let rank = bot.rep("Mythsong").rank;
 
-// Stinger spawns in more than one cell; locate the live room and stay there
-// for the farm. The mission places itself in the map and cell it is given.
-let cell = "";
-if (rank < TARGET) {
-  bot.travel(MAP);
-  cell = findMonsterCell("Stinger", MAP);
-}
-
 while (rank < TARGET) {
   bot.questPlan(
     QUEST,
@@ -30,7 +22,6 @@ while (rank < TARGET) {
           item: HONEY,
           monster: "Stinger",
           map: MAP,
-          cell,
           source: "temp",
         },
       }],

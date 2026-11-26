@@ -293,9 +293,10 @@ const bot = {
     return step({ op: "mission", spec: Object.assign({ kind: "attack" }, opts) });
   },
   // `farm({ item | itemName, qty?, monster, map?, cell?, blockers?, source? })`:
-  // repeat the explicit kill source until the held-item floor is met. `source`
-  // is `"inventory"` (default) or `"temp"`, for drops that never enter the
-  // backpack.
+  // repeat the explicit kill source until the held-item floor is met. With no
+  // cell, the farm travels to `map` and picks the richest live cell for
+  // `monster` (`"*"` picks the richest cell overall). `source` is `"inventory"`
+  // (default) or `"temp"`, for drops that never enter the backpack.
   farm(opts: FarmOpts): unknown {
     return step({ op: "mission", spec: Object.assign({ kind: "farm" }, opts) });
   },

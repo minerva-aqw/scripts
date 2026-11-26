@@ -16,16 +16,16 @@ const SCROLL = 54578;
 
 const QUITE = 3032;
 const DRUID_QUESTS = [
-  [3029, 18525, "Void Bear", "r2"],
-  [3030, 18526, "Void Larva", "r6"],
-  [3031, 18527, "Void Ghast", "r6"],
+  [3029, 18525, "Void Bear"],
+  [3030, 18526, "Void Larva"],
+  [3031, 18527, "Void Ghast"],
 ];
 
 function rankNow(): number {
   return bot.rep("Loremaster").rank;
 }
 
-function studyRogue(daggerCell: string, jonsenCell: string): void {
+function studyRogue(): void {
   bot.questPlan(
     STUDYING,
     {
@@ -34,7 +34,6 @@ function studyRogue(daggerCell: string, jonsenCell: string): void {
           item: DAGGER,
           monster: "Drow Assassin",
           map: WARDWARF,
-          cell: daggerCell,
           source: "temp",
         },
       }],
@@ -43,7 +42,6 @@ function studyRogue(daggerCell: string, jonsenCell: string): void {
           item: SCROLL,
           monster: "D'wain Jonsen",
           map: WARDWARF,
-          cell: jonsenCell,
           source: "temp",
         },
       }],
@@ -52,10 +50,10 @@ function studyRogue(daggerCell: string, jonsenCell: string): void {
   );
 }
 
-function fillOne(id: number, item: number, monster: string, cell: string): void {
+function fillOne(id: number, item: number, monster: string): void {
   const handlers: Record<string, unknown> = {};
   handlers[String(item)] = [{
-    farm: { item, monster, map: DRUIDS, cell, source: "temp" },
+    farm: { item, monster, map: DRUIDS, source: "temp" },
   }];
   bot.questPlan(id, handlers, { choice: 0 });
 }
@@ -63,33 +61,24 @@ function fillOne(id: number, item: number, monster: string, cell: string): void 
 let rank = rankNow();
 const member = bot.me().upgraded === true;
 
-let daggerCell = "";
-let jonsenCell = "";
-if (rank < TARGET) {
-  bot.travel(WARDWARF, "r4", "Left");
-  daggerCell = findMonsterCell("Drow Assassin", WARDWARF);
-  jonsenCell = findMonsterCell("D'wain Jonsen", WARDWARF);
-}
-
 if (member) {
   while (rank < 3) {
-    studyRogue(daggerCell, jonsenCell);
+    studyRogue();
     rank = rankNow();
   }
 
-  bot.travel(DRUIDS);
-  for (const [id, item, monster, cell] of DRUID_QUESTS) {
-    if (!bot.quest(id).done()) fillOne(id, item, monster, cell);
+  for (const [id, item, monster] of DRUID_QUESTS) {
+    if (!bot.quest(id).done()) fillOne(id, item, monster);
   }
-  if (!bot.quest(QUITE).done()) fillOne(QUITE, 18528, "Young Void Giant", "r5");
+  if (!bot.quest(QUITE).done()) fillOne(QUITE, 18528, "Young Void Giant");
 
   while (rank < TARGET) {
-    fillOne(QUITE, 18528, "Young Void Giant", "r5");
+    fillOne(QUITE, 18528, "Young Void Giant");
     rank = rankNow();
   }
 } else {
   while (rank < TARGET) {
-    studyRogue(daggerCell, jonsenCell);
+    studyRogue();
     rank = rankNow();
   }
 }
