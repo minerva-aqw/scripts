@@ -5,7 +5,7 @@
     "name": "King's Echo",
     "desc": "Unlock the King's Echo class.",
     "autoload": null,
-    "sha256": "be87b781dd5f6e57a3447cb292cde3a14b6f6531bc2ae8e68d5a99d2f5e4b488"
+    "sha256": "e1d8b89bbe94463340afcf739ef1811aad58cb59d5827c38b19cc072662b397a"
   },
   {
     "path": "bots/rep/arcangrove.ts",
