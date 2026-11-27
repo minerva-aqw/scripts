@@ -86,7 +86,22 @@ function owned(id: number, name: string): number {
 
 /// One map object or floor drop, item-driven. `qty` comes from the caller
 /// because nothing here is a live quest requirement.
-function collect(item: number, monster: string, map: string, qty: number, timeout?: number): void {
+type CollectOpts = {
+  // Per-fight ceiling, for a boss that outlasts the default.
+  timeout?: number;
+  // Zero for a drop under a few percent: a dry streak is not a bad item id.
+  noProgressTimeout?: number;
+  // Says the drop landed, with `{held}`/`{qty}` expanded by the engine.
+  notify?: string;
+};
+
+function collect(
+  item: number,
+  monster: string,
+  map: string,
+  qty: number,
+  opts?: CollectOpts
+): void {
   if (held(item) >= qty) return;
   const spec: {
     item: number;
@@ -94,8 +109,14 @@ function collect(item: number, monster: string, map: string, qty: number, timeou
     map: string;
     qty: number;
     timeout?: number;
+    noProgressTimeout?: number;
+    notify?: string;
   } = { item, monster, map, qty };
-  if (timeout) spec.timeout = timeout;
+  if (opts?.timeout) spec.timeout = opts.timeout;
+  if (opts?.noProgressTimeout !== undefined) {
+    spec.noProgressTimeout = opts.noProgressTimeout;
+  }
+  if (opts?.notify) spec.notify = opts.notify;
   bot.farm(spec);
 }
 
@@ -167,24 +188,36 @@ function armorChain(): void {
   repeat(ORNAMENT, 120, Q_ORNAMENT, () => {
     collect(TWISTED_ARMS, "Warped Revenant", BCASTLE, 50);
     collect(WREATH_OF_ASTER, "Faceless Ritualist", BCASTLE, 25);
-    collect(GOLDEN_ANJOU, "Headless Knight", BCASTLE, 1, 1200);
+    collect(GOLDEN_ANJOU, "Headless Knight", BCASTLE, 1, { timeout: 1200 });
   });
 
   // 10240 Die Heimkehr — 1 Enthralling Gem Shard.
   repeat(SHARD, 160, Q_SHARD, () => {
     collect(UNDEAD_FLAG, "Undead Garde", GROVE, 9);
     collect(WRAITH_SCREAM, "Garde Wraith", GROVE, 6);
-    collect(NECROMANCER_COIN, "Elder Necromancer", GROVE, 1, 1200);
+    collect(NECROMANCER_COIN, "Elder Necromancer", GROVE, 1, { timeout: 1200 });
   });
 
   // 10266 Rootless Lilies — 1 Thronekeeper's Rune.
   repeat(RUNE, 100, Q_RUNE, () => {
-    collect(BLACK_FLEUR, "Thronekeeper", SANCTUM, 1, 1200);
+    collect(BLACK_FLEUR, "Thronekeeper", SANCTUM, 1, { timeout: 1200 });
   });
 
-  collect(FRAGMENT, "King Alteon", "alteonfight", 20, 1200);
-  collect(SCALE, "Victorious", "darkplane", 1, 1200);
-  collect(BLOOD, "Dethrix", "ebondungeon", 1, 1200);
+  // About 5% a kill and 20 of them: a dry streak is normal, and each one
+  // landing is worth a notification.
+  collect(FRAGMENT, "King Alteon", "alteonfight", 20, {
+    timeout: 1200,
+    noProgressTimeout: 0,
+    notify: "King's Echo: armor fragment {held}/{qty}",
+  });
+  collect(SCALE, "Victorious", "darkplane", 1, {
+    timeout: 1200,
+    noProgressTimeout: 0,
+  });
+  collect(BLOOD, "Dethrix", "ebondungeon", 1, {
+    timeout: 1200,
+    noProgressTimeout: 0,
+  });
 
   // 20 needs the armor, 8 each need the two nested suits, 8 for Lynaria's.
   stock(VOUCHER_SHOP, ALCHEMY, VOUCHER_100K, 36);
