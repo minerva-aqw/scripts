@@ -71,12 +71,15 @@ function held(idOrName: number | string): number {
   return item.qty;
 }
 
-/// Backpack count, with a banked copy pulled first. A banked crown is still
-/// owned; farming it again because the bag reads zero would burn a whole
-/// chapter twice.
+/// Backpack count, with a floor copy claimed first and a banked copy pulled
+/// after. A reward can sit unclaimed on the floor, and a banked crown is
+/// still owned; either case must not make the script farm the chapter twice.
 function owned(id: number, name: string): number {
   const bag = held(id);
   if (bag > 0) return bag;
+  bot.pickupNow(id);
+  const claimed = held(id);
+  if (claimed > 0) return claimed;
   bot.ensureItemState(name, 1);
   return held(id);
 }
