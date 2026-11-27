@@ -282,7 +282,17 @@ function reforged(): void {
     10441,
     {
       "94980": [{ farm: { item: 94980, monster: "*", cell: "r5", map: "thelimacity" } }],
-      "96124": [{ farm: { item: 96124, monster: "*", cell: "r9", map: "liatarahill" } }],
+      "96124": [
+        {
+          farm: {
+            item: 96124,
+            monster: "*",
+            cell: "r9",
+            map: "liatarahill",
+            notify: "King's Echo: Skye Gold {held}/{qty}",
+          },
+        },
+      ],
       // 96123 Atlas Gold — the Atlas Kingdom packs in r2. King Zedek in Atlas
       // Falls drops it too, but his true damage kills a support-heavy party, so
       // the packs are the source.
