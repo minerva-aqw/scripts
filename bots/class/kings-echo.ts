@@ -283,7 +283,23 @@ function reforged(): void {
     {
       "94980": [{ farm: { item: 94980, monster: "*", cell: "r5", map: "thelimacity" } }],
       "96124": [{ farm: { item: 96124, monster: "*", cell: "r9", map: "liatarahill" } }],
-      "96123": [{ farm: { item: 96123, monster: "*", cell: "r2", map: "atlaskingdom" } }],
+      // 96123 Atlas Gold — the Atlas Kingdom packs in r2. King Zedek drops the
+      // same item, but he lives in Atlas Falls, not Atlas Kingdom: 2,000,000
+      // HP, unstunnable, and he heals 5% a Roar. A party that wants him swaps
+      // this handler for
+      //   { farm: { item: 96123, monster: "King Zedek", map: "atlasfalls", timeout: 1800 } }
+      // and leaves the rest of the plan alone.
+      "96123": [
+        {
+          farm: {
+            item: 96123,
+            monster: "*",
+            cell: "r2",
+            map: "atlaskingdom",
+            notify: "King's Echo: Atlas Gold {held}/{qty}",
+          },
+        },
+      ],
       "96125": [{ farm: { item: 96125, monster: "*", cell: "r9", map: "camlan" } }],
     },
     { choice: 0 }
