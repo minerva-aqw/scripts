@@ -210,13 +210,17 @@ function armorChain(): void {
     noProgressTimeout: 0,
     notify: "King's Echo: armor fragment {held}/{qty}",
   });
+  // Both are one-of merge materials the community calls the long part of the
+  // chain: no published rate, so say it out loud when one lands.
   collect(SCALE, "Victorious", "darkplane", 1, {
     timeout: 1200,
     noProgressTimeout: 0,
+    notify: "King's Echo: Victorious' Golden Scale",
   });
   collect(BLOOD, "Dethrix", "ebondungeon", 1, {
     timeout: 1200,
     noProgressTimeout: 0,
+    notify: "King's Echo: Monster Blood",
   });
 
   // 20 needs the armor, 8 each need the two nested suits, 8 for Lynaria's.
