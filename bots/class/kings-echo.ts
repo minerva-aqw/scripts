@@ -104,6 +104,11 @@ function repeat(item: number, target: number, quest: number, cycle: () => void):
   const ceiling = target * 12;
   let rounds = 0;
   while (held(item) < target) {
+    // The reward is granted by the turn-in, but a pending reward that landed
+    // on the floor would never enter the bag on its own; claim it before the
+    // next cycle so `held` can see it and the loop can end.
+    bot.pickupNow(item);
+    if (held(item) >= target) break;
     cycle();
     rounds += 1;
     if (rounds > ceiling) {
