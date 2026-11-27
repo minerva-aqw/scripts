@@ -283,21 +283,16 @@ function reforged(): void {
     {
       "94980": [{ farm: { item: 94980, monster: "*", cell: "r5", map: "thelimacity" } }],
       "96124": [{ farm: { item: 96124, monster: "*", cell: "r9", map: "liatarahill" } }],
-      // 96123 Atlas Gold — King Zedek in Atlas Falls: one 2,000,000 HP boss
-      // per pull instead of the Atlas Kingdom packs. The fight ceiling is the
-      // boss's, and the farm's progress clock inherits it.
-      //
-      // The packs are the safer source at a lower rate per pull; swap back by
-      // replacing this handler with
-      //   { farm: { item: 96123, monster: "*", cell: "r2", map: "atlaskingdom",
-      //             notify: "King's Echo: Atlas Gold {held}/{qty}" } }
+      // 96123 Atlas Gold — the Atlas Kingdom packs in r2. King Zedek in Atlas
+      // Falls drops it too, but his true damage kills a support-heavy party, so
+      // the packs are the source.
       "96123": [
         {
           farm: {
             item: 96123,
-            monster: "King Zedek",
-            map: "atlasfalls",
-            timeout: 1800,
+            monster: "*",
+            cell: "r2",
+            map: "atlaskingdom",
             notify: "King's Echo: Atlas Gold {held}/{qty}",
           },
         },
