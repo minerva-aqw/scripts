@@ -112,6 +112,10 @@ type FarmOpts = MissionOpts & {
   // Where the floor is counted: the permanent backpack (default) or the
   // separate temp inventory (Skua's `tempItem`).
   source?: "inventory" | "temp";
+  // Seconds (0-86400) the held count may stay flat before the farm fails.
+  // Defaults to the engine's own window. Zero never gives up, for a sub-1%
+  // drop that can take hours.
+  patience?: number;
 };
 
 // Registered quests (`bot.quest.register`): Skua's `RegisterQuests` idea, in

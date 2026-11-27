@@ -106,6 +106,9 @@ when the bot reads it back.
 - A raid-scale boss outlives the default 180s fight ceiling, and the run then
   fails as `farm … timed out`. Declare `timeout` (seconds) on that handler —
   never raise the ceiling for the whole run to accommodate one fight.
+- A sub-1% drop can stay dry past the engine's progress window, and the run
+  then fails as `farm … made no progress`. Declare `patience: 0` on that
+  handler so a dry spell never ends the run; a positive value bounds it.
 - `bot.quest.register(ids, opts?)` is only for a tick-swept set with no plan
   around it. A plan owns its own quest; do not register the same id.
 - `bot.quest(id, handlers)`, `bot.hunt`, and `bot.gather` are legacy migration
