@@ -116,6 +116,9 @@ type FarmOpts = MissionOpts & {
   // Defaults to the engine's own window. Zero never gives up, for a sub-1%
   // drop that can take hours.
   patience?: number;
+  // Notification sent whenever the held count rises; `{held}` and `{qty}`
+  // expand to the count after the drop and the farm target. For rare drops.
+  notify?: string;
 };
 
 // Registered quests (`bot.quest.register`): Skua's `RegisterQuests` idea, in

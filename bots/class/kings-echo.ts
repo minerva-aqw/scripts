@@ -192,18 +192,9 @@ const TRACE_FARM = {
   timeout: 1800,
   // Under 1%: a dry spell must not end the run.
   patience: 0,
+  // Thirteen drops, so report each one as it lands.
+  notify: "King's Echo: Trace of Chaos {held}/{qty}",
 };
-
-/// Fill Trace of Chaos one drop at a time, reporting each one. `patience: 0`
-/// makes that single call wait as long as the drop takes.
-function traceOfChaos(need: number): void {
-  while (held(TRACE) < need) {
-    const before = held(TRACE);
-    bot.farm(TRACE_FARM);
-    const now = held(TRACE);
-    if (now > before) bot.notify("King's Echo: Trace of Chaos " + now + "/" + need);
-  }
-}
 
 /// 10440 Purify The Crown. The Queen of Monsters map expects the QOM story
 /// value, which Skua writes client-side; do the same instead of stalling.
@@ -211,11 +202,6 @@ function crown(): void {
   bot.notify("King's Echo: King Alteon's Crown");
   const qom = bot.questValue(426) as number;
   if (qom < 33) bot.setQuestValue(426, 33);
-
-  const quest = bot.quest(10440);
-  if (!quest.active()) quest.accept();
-  const trace = (quest.info().turnin || []).find((req) => req.id === TRACE);
-  if (trace && (trace.have ?? 0) < trace.need) traceOfChaos(trace.need);
 
   bot.questPlan(
     10440,
