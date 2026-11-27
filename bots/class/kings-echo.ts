@@ -39,6 +39,16 @@ const SCALE = 93645;
 const BLOOD = 44209;
 const TRACE = 74259;
 
+// Quest items: the cycle farms each to the quest's own quantity, so a met
+// requirement stops the hunt instead of finishing a fixed kill count.
+const TWISTED_ARMS = 93607;
+const WREATH_OF_ASTER = 93608;
+const GOLDEN_ANJOU = 93609;
+const UNDEAD_FLAG = 93558;
+const WRAITH_SCREAM = 93559;
+const NECROMANCER_COIN = 93560;
+const BLACK_FLEUR = 93687;
+
 const CROWN = 95745;
 const REFORGED = 95744;
 const SWORD = 95760;
@@ -84,14 +94,6 @@ function collect(item: number, monster: string, map: string, qty: number, timeou
   } = { item, monster, map, qty };
   if (timeout) spec.timeout = timeout;
   bot.farm(spec);
-}
-
-/// Kill `monster` where it is most numerous, then count exactly.
-function hunt(map: string, monster: string, count: number): void {
-  bot.travel(map);
-  const at = bot.locate(monster) as { found: boolean; cell: string };
-  if (!at.found) fail("no " + monster + " in " + map);
-  bot.kill({ monster, count, map, cell: at.cell });
 }
 
 /// A repeatable quest that pays `item`. The sweep is forced on every parked
@@ -155,21 +157,21 @@ function armorChain(): void {
 
   // 10253 Anjou Fleur — 1 Bocklin Ornament, rolled up to 4.
   repeat(ORNAMENT, 120, Q_ORNAMENT, () => {
-    hunt(BCASTLE, "Warped Revenant", 50);
-    hunt(BCASTLE, "Faceless Ritualist", 25);
-    hunt(BCASTLE, "Headless Knight", 1);
+    collect(TWISTED_ARMS, "Warped Revenant", BCASTLE, 50);
+    collect(WREATH_OF_ASTER, "Faceless Ritualist", BCASTLE, 25);
+    collect(GOLDEN_ANJOU, "Headless Knight", BCASTLE, 1, 1200);
   });
 
   // 10240 Die Heimkehr — 1 Enthralling Gem Shard.
   repeat(SHARD, 160, Q_SHARD, () => {
-    hunt(GROVE, "Undead Garde", 9);
-    hunt(GROVE, "Garde Wraith", 6);
-    hunt(GROVE, "Elder Necromancer", 1);
+    collect(UNDEAD_FLAG, "Undead Garde", GROVE, 9);
+    collect(WRAITH_SCREAM, "Garde Wraith", GROVE, 6);
+    collect(NECROMANCER_COIN, "Elder Necromancer", GROVE, 1, 1200);
   });
 
   // 10266 Rootless Lilies — 1 Thronekeeper's Rune.
   repeat(RUNE, 100, Q_RUNE, () => {
-    hunt(SANCTUM, "Thronekeeper", 1);
+    collect(BLACK_FLEUR, "Thronekeeper", SANCTUM, 1, 1200);
   });
 
   collect(FRAGMENT, "King Alteon", "alteonfight", 20, 1200);
