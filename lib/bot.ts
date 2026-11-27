@@ -113,9 +113,9 @@ type FarmOpts = MissionOpts & {
   // separate temp inventory (Skua's `tempItem`).
   source?: "inventory" | "temp";
   // Seconds (0-86400) the held count may stay flat before the farm fails.
-  // Defaults to the engine's own window. Zero never gives up, for a sub-1%
-  // drop that can take hours.
-  patience?: number;
+  // Defaults to the engine's no-progress window; zero disables the check, so
+  // a sub-1% drop can take hours.
+  noProgressTimeout?: number;
   // Notification sent whenever the held count rises; `{held}` and `{qty}`
   // expand to the count after the drop and the farm target. For rare drops.
   notify?: string;

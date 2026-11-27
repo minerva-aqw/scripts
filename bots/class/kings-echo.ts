@@ -191,7 +191,7 @@ const TRACE_FARM = {
   // 923,300 HP: one fight can outlast the default fight ceiling.
   timeout: 1800,
   // Under 1%: a dry spell must not end the run.
-  patience: 0,
+  noProgressTimeout: 0,
   // Thirteen drops, so report each one as it lands.
   notify: "King's Echo: Trace of Chaos {held}/{qty}",
 };
