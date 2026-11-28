@@ -264,6 +264,14 @@
     "sha256": "8f9535c1b9bf4bf2461b1ec7ff0d9f87ba3a12fa4e9e20ef86f80259a637df6a"
   },
   {
+    "path": "bots/story/doomwood/06-mad-scientists-lab.ts",
+    "kind": "bots",
+    "name": "Mad Scientists Lab",
+    "desc": "Complete the Mad Scientist's Lab chapter, the last part of the Doomwood saga.",
+    "autoload": null,
+    "sha256": "c585e7ea63402c03f2a6b99dd2cff2c2b2155ec2843b88f69c06c5cb8fca0638"
+  },
+  {
     "path": "bots/story/dragon-of-yokai/01-yokai-pirate.ts",
     "kind": "bots",
     "name": "Yokai Pirate",
