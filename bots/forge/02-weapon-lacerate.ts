@@ -8,6 +8,10 @@
 /// Forest Axe and Black Knight Orb. The four are collected first, so the main
 /// plan only has to hunt the two drops.
 ///
+/// Every temp quest item here lands on the floor as a drop, and a temp-source
+/// farm is out of the mission sweep by default, so each one declares `pickup`
+/// to claim its own drop. The two map objects are grants instead and need none.
+///
 /// The quest shares slot 10 with the three Hit Job quests that precede it
 /// (values 1 to 3; its own is 4), so the accept needs that chain finished. It is
 /// walked here when the slot reads lower.
@@ -48,7 +52,16 @@ function hitJob(): void {
   if (bot.quest(UNLOCK).done()) return;
   bot.questPlan(90, {
     "435": [
-      { farm: { item: 435, monster: "Shark Bait", cell: "End", map: "pirates", source: "temp" } },
+      {
+        farm: {
+          item: 435,
+          pickup: 435,
+          monster: "Shark Bait",
+          cell: "End",
+          map: "pirates",
+          source: "temp",
+        },
+      },
     ],
   });
   bot.questPlan(91, {
@@ -56,6 +69,7 @@ function hitJob(): void {
       {
         farm: {
           item: 42651,
+          pickup: 42651,
           monster: "Kittarian",
           cell: "West1",
           map: "greenguardwest",
@@ -67,6 +81,7 @@ function hitJob(): void {
       {
         farm: {
           item: 42652,
+          pickup: 42652,
           monster: "River Fishman",
           cell: "West9",
           map: "greenguardwest",
@@ -78,6 +93,7 @@ function hitJob(): void {
       {
         farm: {
           item: 42653,
+          pickup: 42653,
           monster: "Slime",
           cell: "West10",
           map: "greenguardwest",
@@ -89,6 +105,7 @@ function hitJob(): void {
       {
         farm: {
           item: 42654,
+          pickup: 42654,
           monster: "Frogzard",
           cell: "West3",
           map: "greenguardwest",
@@ -100,6 +117,7 @@ function hitJob(): void {
       {
         farm: {
           item: 42655,
+          pickup: 42655,
           monster: "Big Bad Boar",
           cell: "West12",
           map: "greenguardwest",
@@ -113,6 +131,7 @@ function hitJob(): void {
       {
         farm: {
           item: 42649,
+          pickup: 42649,
           monster: "Breken the Vile",
           cell: "West5",
           map: "greenguardwest",
@@ -124,6 +143,7 @@ function hitJob(): void {
       {
         farm: {
           item: 42650,
+          pickup: 42650,
           monster: "Ogug Stoneaxe",
           cell: "West11",
           map: "greenguardwest",
@@ -139,7 +159,16 @@ function horcCleaver(): void {
     279,
     {
       "1204": [
-        { farm: { item: 1204, monster: "Horc Master", cell: "r3", map: "warhorc", source: "temp" } },
+        {
+          farm: {
+            item: 1204,
+            pickup: 1204,
+            monster: "Horc Master",
+            cell: "r3",
+            map: "warhorc",
+            source: "temp",
+          },
+        },
       ],
     },
     { choice: 0 }
@@ -150,9 +179,19 @@ function swordInStone(): void {
   bot.questPlan(
     316,
     {
-      // Map object 54 is the sword in the stone itself, not the 1567 item.
+      // Map object 54 grants 1567 itself, so it is a gather and not a farm.
       "1567": [{ gather: { id: 54, map: "greenguardeast", qty: 7 } }],
-      "8703": [{ farm: { item: 8703, monster: "Spider", map: "greenguardeast", source: "temp" } }],
+      "8703": [
+        {
+          farm: {
+            item: 8703,
+            pickup: 8703,
+            monster: "Spider",
+            map: "greenguardeast",
+            source: "temp",
+          },
+        },
+      ],
     },
     { choice: 0 }
   );
@@ -162,10 +201,50 @@ function blackKnightOrb(): void {
   bot.questPlan(
     318,
     {
-      "1577": [{ farm: { item: 1577, monster: "Gell Oh No", map: "well", source: "temp" } }],
-      "1578": [{ farm: { item: 1578, monster: "Greenguard Dragon", map: "greendragon", source: "temp" } }],
-      "1579": [{ farm: { item: 1579, monster: "Deathgazer", map: "deathgazer", source: "temp" } }],
-      "1580": [{ farm: { item: 1580, monster: "GreenGuard Basilisk", map: "trunk", source: "temp" } }],
+      "1577": [
+        {
+          farm: {
+            item: 1577,
+            pickup: 1577,
+            monster: "Gell Oh No",
+            map: "well",
+            source: "temp",
+          },
+        },
+      ],
+      "1578": [
+        {
+          farm: {
+            item: 1578,
+            pickup: 1578,
+            monster: "Greenguard Dragon",
+            map: "greendragon",
+            source: "temp",
+          },
+        },
+      ],
+      "1579": [
+        {
+          farm: {
+            item: 1579,
+            pickup: 1579,
+            monster: "Deathgazer",
+            map: "deathgazer",
+            source: "temp",
+          },
+        },
+      ],
+      "1580": [
+        {
+          farm: {
+            item: 1580,
+            pickup: 1580,
+            monster: "GreenGuard Basilisk",
+            map: "trunk",
+            source: "temp",
+          },
+        },
+      ],
     },
     { choice: 0 }
   );
@@ -175,9 +254,19 @@ function forestAxe(): void {
   bot.questPlan(
     301,
     {
-      // Map object 55 is the milk bottle.
+      // Map object 55 grants 1548 itself, so it is a gather and not a farm.
       "1548": [{ gather: { id: 55, map: "farm", qty: 4 } }],
-      "15199": [{ farm: { item: 15199, monster: "Mosquito", map: "farm", source: "temp" } }],
+      "15199": [
+        {
+          farm: {
+            item: 15199,
+            pickup: 15199,
+            monster: "Mosquito",
+            map: "farm",
+            source: "temp",
+          },
+        },
+      ],
     },
     { choice: 0 }
   );
@@ -192,6 +281,7 @@ function unlock(): void {
   if (!ready(1576)) blackKnightOrb();
   if (!ready(1581)) forestAxe();
 
+  // The two main drops are permanent, so the farm sweeps its own item.
   bot.questPlan(QUEST, {
     "369": [
       {
