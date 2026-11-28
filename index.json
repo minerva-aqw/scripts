@@ -256,6 +256,14 @@
     "sha256": "3c9ded435d317dce1c1fcf96ea73a88050379184793e3220048db55d49d075fb"
   },
   {
+    "path": "bots/story/doomwood/05-temple-of-light.ts",
+    "kind": "bots",
+    "name": "Temple of the Light",
+    "desc": "Complete the Temple of the Light chapter, the fifth part of the Doomwood saga.",
+    "autoload": null,
+    "sha256": "8f9535c1b9bf4bf2461b1ec7ff0d9f87ba3a12fa4e9e20ef86f80259a637df6a"
+  },
+  {
     "path": "bots/story/dragon-of-yokai/01-yokai-pirate.ts",
     "kind": "bots",
     "name": "Yokai Pirate",
