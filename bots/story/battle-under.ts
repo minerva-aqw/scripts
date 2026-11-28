@@ -131,8 +131,12 @@ runChainQuest(SLOT, 11, 937, {
   "6702": [{ farm: { item: 6702, monster: "Blue Crystalized Undead", map: C, source: "temp", pickup: 6702 } }],
 });
 
+// The jellyfish that pays the capture is the big one on the boss screen: the
+// two smaller Purple Crystalized Jellyfish carry the same substring in their
+// name but drop Crystal Cores, not the quest item. `r5` is the screen Skua
+// farms its Jellyfish Soul from, so the click lands on the right one.
 runChainQuest(SLOT, 12, 938, {
-  "6703": [{ farm: { item: 6703, monster: "Crystalized Jellyfish", map: C, source: "temp", pickup: 6703 } }],
+  "6703": [{ farm: { item: 6703, monster: "Crystalized Jellyfish", cell: "r5", map: C, source: "temp", pickup: 6703 } }],
 });
 
 runChainQuest(
@@ -142,7 +146,7 @@ runChainQuest(
   {
     "6704": [{ farm: { item: 6704, monster: "Bone Terror", map: A, source: "temp", pickup: 6704 } }],
     "6705": [{ farm: { item: 6705, monster: "Undead Champion", map: B, source: "temp", pickup: 6705 } }],
-    "6706": [{ farm: { item: 6706, monster: "Crystalized Jellyfish", map: C, source: "temp", pickup: 6706 } }],
+    "6706": [{ farm: { item: 6706, monster: "Crystalized Jellyfish", cell: "r5", map: C, source: "temp", pickup: 6706 } }],
   },
   { choice: 0 }
 );
