@@ -21,7 +21,7 @@
     "name": "Blacksmithing reputation",
     "desc": "Farm Blacksmithing reputation to rank 10 with Monster Machining.",
     "autoload": null,
-    "sha256": "02f0a023b9c817b29680b9784cad512120ac93b7dc03d0713676d5e121a081ff"
+    "sha256": "c4a651d4d93b76ada2eb3b9573332593fa8033a6c5217561251d82bd749d06ab"
   },
   {
     "path": "bots/rep/loremaster.ts",
