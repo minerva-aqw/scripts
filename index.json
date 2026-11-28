@@ -45,7 +45,7 @@
     "name": "Lacerate",
     "desc": "Unlock the Lacerate Forge weapon enhancement.",
     "autoload": null,
-    "sha256": "a17a8e97947c2900f745b9e25c1a69cc7e60c3ea023116567155b3aefd40a1be"
+    "sha256": "948c2dfcb974a4e3e2509eeac182c9c0e5787d947afa19ad57cb29fef393b2a3"
   },
   {
     "path": "bots/rep/arcangrove.ts",

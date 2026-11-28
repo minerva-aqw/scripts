@@ -12,6 +12,11 @@
 /// farm is out of the mission sweep by default, so each one declares `pickup`
 /// to claim its own drop. The two map objects are grants instead and need none.
 ///
+/// Three of the four reward items land on the floor too, and a turn-in leaves
+/// them there: the cleaver, the sword and the axe are claimed right after the
+/// quest that pays them, before the next plan travels away and takes the floor
+/// with it. The Black Knight Orb is granted straight to the backpack.
+///
 /// The quest shares slot 10 with the three Hit Job quests that precede it
 /// (values 1 to 3; its own is 4), so the accept needs that chain finished. It is
 /// walked here when the slot reads lower.
@@ -46,6 +51,18 @@ function guard(): void {
 /// the bag only.
 function ready(item: number): boolean {
   return (bot.ensureItemState(item, 1) as { ok: boolean }).ok;
+}
+
+/// A reward that did not reach the bag is claimed off the floor. `pickupNow`
+/// answers `absent` without waiting when the drop has not landed yet, so the
+/// bag read at the head of each attempt is what spaces the retry.
+function settle(item: number, quest: number): void {
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    if (ready(item)) return;
+    const claim = bot.pickupNow(item) as { ok: boolean };
+    if (claim.ok) return;
+  }
+  stop("lacerate: quest " + quest + " pays item " + item + " and it is neither in the bag nor on the floor");
 }
 
 function hitJob(): void {
@@ -173,6 +190,7 @@ function horcCleaver(): void {
     },
     { choice: 0 }
   );
+  settle(1196, 279);
 }
 
 function swordInStone(): void {
@@ -195,6 +213,7 @@ function swordInStone(): void {
     },
     { choice: 0 }
   );
+  settle(1532, 316);
 }
 
 function blackKnightOrb(): void {
@@ -248,6 +267,7 @@ function blackKnightOrb(): void {
     },
     { choice: 0 }
   );
+  settle(1576, 318);
 }
 
 function forestAxe(): void {
@@ -270,6 +290,7 @@ function forestAxe(): void {
     },
     { choice: 0 }
   );
+  settle(1581, 301);
 }
 
 function unlock(): void {
