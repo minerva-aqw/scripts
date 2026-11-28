@@ -224,6 +224,14 @@
     "sha256": "280d03c0e29360e76f076353c8d055743102851443eae020c0a412a32178d18d"
   },
   {
+    "path": "bots/story/doomwood/01-doomwood-forest.ts",
+    "kind": "bots",
+    "name": "Doomwood Forest",
+    "desc": "Complete the Doomwood Forest chapter, the first part of the Doomwood saga.",
+    "autoload": null,
+    "sha256": "62bb62ce371aa558fc6a00ee4db98b8a9fcb0d4076f585cc881fb9959ee67502"
+  },
+  {
     "path": "bots/story/dragon-of-yokai/01-yokai-pirate.ts",
     "kind": "bots",
     "name": "Yokai Pirate",
