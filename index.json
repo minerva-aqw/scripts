@@ -240,6 +240,14 @@
     "sha256": "546db072c9715fa64e9174158acde76d28a34f9c3ecebe12ba6aedde6556683f"
   },
   {
+    "path": "bots/story/doomwood/03-necro-tower.ts",
+    "kind": "bots",
+    "name": "Necro Tower",
+    "desc": "Complete the Necro Tower chapter, the third part of the Doomwood saga.",
+    "autoload": null,
+    "sha256": "9c5788e22d9fc449259414076f47b890059b3bf7895686d9c9848e8b0138d41f"
+  },
+  {
     "path": "bots/story/dragon-of-yokai/01-yokai-pirate.ts",
     "kind": "bots",
     "name": "Yokai Pirate",
