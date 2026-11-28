@@ -248,6 +248,14 @@
     "sha256": "9c5788e22d9fc449259414076f47b890059b3bf7895686d9c9848e8b0138d41f"
   },
   {
+    "path": "bots/story/doomwood/04-necro-u.ts",
+    "kind": "bots",
+    "name": "Necro U",
+    "desc": "Complete the Necro U chapter, the fourth part of the Doomwood saga.",
+    "autoload": null,
+    "sha256": "3c9ded435d317dce1c1fcf96ea73a88050379184793e3220048db55d49d075fb"
+  },
+  {
     "path": "bots/story/dragon-of-yokai/01-yokai-pirate.ts",
     "kind": "bots",
     "name": "Yokai Pirate",
