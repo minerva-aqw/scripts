@@ -6,9 +6,6 @@
 /// /stalagbite behind Stalagbite, Kitsune in /kitsune, and Wolfwing in
 /// /wolfwing. The data gates it on level 30 and Blacksmithing rank 4 (10,000
 /// rep); anything else the server wants is left to the accept.
-///
-/// Wolfwing's Wrath of the Werepyre is a member drop, so the quest cannot be
-/// finished on a free account.
 
 const QUEST = 8828;
 const LEVEL = 30;
@@ -34,9 +31,9 @@ function openRoom(slot: number, value: number): void {
 }
 
 function guard(): void {
-  const me = bot.me() as { level: number; upgraded: boolean };
-  if (me.level < LEVEL) {
-    stop("forge helmet needs level " + LEVEL + ", this character is level " + me.level);
+  const level = (bot.me() as { level: number }).level;
+  if (level < LEVEL) {
+    stop("forge helmet needs level " + LEVEL + ", this character is level " + level);
   }
   const faction = bot.rep("Blacksmithing") as { found: boolean; rank: number };
   if (!faction.found) stop("forge helmet: no Blacksmithing faction on this character");
@@ -45,9 +42,6 @@ function guard(): void {
       "forge helmet needs Blacksmithing rank " + RANK + " (10,000 rep), the character is rank " +
         faction.rank + "; run Blacksmithing reputation first"
     );
-  }
-  if (!me.upgraded) {
-    stop("forge helmet needs the member drop Wrath of the Werepyre, and this is a free account");
   }
 }
 

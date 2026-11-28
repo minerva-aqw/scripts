@@ -13,7 +13,7 @@
     "name": "Forge helmet enhancement",
     "desc": "Unlock the Forge helmet enhancement with the four Chaos Lord weapons.",
     "autoload": null,
-    "sha256": "cdf18f54482abc21bc1e4c2f3d9cd918693477b551413c35347a6dc2fd181eaa"
+    "sha256": "90d00a26b0d68e8db964a6c4449846ea93bc796a936b68804b54d29f46f7851c"
   },
   {
     "path": "bots/forge/01-forge-weapon.ts",
