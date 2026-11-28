@@ -28,17 +28,18 @@ const RANK = 5;
 
 const MATERIALS = [1196, 1532, 1576, 1581];
 
-/// A material is owned when it is in the backpack or the bank. The bank may
+/// `isOwned(item)`: the material is in the backpack or the bank. The bank may
 /// read unknown on an unloaded bank, which only means its quest runs again.
-function owned(item: number): boolean {
+function isOwned(item: number): boolean {
   const state = bot.itemState(item) as { presence: string; banked: string };
   return state.presence === "present" || state.banked === "present";
 }
 
-/// A reward that did not reach the bag is claimed off the floor. `pickupNow`
-/// answers `absent` without waiting when the drop has not landed yet, so the
-/// bag read at the head of each attempt is what spaces the retry.
-function settle(item: number, quest: number): void {
+/// `claimReward(item, quest)`: a reward that did not reach the bag is claimed
+/// off the floor. `pickupNow` answers `absent` without waiting when the drop has
+/// not landed yet, so the bag read at the head of each attempt is what spaces
+/// the retry.
+function claimReward(item: number, quest: number): void {
   for (let attempt = 0; attempt < 3; attempt += 1) {
     const state = bot.itemState(item) as { presence: string };
     if (state.presence === "present") return;
@@ -173,7 +174,7 @@ function horcCleaver(): void {
     },
     { choice: 0 }
   );
-  settle(1196, 279);
+  claimReward(1196, 279);
 }
 
 function swordInStone(): void {
@@ -196,7 +197,7 @@ function swordInStone(): void {
     },
     { choice: 0 }
   );
-  settle(1532, 316);
+  claimReward(1532, 316);
 }
 
 function blackKnightOrb(): void {
@@ -250,7 +251,7 @@ function blackKnightOrb(): void {
     },
     { choice: 0 }
   );
-  settle(1576, 318);
+  claimReward(1576, 318);
 }
 
 function forestAxe(): void {
@@ -273,17 +274,17 @@ function forestAxe(): void {
     },
     { choice: 0 }
   );
-  settle(1581, 301);
+  claimReward(1581, 301);
 }
 
 function unlock(): void {
   hitJob();
 
   bot.notify("Lacerate: the four materials");
-  if (!owned(1196)) horcCleaver();
-  if (!owned(1532)) swordInStone();
-  if (!owned(1576)) blackKnightOrb();
-  if (!owned(1581)) forestAxe();
+  if (!isOwned(1196)) horcCleaver();
+  if (!isOwned(1532)) swordInStone();
+  if (!isOwned(1576)) blackKnightOrb();
+  if (!isOwned(1581)) forestAxe();
 
   // The projection counts the bank; the turn-in takes the bag only.
   for (const item of MATERIALS) bot.ensureItemState(item, 1);

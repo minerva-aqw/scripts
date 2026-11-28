@@ -194,13 +194,12 @@ function sweepQuests(): unknown {
   });
 }
 
-/// The tick hook: a registered set is swept before the next parked call, no
-/// more often than its interval. Sweeping from here (rather than from a timer)
-/// is what makes registration work at all: the script is only running while a
-/// call is parked, and a sweep needs a parked frame to answer it. `dispatch`,
-/// not `step`: every lib file is a global, so an ordinary name here is a name a
-/// bot can shadow out from under the API.
-function dispatch(v: unknown): unknown {
+/// `parkOp(op)`: sweep the registered set when due, then park this op until the
+/// host answers it. Every `bot.*` call goes through here. Sweeping from here
+/// (rather than from a timer) is what makes registration work at all: the
+/// script is only running while a call is parked, and a sweep needs a parked
+/// frame to answer it.
+function parkOp(v: unknown): unknown {
   if (questRegistry.length > 0 && Date.now() - registeredAt >= registeredEvery) {
     sweepQuests();
   }
@@ -210,40 +209,40 @@ function dispatch(v: unknown): unknown {
 function questStep(id: number): unknown {
   return {
     accept(): unknown {
-      return dispatch({ op: "quest_accept", id });
+      return parkOp({ op: "quest_accept", id });
     },
     turnIn(choice?: number, qty?: number): unknown {
-      return dispatch({ op: "quest_turnin", id, choice: choice ?? -1, qty: qty ?? 1 });
+      return parkOp({ op: "quest_turnin", id, choice: choice ?? -1, qty: qty ?? 1 });
     },
     completed(): unknown {
-      return dispatch({ op: "quest_completed", id });
+      return parkOp({ op: "quest_completed", id });
     },
     // The whole projection record for one quest. `active` = in the tracker,
     // `ready` = the client's own `canTurnInQuest`, `done` = the chain slot
     // reached its value, `dailyComplete` = today's achievement is already
     // claimed, and `turnin` carries each requirement's `{id,name,need,have}`.
     info(): QuestInfo {
-      return dispatch({ op: "quest_info", id }) as QuestInfo;
+      return parkOp({ op: "quest_info", id }) as QuestInfo;
     },
     active(): boolean {
-      return dispatch({ op: "quest_info", id })["active"] === true;
+      return parkOp({ op: "quest_info", id })["active"] === true;
     },
     ready(): boolean {
-      return dispatch({ op: "quest_info", id })["ready"] === true;
+      return parkOp({ op: "quest_info", id })["ready"] === true;
     },
     done(): boolean {
-      return dispatch({ op: "quest_info", id })["done"] === true;
+      return parkOp({ op: "quest_info", id })["done"] === true;
     },
     // True when this daily quest's achievement is already claimed today.
     // Always false for a quest without a daily field, and resets with the
     // game's daily rollover — not at local midnight.
     dailyComplete(): boolean {
-      return dispatch({ op: "quest_info", id })["dailyComplete"] === true;
+      return parkOp({ op: "quest_info", id })["dailyComplete"] === true;
     },
     // Requirements still short, as `{id,name,need,have}`. Empty when the
     // gate can take the quest.
     wants(): QuestReq[] {
-      const info = dispatch({ op: "quest_info", id }) as QuestInfo;
+      const info = parkOp({ op: "quest_info", id }) as QuestInfo;
       const reqs = info.turnin || [];
       return reqs.filter(function (r) {
         return (r.have === undefined ? -1 : r.have) < r.need;
@@ -273,7 +272,7 @@ const bot = {
   // most one action per tick, pauses on death/cutscene, cancels
   // location-sensitive steps when the map changes, and resumes where it was.
   plan(steps: PlanStep[]): unknown {
-    return dispatch({ op: "plan", steps });
+    return parkOp({ op: "plan", steps });
   },
   // Explicit quest plan: accept, run each requirement's handler from the
   // projection, then turn in. Handler keys are requirement item ids. The plan
@@ -281,7 +280,7 @@ const bot = {
   // without filling its requirement fails with a typed reason instead of
   // spinning.
   questPlan(id: number, handlers: QuestPlanHandlers, opts?: QuestPlanOpts): unknown {
-    return dispatch({
+    return parkOp({
       op: "quest_plan",
       id,
       handlers,
@@ -293,25 +292,25 @@ const bot = {
   // Already in `map` reads as done with no rejoin; a non-default `cell`
   // goes through the verified cell move instead of the join's blind args.
   travel(map: string, cell?: string, pad?: string): unknown {
-    return dispatch({ op: "travel", map, cell: cell ?? "Enter", pad: pad ?? "Spawn" });
+    return parkOp({ op: "travel", map, cell: cell ?? "Enter", pad: pad ?? "Spawn" });
   },
   cell(frame: string, pad?: string): unknown {
-    return dispatch({ op: "cell", frame, pad: pad ?? "Spawn" });
+    return parkOp({ op: "cell", frame, pad: pad ?? "Spawn" });
   },
   // `kill({ monster, count?, blockers?, splash? })`: exact-count in the
   // current cell, typed result. Blockers are priority names that engage but
   // never count. Plain drops declare their own `pickup` ids.
   kill(opts: MissionOpts): unknown {
-    return dispatch({ op: "mission", spec: Object.assign({ kind: "kill" }, opts) });
+    return parkOp({ op: "mission", spec: Object.assign({ kind: "kill" }, opts) });
   },
   // `clear({ monster?, blockers? })`: kill every matching monster in the
   // current cell. No count and no roaming.
   clear(opts?: MissionOpts): unknown {
-    return dispatch({ op: "mission", spec: Object.assign({ kind: "clear" }, opts ?? {}) });
+    return parkOp({ op: "mission", spec: Object.assign({ kind: "clear" }, opts ?? {}) });
   },
   // `attack({ monster?, id?, blockers? })`: kill one instance, not a count.
   attack(opts: MissionOpts): unknown {
-    return dispatch({ op: "mission", spec: Object.assign({ kind: "attack" }, opts) });
+    return parkOp({ op: "mission", spec: Object.assign({ kind: "attack" }, opts) });
   },
   // `farm({ item | itemName, qty?, monster, map?, cell?, blockers?, source? })`:
   // repeat the explicit kill source until the held-item floor is met. With no
@@ -319,7 +318,7 @@ const bot = {
   // `monster` (`"*"` picks the richest cell overall). `source` is `"inventory"`
   // (default) or `"temp"`, for drops that never enter the backpack.
   farm(opts: FarmOpts): unknown {
-    return dispatch({ op: "mission", spec: Object.assign({ kind: "farm" }, opts) });
+    return parkOp({ op: "mission", spec: Object.assign({ kind: "farm" }, opts) });
   },
   // `quest(id)` returns the step handle: `info`, `active`, `ready`, `done`,
   // `wants`, `accept`, `turnIn`, `completed`. Use `questPlan(id, handlers)`
@@ -332,7 +331,7 @@ const bot = {
   // `found:false` with the cells seen, so `if` branches work). Travel
   // first, then locate, then `cell()` + `kill()`.
   locate(name: string): unknown {
-    return dispatch({ op: "locate", name });
+    return parkOp({ op: "locate", name });
   },
   // `gatherState(id, map, qty?, quest?)`: typed gather result. `held` is the
   // temp count or the watched quest-requirement count, `grant` names the id
@@ -342,15 +341,15 @@ const bot = {
   // Passing the active `quest` watches its requirements even when the tracker
   // has not listed the just-accepted quest yet.
   gatherState(id: number, map: string, qty?: number, quest?: number): unknown {
-    return dispatch({ op: "gather_state", id, map, qty: qty ?? 1, quest: quest ?? null });
+    return parkOp({ op: "gather_state", id, map, qty: qty ?? 1, quest: quest ?? null });
   },
   // `itemState(idOrName)`: typed read-only item query with explicit
   // presence. `presence`/`banked` are `"unknown" | "absent" | "present"`;
   // an unloaded bank reports `unknown`, never a false absence.
   itemState(idOrName: number | string): unknown {
     return typeof idOrName === "number"
-      ? dispatch({ op: "item_state", id: idOrName })
-      : dispatch({ op: "item_state", name: idOrName });
+      ? parkOp({ op: "item_state", id: idOrName })
+      : parkOp({ op: "item_state", name: idOrName });
   },
   // `ensureItemState(idOrName, qty?)`: typed turn-in precondition. Unbanks
   // when needed and resumes `{ ok, item: { presence, qty, banked },
@@ -358,8 +357,8 @@ const bot = {
   ensureItemState(idOrName: number | string, qty?: number): unknown {
     const want = qty ?? 1;
     return typeof idOrName === "number"
-      ? dispatch({ op: "ensure_item_state", id: idOrName, qty: want })
-      : dispatch({ op: "ensure_item_state", name: idOrName, qty: want });
+      ? parkOp({ op: "ensure_item_state", id: idOrName, qty: want })
+      : parkOp({ op: "ensure_item_state", name: idOrName, qty: want });
   },
   // `equip(idOrName)`: put an owned item on through the client's own toggle
   // (gear or usable, decided in-movie). `status` is
@@ -368,8 +367,8 @@ const bot = {
   // it is on.
   equip(idOrName: number | string): unknown {
     return typeof idOrName === "number"
-      ? dispatch({ op: "equip", id: idOrName })
-      : dispatch({ op: "equip", name: idOrName });
+      ? parkOp({ op: "equip", id: idOrName })
+      : parkOp({ op: "equip", name: idOrName });
   },
   // `shopState(shopId, idOrName)`: typed stock query. `loaded` and `stock`
   // are `"unknown" | "absent" | "present"`; `paged`/`pages` report a stock
@@ -377,8 +376,8 @@ const bot = {
   // `loaded: "absent"`, never an error.
   shopState(shopId: number, idOrName: number | string): unknown {
     return typeof idOrName === "number"
-      ? dispatch({ op: "shop_state", shop_id: shopId, id: idOrName })
-      : dispatch({ op: "shop_state", shop_id: shopId, name: idOrName });
+      ? parkOp({ op: "shop_state", shop_id: shopId, id: idOrName })
+      : parkOp({ op: "shop_state", shop_id: shopId, name: idOrName });
   },
   // `buyItemState(shopId, idOrName, qty?)`: typed buy. `status` is
   // `"ok" | "not_stocked" | "gated" | "timeout" | "absent"`; `before`,
@@ -387,22 +386,22 @@ const bot = {
   buyItemState(shopId: number, idOrName: number | string, qty?: number): unknown {
     const want = qty ?? 1;
     return typeof idOrName === "number"
-      ? dispatch({ op: "buy_item_state", shop_id: shopId, id: idOrName, qty: want })
-      : dispatch({ op: "buy_item_state", shop_id: shopId, name: idOrName, qty: want });
+      ? parkOp({ op: "buy_item_state", shop_id: shopId, id: idOrName, qty: want })
+      : parkOp({ op: "buy_item_state", shop_id: shopId, name: idOrName, qty: want });
   },
   // `sellItemState(idOrName, qty?)`: typed sell. `moved` is the clamped
   // amount that actually left the backpack; `limit` is `maximumShopSells`.
   sellItemState(idOrName: number | string, qty?: number): unknown {
     const want = qty ?? 1;
     return typeof idOrName === "number"
-      ? dispatch({ op: "sell_item_state", id: idOrName, qty: want })
-      : dispatch({ op: "sell_item_state", name: idOrName, qty: want });
+      ? parkOp({ op: "sell_item_state", id: idOrName, qty: want })
+      : parkOp({ op: "sell_item_state", name: idOrName, qty: want });
   },
   // `me()`: read-only player snapshot — identity, wallet, vitals, location,
   // capacity. No travel, no polling, no packets. Resumes the detail object;
   // raw counts only, scripts subtract.
   me(): unknown {
-    return dispatch({ op: "me" });
+    return parkOp({ op: "me" });
   },
   // `rep(idOrName)`: read-only faction query — the record for a `FactionID`
   // or an exact `sName` (the SWF's own either/or lookup). Resumes
@@ -412,14 +411,14 @@ const bot = {
   // on a typo'd name.
   rep(idOrName: number | string): unknown {
     return typeof idOrName === "number"
-      ? dispatch({ op: "rep", id: idOrName })
-      : dispatch({ op: "rep", name: idOrName });
+      ? parkOp({ op: "rep", id: idOrName })
+      : parkOp({ op: "rep", name: idOrName });
   },
   // `questValue(slot)`: read-only quest progression slot — `slot` is
   // uncapped (`strQuests`, `strQuests2`, …). Resumes the bare number (`-1`
   // when unset, the SWF's own miss signal).
   questValue(slot: number): unknown {
-    return dispatch({ op: "quest_value", slot });
+    return parkOp({ op: "quest_value", slot });
   },
   // `setQuestValue(slot, value)`: write a progression slot (map/cutscene
   // `qs` locks and quest/shop gates read these same local strings, so a
@@ -427,14 +426,14 @@ const bot = {
   // digit per slot, anything more corrupts to `"0"`. Resumes bare
   // `true`/`false`: `false` when the server echo never lands.
   setQuestValue(slot: number, value: number): unknown {
-    return dispatch({ op: "set_quest_value", slot, value });
+    return parkOp({ op: "set_quest_value", slot, value });
   },
   // `align(side)`: switch alignment — `"good"`, `"evil"` or `"chaos"`
   // (Skua's `ChangeAlignment`, same `updateQuest` packet, slot 41).
   // Fire-and-forget past the paced send: no readable echo exists, so a
   // gated quest's accept is the real check. Resumes bare `true`.
   align(side: string): unknown {
-    return dispatch({ op: "align", side });
+    return parkOp({ op: "align", side });
   },
   // `pickupNow(idOrName)` / `pickupNow("*")`: typed one-shot pickup.
   // `{ok, requested, claimed, remaining, reason}` where `reason` is
@@ -444,14 +443,14 @@ const bot = {
   // instead; this is the explicit one-shot.
   pickupNow(idOrName: number | string): unknown {
     return typeof idOrName === "number"
-      ? dispatch({ op: "pickup_state", id: idOrName })
-      : dispatch({ op: "pickup_state", name: idOrName });
+      ? parkOp({ op: "pickup_state", id: idOrName })
+      : parkOp({ op: "pickup_state", name: idOrName });
   },
   // `notify(message)`: explicit bot notification — posts a high-visibility
   // Android notification (default sound) and logs the line. No game touch,
   // no waiting: resumes bare `true` once queued. Reserve it for milestones
   // and failures the player must act on, not routine quest completion.
   notify(message: string): unknown {
-    return dispatch({ op: "notify", message });
+    return parkOp({ op: "notify", message });
   },
 };

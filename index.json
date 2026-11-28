@@ -45,7 +45,7 @@
     "name": "Lacerate",
     "desc": "Unlock the Lacerate Forge weapon enhancement.",
     "autoload": null,
-    "sha256": "ff8d8324226904b5bacc2b0c504874f96cea37d93dab5c7e2fa5ff82e9dd33f0"
+    "sha256": "6d7f9f9098c9c9a69857f91757246d3375fc23645e74df7f0663107952b0bf15"
   },
   {
     "path": "bots/forge/03-helm-examen.ts",
@@ -229,7 +229,7 @@
     "name": "Battle Under",
     "desc": "Complete the Battle Under saga from A to E in one run.",
     "autoload": null,
-    "sha256": "8dc4c15efd2591b27400ce3d6f545b760fb9a4f84a69f27047c615dcd7dac85f"
+    "sha256": "2e912f7c10a31be0b90cebaefeaf3b70f0f800763149f1a5935b8497744f6a39"
   },
   {
     "path": "bots/story/doomwood/01-doomwood-forest.ts",
@@ -541,7 +541,7 @@
     "name": null,
     "desc": null,
     "autoload": null,
-    "sha256": "7016512e82ef3d61753ef36004793f1db16768e3eb46352ab9e246263a51d0a3"
+    "sha256": "1a23917e5ecd187ac407da0533bf48c295e70b7c459aa7eee112027e56191797"
   },
   {
     "path": "lib/gates.ts",
