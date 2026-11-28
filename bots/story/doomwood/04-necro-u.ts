@@ -77,13 +77,15 @@ if (!bot.quest(LAST).done()) {
   );
 
   // 1121 Skullaton Shells
-  // Two objects, one per requirement. The plan binds each click to the
-  // requirement it fills, so a sibling that is already full cannot end it.
+  // The pair is the reverse of the quest's item order: clicking 454 grants the
+  // Shell (8401) and 455 grants the Skull (8400), read off a live run. Each
+  // click is bound to the requirement it fills, so a crossed pair now fails on
+  // the object that cannot pay instead of filling the wrong line.
   bot.questPlan(
     1121,
     {
-      "8400": [{ gather: { id: 454, map: NECROU } }],
-      "8401": [{ gather: { id: 455, map: NECROU } }],
+      "8400": [{ gather: { id: 455, map: NECROU } }],
+      "8401": [{ gather: { id: 454, map: NECROU } }],
       "8402": [{ farm: { item: 8402, monster: "Shelleton", map: NECROU, source: "temp", pickup: 8402 } }],
     },
     { choice: 0 }
