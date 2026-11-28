@@ -8,6 +8,14 @@
     "sha256": "a1700764a24c16019eb311767e42b439e6d82e9dbd4465fe98bfcb54e2865e3c"
   },
   {
+    "path": "bots/forge/01-forge-cape.ts",
+    "kind": "bots",
+    "name": "Forge cape enhancement",
+    "desc": "Unlock the Forge cape enhancement with the four Infernal wings.",
+    "autoload": null,
+    "sha256": "7cebf4986cbcd11fcea4a6138bb5b76c921fecc350ac9c05c5061009f1322d65"
+  },
+  {
     "path": "bots/forge/01-forge-helm.ts",
     "kind": "bots",
     "name": "Forge helmet enhancement",
