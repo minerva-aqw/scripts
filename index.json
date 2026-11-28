@@ -32,6 +32,14 @@
     "sha256": "9d221739e475fd1179705c23095616bd9d224ca72e1c1c2d0405f28b4589b23f"
   },
   {
+    "path": "bots/forge/02-helm-examen.ts",
+    "kind": "bots",
+    "name": "Examen",
+    "desc": "Unlock the Examen Forge helm enhancement.",
+    "autoload": null,
+    "sha256": "086df64ba5749d0fa92b7dc35ca1bd12a837677c0ac1465b28b96bec32328936"
+  },
+  {
     "path": "bots/forge/02-helm-vim.ts",
     "kind": "bots",
     "name": "Vim",
