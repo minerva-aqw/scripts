@@ -77,11 +77,22 @@ if (!bot.quest(LAST).done()) {
   );
 
   // 1121 Skullaton Shells
+  // Two objects and two requirements, and nothing offline says which object
+  // grants which: the saga script clicks them in the order it listed the quest
+  // items, which is not evidence of the pair. Each requirement's handler
+  // therefore clicks both, so a swapped pair still fills instead of leaving one
+  // gather clicking an object that pays the other requirement.
   bot.questPlan(
     1121,
     {
-      "8400": [{ gather: { id: 454, map: NECROU } }],
-      "8401": [{ gather: { id: 455, map: NECROU } }],
+      "8400": [
+        { gather: { id: 454, map: NECROU } },
+        { gather: { id: 455, map: NECROU } },
+      ],
+      "8401": [
+        { gather: { id: 454, map: NECROU } },
+        { gather: { id: 455, map: NECROU } },
+      ],
       "8402": [{ farm: { item: 8402, monster: "Shelleton", map: NECROU, source: "temp", pickup: 8402 } }],
     },
     { choice: 0 }

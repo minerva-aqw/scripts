@@ -253,7 +253,7 @@
     "name": "Necro U",
     "desc": "Complete the Necro U chapter, the fourth part of the Doomwood saga.",
     "autoload": null,
-    "sha256": "3c9ded435d317dce1c1fcf96ea73a88050379184793e3220048db55d49d075fb"
+    "sha256": "829216a3f21aff8671ad309423f15514182f7ec4618414f6d1d9219c4ab6d7a6"
   },
   {
     "path": "bots/story/doomwood/05-temple-of-light.ts",
