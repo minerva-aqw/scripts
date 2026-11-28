@@ -21,37 +21,10 @@ const RANK = 7;
 const ESSENCE = 71878;
 const NEED = 250;
 
-function stop(message: string): never {
-  bot.notify(message);
-  throw new Error(message);
-}
-
-function guard(): void {
-  const level = (bot.me() as { level: number }).level;
-  if (level < LEVEL) {
-    stop("vim needs level " + LEVEL + ", this character is level " + level);
-  }
-  const faction = bot.rep("Blacksmithing") as { found: boolean; rank: number };
-  if (!faction.found) stop("vim: no Blacksmithing faction on this character");
-  if (faction.rank < RANK) {
-    stop(
-      "vim needs Blacksmithing rank " + RANK + " (78,400 rep), the character is rank " +
-        faction.rank + "; run Blacksmithing reputation first"
-    );
-  }
-}
-
-function openTower(): void {
-  if ((bot.questValue(SLOT) as number) >= TOP) return;
-  bot.setQuestValue(SLOT, TOP);
-  const now = bot.questValue(SLOT) as number;
-  if (now < TOP) {
-    stop("vim: tower slot " + SLOT + " reads " + now + " after writing " + TOP);
-  }
-}
-
 function unlock(): void {
-  openTower();
+  // The tower's rooms read the slot on the entry frame; the top value is opened
+  // before the travel.
+  openQuestSlot("vim", SLOT, TOP);
 
   bot.notify("Vim: " + NEED + " Ethereal Essence from floor 8");
   bot.questPlan(QUEST, {
@@ -72,6 +45,7 @@ function unlock(): void {
 if (bot.quest(QUEST).done()) {
   bot.notify("Vim is already unlocked");
 } else {
-  guard();
+  requireLevel("vim", LEVEL);
+  requireRank("vim", "Blacksmithing", RANK);
   unlock();
 }

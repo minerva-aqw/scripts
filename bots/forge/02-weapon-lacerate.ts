@@ -26,31 +26,13 @@ const UNLOCK = 92;
 const LEVEL = 40;
 const RANK = 5;
 
-function stop(message: string): never {
-  bot.notify(message);
-  throw new Error(message);
-}
+const MATERIALS = [1196, 1532, 1576, 1581];
 
-function guard(): void {
-  const level = (bot.me() as { level: number }).level;
-  if (level < LEVEL) {
-    stop("lacerate needs level " + LEVEL + ", this character is level " + level);
-  }
-  const faction = bot.rep("Blacksmithing") as { found: boolean; rank: number };
-  if (!faction.found) stop("lacerate: no Blacksmithing faction on this character");
-  if (faction.rank < RANK) {
-    stop(
-      "lacerate needs Blacksmithing rank " + RANK + " (22,500 rep), the character is rank " +
-        faction.rank + "; run Blacksmithing reputation first"
-    );
-  }
-}
-
-/// A material is ready when it sits in the backpack. The four quest rewards are
-/// permanent, so one can be banked from an earlier run, and the turn-in takes
-/// the bag only.
-function ready(item: number): boolean {
-  return (bot.ensureItemState(item, 1) as { ok: boolean }).ok;
+/// A material is owned when it is in the backpack or the bank. The bank may
+/// read unknown on an unloaded bank, which only means its quest runs again.
+function owned(item: number): boolean {
+  const state = bot.itemState(item) as { presence: string; banked: string };
+  return state.presence === "present" || state.banked === "present";
 }
 
 /// A reward that did not reach the bag is claimed off the floor. `pickupNow`
@@ -58,11 +40,12 @@ function ready(item: number): boolean {
 /// bag read at the head of each attempt is what spaces the retry.
 function settle(item: number, quest: number): void {
   for (let attempt = 0; attempt < 3; attempt += 1) {
-    if (ready(item)) return;
+    const state = bot.itemState(item) as { presence: string };
+    if (state.presence === "present") return;
     const claim = bot.pickupNow(item) as { ok: boolean };
     if (claim.ok) return;
   }
-  stop("lacerate: quest " + quest + " pays item " + item + " and it is neither in the bag nor on the floor");
+  stopRun("lacerate: quest " + quest + " pays item " + item + " and it is neither in the bag nor on the floor");
 }
 
 function hitJob(): void {
@@ -297,10 +280,13 @@ function unlock(): void {
   hitJob();
 
   bot.notify("Lacerate: the four materials");
-  if (!ready(1196)) horcCleaver();
-  if (!ready(1532)) swordInStone();
-  if (!ready(1576)) blackKnightOrb();
-  if (!ready(1581)) forestAxe();
+  if (!owned(1196)) horcCleaver();
+  if (!owned(1532)) swordInStone();
+  if (!owned(1576)) blackKnightOrb();
+  if (!owned(1581)) forestAxe();
+
+  // The projection counts the bank; the turn-in takes the bag only.
+  for (const item of MATERIALS) bot.ensureItemState(item, 1);
 
   // The two main drops are permanent, so the farm sweeps its own item.
   bot.questPlan(QUEST, {
@@ -333,6 +319,7 @@ function unlock(): void {
 if (bot.quest(QUEST).done()) {
   bot.notify("Lacerate is already unlocked");
 } else {
-  guard();
+  requireLevel("lacerate", LEVEL);
+  requireRank("lacerate", "Blacksmithing", RANK);
   unlock();
 }

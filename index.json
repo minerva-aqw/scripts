@@ -13,7 +13,7 @@
     "name": "Forge cape enhancement",
     "desc": "Unlock the Forge cape enhancement with the four Infernal wings.",
     "autoload": null,
-    "sha256": "7cebf4986cbcd11fcea4a6138bb5b76c921fecc350ac9c05c5061009f1322d65"
+    "sha256": "78e8e445300294cef988ffd65a8697f9d32c9e4e6c4f34e85ced130a13756fa7"
   },
   {
     "path": "bots/forge/01-forge-helm.ts",
@@ -21,7 +21,7 @@
     "name": "Forge helmet enhancement",
     "desc": "Unlock the Forge helmet enhancement with the four Chaos Lord weapons.",
     "autoload": null,
-    "sha256": "90d00a26b0d68e8db964a6c4449846ea93bc796a936b68804b54d29f46f7851c"
+    "sha256": "dbf95c2469efffbb5fdb00ba0d3e15bf952db5ba945eec90ddfc546b6b685730"
   },
   {
     "path": "bots/forge/01-forge-weapon.ts",
@@ -29,7 +29,7 @@
     "name": "Forge weapon enhancement",
     "desc": "Unlock the Forge weapon enhancement with the four Chaos Lord helms.",
     "autoload": null,
-    "sha256": "d7aeb92717d91f7c62d1e6cdaa03888a544b777202fef5eb68c257a07b7b3b46"
+    "sha256": "9d221739e475fd1179705c23095616bd9d224ca72e1c1c2d0405f28b4589b23f"
   },
   {
     "path": "bots/forge/02-helm-vim.ts",
@@ -37,7 +37,7 @@
     "name": "Vim",
     "desc": "Unlock the Vim Forge helm enhancement.",
     "autoload": null,
-    "sha256": "ecf1f248a2b75f494492c2ecd8f707641b7767f10cd17943a8cef2d940b2a0a1"
+    "sha256": "2d1dab44c96f6492fcf8cf9d16bb396be9704a3380b99ae98b25bf151ad012f6"
   },
   {
     "path": "bots/forge/02-weapon-lacerate.ts",
@@ -45,7 +45,7 @@
     "name": "Lacerate",
     "desc": "Unlock the Lacerate Forge weapon enhancement.",
     "autoload": null,
-    "sha256": "948c2dfcb974a4e3e2509eeac182c9c0e5787d947afa19ad57cb29fef393b2a3"
+    "sha256": "ff8d8324226904b5bacc2b0c504874f96cea37d93dab5c7e2fa5ff82e9dd33f0"
   },
   {
     "path": "bots/rep/arcangrove.ts",
@@ -301,7 +301,7 @@
     "name": "Tower of Doom",
     "desc": "Climb the ten floors of the Tower of Doom story, one boss per floor.",
     "autoload": null,
-    "sha256": "60a238e124e8dcab085d15a7dbb806f2ffeff4966a5e50d02a4d687e7982560f"
+    "sha256": "a10c08f727f8aba3bb9b37bf3de85376cf3c596e90d5d2954b4478129c47b7fc"
   },
   {
     "path": "bots/test.ts",
@@ -478,6 +478,14 @@
     "desc": null,
     "autoload": null,
     "sha256": "109df6082597e61d7280125299aa68754408d8615af4d254c13c8dd0de199b9d"
+  },
+  {
+    "path": "lib/gates.ts",
+    "kind": "lib",
+    "name": null,
+    "desc": null,
+    "autoload": null,
+    "sha256": "113333b667ac93eb51058b1b2094f25e8298185167ad61bf404e67e29f796b70"
   },
   {
     "path": "lib/monsters.ts",

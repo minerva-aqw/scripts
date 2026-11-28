@@ -15,26 +15,6 @@ const RANK = 4;
 
 const WINGS = [31040, 31044, 36468, 36473];
 
-function stop(message: string): never {
-  bot.notify(message);
-  throw new Error(message);
-}
-
-function guard(): void {
-  const level = (bot.me() as { level: number }).level;
-  if (level < LEVEL) {
-    stop("forge cape needs level " + LEVEL + ", this character is level " + level);
-  }
-  const faction = bot.rep("Blacksmithing") as { found: boolean; rank: number };
-  if (!faction.found) stop("forge cape: no Blacksmithing faction on this character");
-  if (faction.rank < RANK) {
-    stop(
-      "forge cape needs Blacksmithing rank " + RANK + " (10,000 rep), the character is rank " +
-        faction.rank + "; run Blacksmithing reputation first"
-    );
-  }
-}
-
 /// Move a wing a previous run left in the bank into the backpack: the projection
 /// counts the bank, the turn-in takes the bag only. A wing that is not owned yet
 /// reads `ok:false` here and is left to the plan.
@@ -98,6 +78,7 @@ function unlock(): void {
 if (bot.quest(QUEST).done()) {
   bot.notify("Forge cape enhancement is already unlocked");
 } else {
-  guard();
+  requireLevel("forge cape", LEVEL);
+  requireRank("forge cape", "Blacksmithing", RANK);
   unlock();
 }

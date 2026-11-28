@@ -25,19 +25,8 @@ const FLOORS = [
   { map: "towerofdoom10", quest: 3484, item: 23655, boss: "Slugbutter" },
 ];
 
-function openTower(): void {
-  if ((bot.questValue(SLOT) as number) === TOP) return;
-  bot.setQuestValue(SLOT, TOP);
-  const now = bot.questValue(SLOT) as number;
-  if (now !== TOP) {
-    throw new Error(
-      "tower gate: slot " + SLOT + " reads " + now + " after writing " + TOP
-    );
-  }
-}
-
 for (const stage of FLOORS) {
-  openTower();
+  openQuestSlot("tower of doom", SLOT, TOP);
   bot.questPlan(stage.quest, {
     [String(stage.item)]: [{
       farm: {

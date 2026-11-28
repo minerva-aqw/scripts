@@ -8,6 +8,10 @@ Shared, flat prelude files evaluated into every script before its entry.
 - `monsters.ts` — `findMonsterCell(name, map, cell?)`: the cell holding a named
   monster in the room the caller already joined, cached per map. It throws with
   the cells seen when the monster is absent.
+- `gates.ts` — `stopRun(message)`, the failure verb every bot ends with, plus
+  `requireLevel(who, level)`, `requireRank(who, faction, rank)` and
+  `openQuestSlot(who, slot, value)`. Each gate reads one typed record, names the
+  shortfall and ends the run.
 
 ## Adding a helper
 

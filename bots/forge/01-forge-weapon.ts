@@ -17,38 +17,6 @@ const RANK = 4;
 
 const HELMS = [1173, 1763, 2242, 4853];
 
-function stop(message: string): never {
-  bot.notify(message);
-  throw new Error(message);
-}
-
-/// A room reads its chapter's quest value slot on the arrival frame and will
-/// not serve the Chaos Lord below it. Skua opens the slot on the way in; it is
-/// opened here before the plan travels, and never lowered.
-function openRoom(slot: number, value: number): void {
-  if ((bot.questValue(slot) as number) >= value) return;
-  bot.setQuestValue(slot, value);
-  const now = bot.questValue(slot) as number;
-  if (now < value) {
-    stop("forge weapon: room slot " + slot + " reads " + now + " after writing " + value);
-  }
-}
-
-function guard(): void {
-  const level = (bot.me() as { level: number }).level;
-  if (level < LEVEL) {
-    stop("forge weapon needs level " + LEVEL + ", this character is level " + level);
-  }
-  const faction = bot.rep("Blacksmithing") as { found: boolean; rank: number };
-  if (!faction.found) stop("forge weapon: no Blacksmithing faction on this character");
-  if (faction.rank < RANK) {
-    stop(
-      "forge weapon needs Blacksmithing rank " + RANK + " (10,000 rep), the character is rank " +
-        faction.rank + "; run Blacksmithing reputation first"
-    );
-  }
-}
-
 /// Move a helm a previous run left in the bank into the backpack: the
 /// projection counts the bank, the turn-in takes the bag only. A helm that is
 /// not owned yet reads `ok:false` here and is left to the plan.
@@ -59,9 +27,9 @@ function bagHelms(): void {
 function unlock(): void {
   bagHelms();
   // Vath, Kitsune and Wolfwing each sit behind their chapter's own value.
-  openRoom(22, 35);
-  openRoom(25, 22);
-  openRoom(26, 23);
+  openQuestSlot("forge weapon", 22, 35);
+  openQuestSlot("forge weapon", 25, 22);
+  openQuestSlot("forge weapon", 26, 23);
 
   bot.notify("Forge weapon: Kitsune, Vath, Escherion, Wolfwing");
   bot.questPlan(QUEST, {
@@ -120,6 +88,7 @@ function unlock(): void {
 if (bot.quest(QUEST).done()) {
   bot.notify("Forge weapon enhancement is already unlocked");
 } else {
-  guard();
+  requireLevel("forge weapon", LEVEL);
+  requireRank("forge weapon", "Blacksmithing", RANK);
   unlock();
 }
