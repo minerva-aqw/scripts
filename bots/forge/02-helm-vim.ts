@@ -1,0 +1,77 @@
+/// name: Vim
+/// desc: Unlock the Vim Forge helm enhancement.
+///
+/// Quest 8824 is the first helm tier: level 70, Blacksmithing rank 7 (78,400
+/// rep), and 250 Ethereal Essence. The essence drops from the Dreadrooms of
+/// /towerofdoom10, and floor 8 is the cell with three of them.
+///
+/// The wiki lists the Rogue class at rank 10 as a requirement. The quest data
+/// carries no class gate (its accept requirement is the class item at quantity
+/// zero), and the live accept answered success on an account that does not own
+/// Rogue, so no class is bought or ranked here.
+///
+/// Every tower room reads quest value slot 159 on the frame it plays, so the top
+/// value is opened before the travel.
+
+const QUEST = 8824;
+const SLOT = 159;
+const TOP = 10;
+const LEVEL = 70;
+const RANK = 7;
+const ESSENCE = 71878;
+const NEED = 250;
+
+function stop(message: string): never {
+  bot.notify(message);
+  throw new Error(message);
+}
+
+function guard(): void {
+  const level = (bot.me() as { level: number }).level;
+  if (level < LEVEL) {
+    stop("vim needs level " + LEVEL + ", this character is level " + level);
+  }
+  const faction = bot.rep("Blacksmithing") as { found: boolean; rank: number };
+  if (!faction.found) stop("vim: no Blacksmithing faction on this character");
+  if (faction.rank < RANK) {
+    stop(
+      "vim needs Blacksmithing rank " + RANK + " (78,400 rep), the character is rank " +
+        faction.rank + "; run Blacksmithing reputation first"
+    );
+  }
+}
+
+function openTower(): void {
+  if ((bot.questValue(SLOT) as number) >= TOP) return;
+  bot.setQuestValue(SLOT, TOP);
+  const now = bot.questValue(SLOT) as number;
+  if (now < TOP) {
+    stop("vim: tower slot " + SLOT + " reads " + now + " after writing " + TOP);
+  }
+}
+
+function unlock(): void {
+  openTower();
+
+  bot.notify("Vim: " + NEED + " Ethereal Essence from floor 8");
+  bot.questPlan(QUEST, {
+    "71878": [
+      {
+        farm: {
+          item: ESSENCE,
+          monster: "*",
+          cell: "r8",
+          map: "towerofdoom10",
+        },
+      },
+    ],
+  });
+  bot.notify("Vim unlocked");
+}
+
+if (bot.quest(QUEST).done()) {
+  bot.notify("Vim is already unlocked");
+} else {
+  guard();
+  unlock();
+}

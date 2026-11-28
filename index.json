@@ -32,6 +32,14 @@
     "sha256": "d7aeb92717d91f7c62d1e6cdaa03888a544b777202fef5eb68c257a07b7b3b46"
   },
   {
+    "path": "bots/forge/02-helm-vim.ts",
+    "kind": "bots",
+    "name": "Vim",
+    "desc": "Unlock the Vim Forge helm enhancement.",
+    "autoload": null,
+    "sha256": "ecf1f248a2b75f494492c2ecd8f707641b7767f10cd17943a8cef2d940b2a0a1"
+  },
+  {
     "path": "bots/forge/02-weapon-lacerate.ts",
     "kind": "bots",
     "name": "Lacerate",
