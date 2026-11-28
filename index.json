@@ -224,6 +224,14 @@
     "sha256": "280d03c0e29360e76f076353c8d055743102851443eae020c0a412a32178d18d"
   },
   {
+    "path": "bots/story/battle-under.ts",
+    "kind": "bots",
+    "name": "Battle Under",
+    "desc": "Complete the Battle Under saga from A to E in one run.",
+    "autoload": null,
+    "sha256": "d98fa5b4f0730a7d9a19d2b9c281fade1f231f1a5df17030cb761dd0b3c3f832"
+  },
+  {
     "path": "bots/story/doomwood/01-doomwood-forest.ts",
     "kind": "bots",
     "name": "Doomwood Forest",
