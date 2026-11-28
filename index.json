@@ -32,6 +32,14 @@
     "sha256": "d7aeb92717d91f7c62d1e6cdaa03888a544b777202fef5eb68c257a07b7b3b46"
   },
   {
+    "path": "bots/forge/02-weapon-lacerate.ts",
+    "kind": "bots",
+    "name": "Lacerate",
+    "desc": "Unlock the Lacerate Forge weapon enhancement.",
+    "autoload": null,
+    "sha256": "0be2a8cd5df2fce6e765e86028a6723faaee19d3152f0cbeb035383f9623b275"
+  },
+  {
     "path": "bots/rep/arcangrove.ts",
     "kind": "bots",
     "name": "Arcangrove reputation",
