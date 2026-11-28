@@ -3,15 +3,15 @@
 ///
 /// Quest 8738 takes one helm from each of the first four Chaos Lords: Escherion
 /// in /escherion behind his Staff of Inversion, Vath in /stalagbite behind
-/// Stalagbite, Kitsune in /kitsune, and Wolfwing in /wolfwing. The quest gates
-/// on level 30, Blacksmithing rank 4 (10,000 rep) and the finished Escherion
-/// chapter (272); all three are guards here, not farms.
+/// Stalagbite, Kitsune in /kitsune, and Wolfwing in /wolfwing. The quest data
+/// gates it on level 30 and Blacksmithing rank 4 (10,000 rep); both are guards
+/// here, and anything else the server wants is left to the accept, which
+/// answers with its own refusal.
 ///
 /// The helms are permanent drops, not quest items, so nothing here depends on
 /// the quest staying accepted between maps.
 
 const QUEST = 8738;
-const STORY = 272;
 const LEVEL = 30;
 const RANK = 4;
 
@@ -46,9 +46,6 @@ function guard(): void {
       "forge weapon needs Blacksmithing rank " + RANK + " (10,000 rep), the character is rank " +
         faction.rank + "; run Blacksmithing reputation first"
     );
-  }
-  if (!bot.quest(STORY).completed()) {
-    stop("forge weapon needs the Escherion chapter (272) finished first");
   }
 }
 

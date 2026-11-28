@@ -13,7 +13,7 @@
     "name": "Forge weapon enhancement",
     "desc": "Unlock the Forge weapon enhancement with the four Chaos Lord helms.",
     "autoload": null,
-    "sha256": "83526b03a8dce23d0d3a0c3b91b9419c92601b202953f7c9f5cde429158d6c6f"
+    "sha256": "d7aeb92717d91f7c62d1e6cdaa03888a544b777202fef5eb68c257a07b7b3b46"
   },
   {
     "path": "bots/rep/arcangrove.ts",
