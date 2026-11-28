@@ -326,7 +326,7 @@ function dragonSword(): void {
     {
       "96129": [{ farm: { item: 96129, monster: "*", cell: "r9", map: "chaoswar" } }],
       "96128": [
-        { farm: { item: 96128, monster: "Sepulchre", map: "falcontower", timeout: 1200 } },
+        { farm: { item: 96128, monster: "Sepulchure", map: "falcontower", timeout: 1200 } },
       ],
       "96130": [
         { farm: { item: 96130, monster: "Volgritian", map: "naoisegrave", timeout: 1200 } },
