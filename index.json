@@ -232,6 +232,14 @@
     "sha256": "62bb62ce371aa558fc6a00ee4db98b8a9fcb0d4076f585cc881fb9959ee67502"
   },
   {
+    "path": "bots/story/doomwood/02-chopping-maul.ts",
+    "kind": "bots",
+    "name": "Chopping Maul",
+    "desc": "Complete the Chopping Maul chapter, the second part of the Doomwood saga.",
+    "autoload": null,
+    "sha256": "546db072c9715fa64e9174158acde76d28a34f9c3ecebe12ba6aedde6556683f"
+  },
+  {
     "path": "bots/story/dragon-of-yokai/01-yokai-pirate.ts",
     "kind": "bots",
     "name": "Yokai Pirate",
