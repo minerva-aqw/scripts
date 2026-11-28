@@ -8,6 +8,14 @@
     "sha256": "a1700764a24c16019eb311767e42b439e6d82e9dbd4465fe98bfcb54e2865e3c"
   },
   {
+    "path": "bots/forge/01-forge-weapon.ts",
+    "kind": "bots",
+    "name": "Forge weapon enhancement",
+    "desc": "Unlock the Forge weapon enhancement with the four Chaos Lord helms.",
+    "autoload": null,
+    "sha256": "83526b03a8dce23d0d3a0c3b91b9419c92601b202953f7c9f5cde429158d6c6f"
+  },
+  {
     "path": "bots/rep/arcangrove.ts",
     "kind": "bots",
     "name": "Arcangrove reputation",
