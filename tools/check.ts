@@ -318,6 +318,22 @@ function checkBotsCalls(
   }
 }
 
+/// Top-level names a file declares. lib files share one global scope with the
+/// entry, so a bot that declares `step` while `lib/bot.ts` does too replaces
+/// the API's own helper — a stack overflow at the first call, not a clean
+/// failure. Only column-zero declarations count; helpers inside a function
+/// cannot collide.
+function declaredNames(src: string): Map<string, number> {
+  const out = new Map<string, number>();
+  for (const match of src.matchAll(
+    /^(?:declare\s+)?(?:function|const|let|var)\s+([A-Za-z_$][\w$]*)/gm,
+  )) {
+    const line = lineAt(src, match.index ?? 0);
+    if (!out.has(match[1])) out.set(match[1], line);
+  }
+  return out;
+}
+
 function main(): void {
   const failures: Failure[] = [];
   const entries = collectEntries();
@@ -328,6 +344,15 @@ function main(): void {
   const libEntry = entries.find((entry) => entry.path === "lib/bot.ts");
   const table = libEntry ? botTable(libEntry.src) : new Map();
 
+  // Every lib file is loaded before the entry and shares its scope.
+  const libNames = new Map<string, string>();
+  for (const entry of entries) {
+    if (entry.kind !== "lib") continue;
+    for (const [name] of declaredNames(entry.src)) {
+      if (!libNames.has(name)) libNames.set(name, entry.path);
+    }
+  }
+
   for (const entry of entries) {
     if (entry.kind === "lib") continue;
     const stripped = stripCode(entry.src);
@@ -337,6 +362,16 @@ function main(): void {
         line: lineAt(entry.src, match.index),
         message: `\`${match[1]}\` is banned in classic scripts (durable stack only)`,
       });
+    }
+    for (const [name, line] of declaredNames(stripped)) {
+      const owner = libNames.get(name);
+      if (owner) {
+        failures.push({
+          path: entry.path,
+          line,
+          message: `\`${name}\` is declared by ${owner}; a script replaces the lib global of that name`,
+        });
+      }
     }
     if (entry.kind === "bots") {
       checkBotsCalls(entry, stripped, table, failures);

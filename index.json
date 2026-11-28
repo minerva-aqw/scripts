@@ -229,7 +229,7 @@
     "name": "Battle Under",
     "desc": "Complete the Battle Under saga from A to E in one run.",
     "autoload": null,
-    "sha256": "d98fa5b4f0730a7d9a19d2b9c281fade1f231f1a5df17030cb761dd0b3c3f832"
+    "sha256": "8dc4c15efd2591b27400ce3d6f545b760fb9a4f84a69f27047c615dcd7dac85f"
   },
   {
     "path": "bots/story/doomwood/01-doomwood-forest.ts",
@@ -541,7 +541,7 @@
     "name": null,
     "desc": null,
     "autoload": null,
-    "sha256": "109df6082597e61d7280125299aa68754408d8615af4d254c13c8dd0de199b9d"
+    "sha256": "7016512e82ef3d61753ef36004793f1db16768e3eb46352ab9e246263a51d0a3"
   },
   {
     "path": "lib/gates.ts",

@@ -187,6 +187,9 @@ when the bot reads it back.
   logic out of it.
 - Helpers are plain functions; `bot.*` stays the only public namespace. Do not
   add a second quest registry or drop-want set.
+- Lib files share one global scope with the entry, so a top-level name in a bot
+  replaces the lib global of that name. Never declare a helper whose name a lib
+  file already uses — `tools/check.ts` fails the tree when you do.
 
 ## Before you commit
 

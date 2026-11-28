@@ -27,9 +27,9 @@ const SLOT = 24;
 const E_SLOT = 242;
 const PICKAXE = 12838;
 
-/// `step(slot, value, quest, handlers, opts?)`: runs one quest unless its chain
-/// slot has already passed that quest's value.
-function step(
+/// `chainStep(slot, value, quest, handlers, opts?)`: runs one quest unless its
+/// chain slot has already passed that quest's value.
+function chainStep(
   slot: number,
   value: number,
   quest: number,
@@ -53,20 +53,20 @@ function claim(item: number, quest: number): void {
 }
 
 // Part A
-step(SLOT, 1, 374, {
+chainStep(SLOT, 1, 374, {
   "1966": [{ farm: { item: 1966, monster: "Skeletal Warrior", map: A, source: "temp", pickup: 1966 } }],
 });
 
-step(SLOT, 2, 375, {
+chainStep(SLOT, 2, 375, {
   "1968": [{ farm: { item: 1968, monster: "Skeletal Warrior", map: A, source: "temp", pickup: 1968 } }],
   "1967": [{ farm: { item: 1967, monster: "Skeletal Warrior", map: A, source: "temp", pickup: 1967 } }],
 });
 
-step(SLOT, 3, 376, {
+chainStep(SLOT, 3, 376, {
   "1969": [{ farm: { item: 1969, monster: "Bone Terror", map: A, source: "temp", pickup: 1969 } }],
 });
 
-step(
+chainStep(
   SLOT,
   4,
   377,
@@ -77,7 +77,7 @@ step(
 );
 
 // Part B
-step(
+chainStep(
   SLOT,
   5,
   689,
@@ -88,7 +88,7 @@ step(
 );
 claim(5165, 689);
 
-step(
+chainStep(
   SLOT,
   6,
   690,
@@ -98,7 +98,7 @@ step(
   { choice: 0 }
 );
 
-step(
+chainStep(
   SLOT,
   7,
   691,
@@ -108,7 +108,7 @@ step(
   { choice: 0 }
 );
 
-step(
+chainStep(
   SLOT,
   8,
   692,
@@ -118,24 +118,24 @@ step(
   { choice: 0 }
 );
 
-step(SLOT, 9, 935, {
+chainStep(SLOT, 9, 935, {
   "6700": [{ gather: { id: 253, map: B } }],
 });
 
 // Part C
-step(SLOT, 10, 936, {
+chainStep(SLOT, 10, 936, {
   "6701": [{ farm: { item: 6701, monster: "Blue Crystalized Undead", map: C, source: "temp", pickup: 6701 } }],
 });
 
-step(SLOT, 11, 937, {
+chainStep(SLOT, 11, 937, {
   "6702": [{ farm: { item: 6702, monster: "Blue Crystalized Undead", map: C, source: "temp", pickup: 6702 } }],
 });
 
-step(SLOT, 12, 938, {
+chainStep(SLOT, 12, 938, {
   "6703": [{ farm: { item: 6703, monster: "Crystalized Jellyfish", map: C, source: "temp", pickup: 6703 } }],
 });
 
-step(
+chainStep(
   SLOT,
   13,
   939,
@@ -150,26 +150,26 @@ claim(6697, 939);
 claim(6699, 939);
 
 // Part E, before D because D is the member-only one
-step(E_SLOT, 1, 5927, {
+chainStep(E_SLOT, 1, 5927, {
   "40580": [{ gather: { id: 5362, map: E } }],
   "40581": [{ farm: { item: 40581, monster: "Lava Guard", map: E, source: "temp", pickup: 40581 } }],
 });
 
-step(E_SLOT, 2, 5928, {
+chainStep(E_SLOT, 2, 5928, {
   "40582": [{ farm: { item: 40582, monster: "Hot Mama", map: E, source: "temp", pickup: 40582 } }],
 });
 
 // Part D
-step(SLOT, 14, 2211, {
+chainStep(SLOT, 14, 2211, {
   "12850": [{ farm: { item: 12850, monster: "Shivering Bones", cell: "Enter", map: D, source: "temp", pickup: 12850 } }],
 });
 
-step(SLOT, 15, 2212, {
+chainStep(SLOT, 15, 2212, {
   "12852": [{ farm: { item: 12852, monster: "Icy Banshee", cell: "r2", map: D, source: "temp", pickup: 12852 } }],
   "12851": [{ gather: { id: 1286, map: D } }],
 });
 
-step(
+chainStep(
   SLOT,
   16,
   2213,
@@ -180,7 +180,7 @@ step(
 );
 claim(PICKAXE, 2213);
 
-step(SLOT, 17, 2214, {
+chainStep(SLOT, 17, 2214, {
   "12854": [{ gather: { id: 1287, map: D } }],
   "12855": [{ farm: { item: 12855, monster: "Glacial Horror", cell: "r5", map: D, source: "temp", pickup: 12855 } }],
 });
@@ -188,7 +188,7 @@ step(SLOT, 17, 2214, {
 // 2215 asks to own the pickaxe, not to carry it into the turn-in.
 bot.ensureItemState(PICKAXE, 1);
 
-step(
+chainStep(
   SLOT,
   18,
   2215,
